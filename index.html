@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>THE BUNKER V.3 + CYBER SHOP</title>
+<title>THE BUNKER V.3 + GLOBAL NETWORK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -81,10 +81,7 @@
     transition: all 0.2s ease;
     overflow: hidden;
   }
-  .profile-corner-btn:hover {
-    border-color: var(--orange);
-    box-shadow: 0 0 10px var(--orange-glow);
-  }
+  .profile-corner-btn:hover { border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
   .profile-corner-btn img { width: 100%; height: 100%; object-fit: cover; }
   .profile-corner-btn span { font-size: 1.5rem; }
 
@@ -104,49 +101,37 @@
     border: 1px solid var(--orange);
     box-shadow: 0 0 30px var(--orange-glow);
     border-radius: 12px;
-    width: 90%;
+    width: 95%;
     max-width: 500px;
     padding: 25px;
     position: relative;
-    transform: translateY(-20px);
-    transition: transform 0.3s ease;
+    max-height: 90vh;
+    overflow-y: auto;
   }
-  .modal-overlay.active .modal-box { transform: translateY(0); }
   .modal-close {
     position: absolute; top: 15px; right: 15px;
     background: none; border: none; color: var(--grey-text);
     font-size: 1.5rem; cursor: pointer;
   }
-  .modal-close:hover { color: var(--neon-red); }
 
   .profile-avatar-big {
-    width: 90px; height: 90px;
-    border-radius: 8px;
-    border: 2px solid var(--orange);
-    margin: 0 auto 15px;
-    display: flex; justify-content: center; align-items: center;
-    background: var(--bg-dark);
-    overflow: hidden;
+    width: 80px; height: 80px; border-radius: 8px; border: 2px solid var(--orange);
+    margin: 0 auto 15px; display: flex; justify-content: center; align-items: center;
+    background: var(--bg-dark); overflow: hidden;
   }
   .profile-avatar-big img { width: 100%; height: 100%; object-fit: cover; }
-  .profile-avatar-big span { font-size: 3rem; }
 
   .avatar-selector-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-    max-height: 120px; overflow-y: auto;
-    background: var(--bg-dark); padding: 10px; border-radius: 6px; border: 1px solid var(--grey-border);
-    margin-bottom: 15px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    max-height: 100px; overflow-y: auto; background: var(--bg-dark); padding: 8px; border-radius: 6px; border: 1px solid var(--grey-border); margin-bottom: 15px;
   }
-  .avatar-option-card {
-    border: 1px solid var(--grey-border); border-radius: 4px; padding: 3px; cursor: pointer; text-align: center; background: var(--bg-card);
-  }
-  .avatar-option-card.active { border-color: var(--neon-green); box-shadow: 0 0 5px var(--neon-green-glow); }
-  .avatar-option-card img { width: 100%; height: 40px; object-fit: cover; border-radius: 2px; }
+  .avatar-option-card { border: 1px solid var(--grey-border); border-radius: 4px; padding: 2px; cursor: pointer; background: var(--bg-card); }
+  .avatar-option-card.active { border-color: var(--neon-green); }
+  .avatar-option-card img { width: 100%; height: 35px; object-fit: cover; border-radius: 2px; }
 
-  /* СЕТКИ ДЛЯ КАСТОМИЗАЦИИ В МОДАЛКЕ */
   .cosm-customizer-section {
-    background: var(--bg-dark); padding: 10px; border-radius: 6px; border: 1px solid var(--grey-border);
-    max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px;
+    background: var(--bg-dark); padding: 8px; border-radius: 6px; border: 1px solid var(--grey-border);
+    max-height: 100px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px;
   }
   .cosm-row-item {
     display: flex; justify-content: space-between; align-items: center;
@@ -154,25 +139,17 @@
   }
   .cosm-row-item.active { border-color: var(--orange); background: #1b120c; }
 
-  /* ОСТАЛЬНЫЕ СТИЛИ */
+  /* ЭКРАНЫ */
   .screen { width: 100%; max-width: 1100px; transition: all 0.3s ease; }
   .hidden { display: none !important; }
   .fade-in { animation: screenReveal 0.4s forwards ease-out; }
   @keyframes screenReveal { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
   .menu-logo {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 3.5rem;
-    font-weight: 900;
-    color: var(--orange);
-    text-shadow: 0 0 20px var(--orange-glow);
-    letter-spacing: 6px;
-    text-align: center;
-    margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; color: var(--orange);
+    text-shadow: 0 0 20px var(--orange-glow); letter-spacing: 6px; text-align: center; margin-bottom: 10px;
   }
   .menu-version { font-size: 0.85rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 40px; text-align: center; }
-
-  .nav-bar { display: flex; gap: 15px; justify-content: center; margin-bottom: 30px; }
 
   .btn {
     background: linear-gradient(135deg, #151522, #1c1c30); color: var(--white); border: 1px solid var(--grey-border);
@@ -184,7 +161,8 @@
   .btn-accent { border-color: var(--orange); color: var(--orange); }
   .btn-sm { padding: 8px 16px; font-size: 0.75rem; letter-spacing: 1px; }
 
-  .network-grid { display: grid; grid-template-columns: 1fr; max-width: 600px; margin: auto; gap: 30px; }
+  .main-lobby-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+
   .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 24px; position: relative; }
   .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
   .form-group { margin-bottom: 20px; }
@@ -200,37 +178,22 @@
   .shop-tab-btn.active { color: var(--orange); border-bottom: 2px solid var(--orange); }
 
   .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 10px; }
-  .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s; }
+  .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
   .shop-item.purchased { border-color: var(--neon-blue); background: linear-gradient(180deg, #141420 0%, #0c1724 100%); }
   .shop-item-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: var(--white); margin-bottom: 8px; }
   .shop-item-desc { font-size: 0.75rem; color: var(--grey-text); margin-bottom: 15px; flex-grow: 1; line-height: 1.4; }
   .shop-item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-green); font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
 
-  .game-layout { display: grid; grid-template-columns: 1fr 320px; gap: 25px; }
   .character-sheet { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px 16px; }
   .trait-card label { margin-bottom: 2px; color: var(--orange); font-weight: bold; }
   .trait-value { font-size: 0.95rem; color: var(--white); }
 
-  .gui-sidebar { display: flex; flex-direction: column; gap: 20px; }
-  .flask-container { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 15px; }
-  .flask-info { flex-grow: 1; }
-  .flask-title { font-size: 0.75rem; color: var(--grey-text); text-transform: uppercase; }
-  .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-top: 2px; }
-  .flask-glass { width: 32px; height: 90px; background: rgba(255,255,255,0.03); border: 2px solid #333345; border-radius: 4px 4px 16px 16px; position: relative; overflow: hidden; }
-  .flask-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; }
-
   .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 220px; overflow-y: auto; font-size: 0.8rem; }
   .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; }
   
   .p-avatar-img { width: 30px; height: 30px; border-radius: 4px; object-fit: cover; vertical-align: middle; margin-right: 8px; border: 1px solid var(--grey-border); }
-  .p-avatar-emoji { font-size: 1.2rem; margin-right: 8px; vertical-align: middle; }
   .p-title { font-size: 0.65rem; background: #222235; color: var(--white); padding: 2px 5px; border-radius: 3px; margin-right: 6px; font-weight: bold; font-family: 'Orbitron', sans-serif; }
-
-  @media (max-width: 850px) {
-    .game-layout { grid-template-columns: 1fr; }
-    .gui-sidebar { order: -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  }
 </style>
 </head>
 <body>
@@ -244,14 +207,19 @@
       <button class="modal-close" onclick="toggleProfileModal(false)">&times;</button>
       <div class="panel-title" style="text-align:center;">Личное Досье Игрока</div>
       
-      <div class="profile-avatar-big" id="profile-avatar-big-box">
-        <span>👤</span>
-      </div>
+      <div class="profile-avatar-big" id="profile-avatar-big-box"><span>👤</span></div>
 
       <div id="profile-modal-authenticated" style="display:none;">
+        <div class="form-group" style="margin-bottom:15px;">
+          <label>Твой Позывной (Никнейм)</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="inp-profile-username" placeholder="Введи ник..." style="padding:10px;">
+            <button class="btn btn-sm btn-accent" onclick="saveNewUsername()">ОК</button>
+          </div>
+        </div>
+
         <div style="text-align:center; margin-bottom:15px;">
-          <p id="profile-user-email" style="color:var(--orange); font-weight:bold;">---</p>
-          <p style="font-family:'Orbitron', sans-serif; font-size:1.2rem; margin-top:5px; color:var(--neon-green);">Баланс: <span id="profile-user-coins">0</span> 🪙</p>
+          <p style="font-family:'Orbitron', sans-serif; font-size:1.1rem; color:var(--neon-green);">Баланс: <span id="profile-user-coins">0</span> 🪙</p>
         </div>
 
         <label>Гардероб Аватарок</label>
@@ -263,40 +231,72 @@
         <label>Эффекты и Цвета Ника</label>
         <div class="cosm-customizer-section" id="modal-colors-options"></div>
 
-        <button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red); width:100%; margin-top:5px;" onclick="logout()">Выйти из терминала</button>
+        <button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red); width:100%; margin-top:5px;" onclick="logout()">Выйти</button>
       </div>
 
       <div id="profile-modal-anonymous" style="text-align:center; padding:20px 0;">
-        <p style="color:var(--grey-text); font-size:0.85rem; margin-bottom:15px;">Вход в сеть не выполнен.</p>
-        <button class="btn btn-sm btn-accent" onclick="toggleProfileModal(false); navigate('scr-game', 'scr-menu'); navigate('scr-network', 'scr-menu');">Авторизоваться</button>
+        <p style="color:var(--grey-text); font-size:0.85rem;">Вход в сеть не выполнен.</p>
       </div>
     </div>
   </div>
 
-  <div id="scr-menu" class="screen">
+  <div id="scr-auth" class="screen">
     <div class="menu-logo">THE BUNKER V.3</div>
-    <div class="menu-version">УБЕЖИЩЕ • КИБЕРМАРКЕТ И СТИЛИ НИКОВ</div>
+    <div class="menu-version">ГЛОБАЛЬНАЯ КИБЕР-СЕТЬ • УБЕЖИЩЕ</div>
     
-    <div class="nav-bar">
-      <button class="btn btn-accent" onclick="navigate('scr-menu', 'scr-network')">В бункер</button>
-      <button class="btn" onclick="openShop()">Магазин</button>
-    </div>
-
-    <div class="network-grid">
+    <div class="network-grid" style="max-width:500px; margin:auto;">
       <div class="panel">
         <div class="panel-title">🔒 Терминал Идентификации</div>
-        <div id="auth-form">
-          <div class="form-group"><label>Шлюзовой Email</label><input type="text" id="inp-email" placeholder="naprimer@gmail.com"></div>
-          <div class="form-group"><label>Код Доступа</label><input type="password" id="inp-pass" placeholder="••••"></div>
-          <div style="display:flex; gap:10px;">
-            <button class="btn btn-sm" onclick="handleAuth('login')">Войти</button>
-            <button class="btn btn-sm btn-accent" onclick="handleAuth('register')">Регистрация</button>
-          </div>
-        </div>
-        <div id="auth-user-status" style="display:none; text-align:center;">
-          <p style="font-size:0.95rem;">Статус соединения: <span style="color:var(--neon-green); font-weight:bold;">АКТИВЕН</span></p>
+        <div class="form-group"><label>Шлюзовой Email</label><input type="text" id="inp-email" placeholder="example@gmail.com"></div>
+        <div class="form-group"><label>Код Доступа (Пароль)</label><input type="password" id="inp-pass" placeholder="••••"></div>
+        <div class="form-group" id="reg-nickname-box"><label>Твой Никнейм (Для новых выживших)</label><input type="text" id="inp-reg-username" placeholder="Позывной..."></div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-sm" onclick="handleAuth('login')">Войти</button>
+          <button class="btn btn-sm btn-accent" onclick="handleAuth('register')">Регистрация</button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="scr-menu" class="screen hidden">
+    <div class="menu-logo">THE BUNKER V.3</div>
+    <div style="text-align:center; margin-bottom:20px; font-size:1.1rem;">Приветствуем в сети, <span id="user-display-name-welcome" style="color:var(--orange); font-weight:bold;">Выживший</span>!</div>
+    
+    <div style="display:flex; justify-content:center; gap:15px; margin-bottom:30px;">
+      <button class="btn btn-sm" onclick="openShop()">Посетить Магазин</button>
+    </div>
+
+    <div class="main-lobby-controls">
+      <div class="panel" style="text-align:center;">
+        <div class="panel-title">⚙ Инициализировать</div>
+        <p style="font-size:0.8rem; color:var(--grey-text); margin-bottom:20px;">Создать глобальный шлюз бункера и сгенерировать 5-значный код комнаты.</p>
+        <button class="btn btn-accent" style="width:100%;" onclick="initP2PRole('host')">Создать Бункер</button>
+      </div>
+
+      <div class="panel" style="text-align:center;">
+        <div class="panel-title">📡 Подключиться</div>
+        <p style="font-size:0.8rem; color:var(--grey-text); margin-bottom:15px;">Введи короткий 5-значный код, выданный Смотрителем бункера.</p>
+        <div class="form-group"><input type="text" id="inp-target-roomcode" placeholder="Код комнаты (Например: 54912)" style="text-align:center; font-weight:bold; letter-spacing:2px;"></div>
+        <button class="btn" style="width:100%;" onclick="initP2PRole('client')">Открыть Шлюз</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="scr-host-lobby" class="screen hidden">
+    <div class="panel" style="max-width:500px; margin:auto; text-align:center;">
+      <div class="panel-title">Бункер Успешно Создан!</div>
+      <p style="font-size:0.85rem; color:var(--grey-text);">Передай этот короткий код друзьям в любом городе:</p>
+      <div id="bunker-short-code-txt" style="font-family:'Orbitron',sans-serif; font-size:2.5rem; color:var(--orange); font-weight:bold; margin:15px 0; text-shadow:0 0 10px var(--orange-glow);">-----</div>
+      <p style="font-size:0.8rem; color:var(--grey-text); margin-bottom:15px;">Ожидание подключения терминалов...</p>
+      <button class="btn btn-accent" style="width:100%;" onclick="hostStartGame()">Запустить Систему Жизнеобеспечения</button>
+    </div>
+  </div>
+
+  <div id="scr-client-wait" class="screen hidden">
+    <div class="panel" style="max-width:500px; margin:auto; text-align:center;">
+      <div class="panel-title" style="color:var(--neon-blue);">Шлюз Синхронизирован</div>
+      <p style="font-size:0.9rem; margin:20px 0;">Успешное подключение к комнате! Ожидайте, пока Смотритель запустит раунд игры.</p>
+      <div style="font-size:0.75rem; color:var(--grey-text);">Глобальное P2P соединение стабильно.</div>
     </div>
   </div>
 
@@ -304,82 +304,42 @@
     <div class="panel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
         <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ</div>
-        <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">Назад в меню</button>
+        <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">В меню</button>
       </div>
       <div style="font-size:1.1rem; margin-bottom: 20px;">Твой капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
       
       <div class="shop-tabs">
-        <button class="shop-tab-btn active" id="tab-btn-upgrades" onclick="switchShopTab('upgrades')">Модификаторы Раунда</button>
-        <button class="shop-tab-btn" id="tab-btn-cosmetics" onclick="switchShopTab('cosmetics')">Косметика и Стили (Навсегда)</button>
+        <button class="shop-tab-btn active" id="tab-btn-upgrades" onclick="switchShopTab('upgrades')">Модификаторы</button>
+        <button class="shop-tab-btn" id="tab-btn-cosmetics" onclick="switchShopTab('cosmetics')">Косметика и Шрифты</button>
       </div>
 
       <div class="shop-grid" id="shop-grid-upgrades">
-        <div class="shop-item" id="item-extra_card">
-          <div class="shop-item-title">Доп. Карта Действия</div>
-          <div class="shop-item-desc">Выдаёт вам +1 дополнительную оперативную карту тактики на раунд. Тратится при старте.</div>
-          <div class="shop-item-price">150 🪙</div>
-          <button class="btn btn-sm" id="btn-buy-extra_card" onclick="buyItem('extra_card', 150, false)">Купить</button>
-        </div>
         <div class="shop-item" id="item-health_serum">
           <div class="shop-item-title">Сыворотка Здоровья</div>
-          <div class="shop-item-desc">Модифицирует ДНК. Гарантирует, что ваш персонаж появится со статусом "Абсолютно здоров".</div>
+          <div class="shop-item-desc">Гарантирует появление со статусом "Абсолютно здоров".</div>
           <div class="shop-item-price">250 🪙</div>
           <button class="btn btn-sm" id="btn-buy-health_serum" onclick="buyItem('health_serum', 250, false)">Купить</button>
         </div>
       </div>
 
       <div class="shop-grid hidden" id="shop-grid-cosmetics">
-        <div class="shop-item" id="item-cosm_av_drone">
-          <div class="shop-item-title">🤖 Аватар: ИИ-Дрон</div>
-          <div class="shop-item-desc">Уникальный арт разведывательного дрона.</div>
-          <div class="shop-item-price">300 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_av_drone" onclick="buyItem('cosm_av_drone', 300, true, 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=150')">Купить</button>
-        </div>
-
         <div class="shop-item" id="item-cosm_c_rgb">
-          <div class="shop-item-title">✨ Шрифты: RGB Перелив</div>
-          <div class="shop-item-desc">Ник плавно переливается всеми цветами радуги. Настоящий кибер-люкс.</div>
+          <div class="shop-item-title">✨ RGB Шрифт никнейма</div>
+          <div class="shop-item-desc">Твой ник будет плавно переливаться радугой в списке выживших.</div>
           <div class="shop-item-price">500 🪙</div>
           <button class="btn btn-sm" id="btn-cosm-cosm_c_rgb" onclick="buyItem('cosm_c_rgb', 500, true)">Купить</button>
         </div>
         <div class="shop-item" id="item-cosm_c_pulse">
-          <div class="shop-item-title">🚨 Шрифты: Пульсар</div>
-          <div class="shop-item-desc">Огненно-неоновый ник, плавно пульсирующий яркостью. Излучает угрозу.</div>
+          <div class="shop-item-title">🚨 Неоновый Пульсар</div>
+          <div class="shop-item-desc">Огненно-пульсирующий ник для привлечения внимания.</div>
           <div class="shop-item-price">450 🪙</div>
           <button class="btn btn-sm" id="btn-cosm-cosm_c_pulse" onclick="buyItem('cosm_c_pulse', 450, true)">Купить</button>
         </div>
-        <div class="shop-item" id="item-cosm_c_pink">
-          <div class="shop-item-title">Цвет: Неоново-Розовый</div>
-          <div class="shop-item-desc">Перекрашивает ваш шрифт в ядовито-розовый цвет.</div>
-          <div class="shop-item-price">300 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_pink" onclick="buyItem('cosm_c_pink', 300, true)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-cosm_c_blue">
-          <div class="shop-item-title">Цвет: Электрический Синий</div>
-          <div class="shop-item-desc">Шрифт цвета высоковольтной дуги.</div>
-          <div class="shop-item-price">300 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_blue" onclick="buyItem('cosm_c_blue', 300, true)">Купить</button>
-        </div>
-
         <div class="shop-item" id="item-cosm_t_rebel">
           <div class="shop-item-title">Префикс: [МЯТЕЖНИК]</div>
-          <div class="shop-item-desc">Добавляет статус перед вашим именем.</div>
+          <div class="shop-item-desc">Добавляет статус мятежника перед именем.</div>
           <div class="shop-item-price">200 🪙</div>
           <button class="btn btn-sm" id="btn-cosm-cosm_t_rebel" onclick="buyItem('cosm_t_rebel', 200, true)">Купить</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="scr-network" class="screen hidden">
-    <div class="nav-bar" style="margin-bottom:15px;"><button class="btn btn-sm" onclick="navigate('scr-network', 'scr-menu')">В меню</button></div>
-    <div class="network-grid">
-      <div class="panel">
-        <div class="panel-title">Инициализировать Убежище</div>
-        <button class="btn" onclick="initP2P('host')">Занять Бункер</button>
-        <div id="host-share-zone" style="display:none; margin-top:15px; text-align:center;">
-          <div id="bunker-code-txt" style="font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--orange); font-weight:bold; margin-bottom:10px;">-----</div>
-          <button class="btn btn-sm btn-accent" onclick="hostStartGame()">Запустить Игру</button>
         </div>
       </div>
     </div>
@@ -397,22 +357,37 @@
   </div>
 
 <script>
-  let currentUser = null, userCoins = 0, userEmailClean = "";
-  let userActiveItems = [];
-  let userOwnedCosmetics = []; 
-  let userEquippedCosmetics = { avatar: '', title: '', color: '' }; 
+  // Конфигурация Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us10Uocp2iuser6I",
+    authDomain: "the-bunker-96d5c.firebaseapp.com",
+    databaseURL: "https://the-bunker-96d5c-default-rtdb.firebaseio.com",
+    projectId: "the-bunker-96d5c",
+    storageBucket: "the-bunker-96d5c.firebasestorage.app",
+    messagingSenderId: "481257011457",
+    appId: "1:481257011457:web:b60b5a1f62d17af1520300"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
 
-  let peer = null, myRole = '', myName = 'Выживший', activePlayers = [];
+  let currentUser = null, userCoins = 0, userEmailClean = "", myCustomUsername = "Выживший";
+  let userActiveItems = []; let userOwnedCosmetics = [];
+  let userEquippedCosmetics = { avatar: '', title: '', color: '' };
+
+  let peer = null, myRole = '', generatedRoomCode = '', globalPeerId = '';
+  let activePlayers = []; let connections = [];
+
+  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Программист ИИ", "Психолог МЧС", "Электрик шлюза", "Пилот разведывательного дрона"];
 
   function navigate(fromId, toId) {
     document.getElementById(fromId).classList.add('hidden');
     const toEl = document.getElementById(toId);
-    toEl.classList.remove('hidden');
-    toEl.classList.add('fade-in');
+    toEl.classList.remove('hidden'); toEl.classList.add('fade-in');
   }
 
   function openShop() { navigate('scr-menu', 'scr-shop'); switchShopTab('upgrades'); }
-
   function switchShopTab(tab) {
     document.getElementById('tab-btn-upgrades').classList.toggle('active', tab === 'upgrades');
     document.getElementById('tab-btn-cosmetics').classList.toggle('active', tab === 'cosmetics');
@@ -426,39 +401,59 @@
     else { modal.classList.remove('active'); }
   }
 
-  // СВЯЗЬ С FIREBASE
+  // FIREBASE AUTH СИСТЕМА
   auth.onAuthStateChanged((user) => {
     if (user) {
       currentUser = user;
       userEmailClean = user.email.replace(/\./g, '_');
-      document.getElementById('auth-form').style.display = 'none';
-      document.getElementById('auth-user-status').style.display = 'block';
       
       db.ref('users/' + userEmailClean).on('value', (snap) => {
         const data = snap.val() || {};
         userCoins = data.coins || 0;
+        myCustomUsername = data.username || user.email.split('@')[0];
         userActiveItems = data.items || [];
         userOwnedCosmetics = data.ownedCosmetics || [];
         userEquippedCosmetics = data.equippedCosmetics || { avatar: '', title: '', color: '' };
         
+        document.getElementById('user-display-name-welcome').innerText = myCustomUsername;
         document.getElementById('shop-balance-holder').innerText = userCoins;
+        
         updateShopCardsUI();
         updateInterfaceAvatars();
         if(document.getElementById('profile-modal').classList.contains('active')) renderProfileModalContent();
       });
+      navigate('scr-auth', 'scr-menu');
+    } else {
+      navigate('scr-menu', 'scr-auth');
+      navigate('scr-host-lobby', 'scr-auth');
+      navigate('scr-client-wait', 'scr-auth');
+      navigate('scr-game', 'scr-auth');
     }
   });
 
   function handleAuth(type) {
     const email = document.getElementById('inp-email').value.trim();
     const pass = document.getElementById('inp-pass').value.trim();
-    if(!email || !pass) return alert('Заполните поля!');
+    const nick = document.getElementById('inp-reg-username').value.trim();
+
+    if(!email || !pass) return alert('Заполните данные!');
     if(type === 'register') {
+      if(!nick) return alert('Введите позывной (никнейм) для регистрации!');
       auth.createUserWithEmailAndPassword(email, pass).then((cred) => {
         let clean = cred.user.email.replace(/\./g, '_');
-        db.ref('users/' + clean).set({ coins: 1000, items: [], ownedCosmetics: [], equippedCosmetics: { avatar: '', title: '', color: '' } });
-      });
-    } else { auth.signInWithEmailAndPassword(email, pass); }
+        db.ref('users/' + clean).set({ 
+          username: nick, coins: 500, items: [], ownedCosmetics: [], equippedCosmetics: { avatar: '', title: '', color: '' } 
+        });
+      }).catch(err => alert(err.message));
+    } else {
+      auth.signInWithEmailAndPassword(email, pass).catch(err => alert(err.message));
+    }
+  }
+
+  function saveNewUsername() {
+    const newName = document.getElementById('inp-profile-username').value.trim();
+    if(!newName) return alert('Ник не может быть пустым!');
+    db.ref('users/' + userEmailClean + '/username').set(newName).then(() => alert('Позывной изменен!'));
   }
 
   function logout() { auth.signOut(); window.location.reload(); }
@@ -468,84 +463,57 @@
     const bigBox = document.getElementById('profile-avatar-big-box');
     let avatarHTML = '<span>👤</span>';
     if(currentUser && userEquippedCosmetics.avatar) {
-      avatarHTML = `<img src="${userEquippedCosmetics.avatar}" alt="av">`;
+      avatarHTML = `<img src="${userEquippedCosmetics.avatar}">`;
     }
     if(cornerBox) cornerBox.innerHTML = avatarHTML;
     if(bigBox) bigBox.innerHTML = avatarHTML;
-    if(currentUser) myName = currentUser.email.split('@')[0];
   }
 
-  // ДИНАМИЧЕСКИЙ КНОПКИ КАСТОМИЗАЦИИ В МОДАЛКЕ
   function renderProfileModalContent() {
     if(!currentUser) return;
-    document.getElementById('profile-user-email').innerText = currentUser.email;
+    document.getElementById('inp-profile-username').value = myCustomUsername;
     document.getElementById('profile-user-coins').innerText = userCoins;
 
-    // Аватарки
+    // Сводка аватарок
     const optionsGrid = document.getElementById('modal-avatar-options');
     let avOwned = userOwnedCosmetics.filter(id => id.startsWith('http://') || id.startsWith('https://'));
     optionsGrid.innerHTML = avOwned.map(url => `
-      <div class="avatar-option-card ${userEquippedCosmetics.avatar === url ? 'active' : ''}" onclick="equipCosmetic('${url}', 'avatar')">
-        <img src="${url}">
-      </div>
-    `).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных аватарок</div>';
+      <div class="avatar-option-card ${userEquippedCosmetics.avatar === url ? 'active' : ''}" onclick="equipCosmetic('${url}', 'avatar')"><img src="${url}"></div>
+    `).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных аватаров</div>';
 
     // Титулы
     const titlesGrid = document.getElementById('modal-titles-options');
     let titlesOwned = userOwnedCosmetics.filter(id => id.startsWith('cosm_t_'));
-    titlesGrid.innerHTML = titlesOwned.map(tId => {
-      let tName = tId === 'cosm_t_rebel' ? '[МЯТЕЖНИК]' : '[ПРИЗРАК]';
-      return `<div class="cosm-row-item ${userEquippedCosmetics.title === tId ? 'active' : ''}" onclick="equipCosmetic('${tId}', 'title')"><span>${tName}</span></div>`;
-    }).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных префиксов</div>';
+    titlesGrid.innerHTML = titlesOwned.map(tId => `
+      <div class="cosm-row-item ${userEquippedCosmetics.title === tId ? 'active' : ''}" onclick="equipCosmetic('${tId}', 'title')"><span>[МЯТЕЖНИК]</span></div>
+    `).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет титулов</div>';
 
     // Цвета и Шрифты
     const colorsGrid = document.getElementById('modal-colors-options');
     let colorsOwned = userOwnedCosmetics.filter(id => id.startsWith('cosm_c_'));
     colorsGrid.innerHTML = colorsOwned.map(cId => {
-      let cName = 'Обычный';
-      let previewClass = '';
-      if(cId === 'cosm_c_pink') { cName = 'Розовый'; previewClass = 'fx-pink'; }
-      if(cId === 'cosm_c_blue') { cName = 'Синий'; previewClass = 'fx-blue'; }
-      if(cId === 'cosm_c_rgb') { cName = '🌈 RGB Перелив'; previewClass = 'fx-rgb'; }
-      if(cId === 'cosm_c_pulse') { cName = '🚨 Пульсар'; previewClass = 'fx-pulse'; }
+      let cName = cId === 'cosm_c_rgb' ? '🌈 RGB Перелив' : '🚨 Пульсар';
+      let previewClass = cId === 'cosm_c_rgb' ? 'fx-rgb' : 'fx-pulse';
       return `<div class="cosm-row-item ${userEquippedCosmetics.color === cId ? 'active' : ''}" onclick="equipCosmetic('${cId}', 'color')"><span class="${previewClass}">${cName}</span></div>`;
-    }).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных эффектов</div>';
+    }).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет спец-эффектов никнейма</div>';
   }
 
   function updateShopCardsUI() {
-    userActiveItems.forEach(itemKey => {
-      const card = document.getElementById('item-' + itemKey);
-      if(card) card.classList.add('purchased');
-    });
-
+    userActiveItems.forEach(k => { const card = document.getElementById('item-' + k); if(card) card.classList.add('purchased'); });
     document.querySelectorAll('#shop-grid-cosmetics .shop-item').forEach(card => {
-      const id = card.id.replace('item-', '');
-      const btn = document.getElementById('btn-cosm-' + id);
-      let checkKey = id; 
-      if(id === 'cosm_av_drone') checkKey = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=150';
-
-      if(userOwnedCosmetics.includes(checkKey)) {
-        card.classList.add('purchased');
-        btn.innerText = "Куплено"; btn.disabled = true;
-      }
+      const id = card.id.replace('item-', ''); const btn = document.getElementById('btn-cosm-' + id);
+      if(userOwnedCosmetics.includes(id)) { card.classList.add('purchased'); btn.innerText = "Куплено"; btn.disabled = true; }
     });
   }
 
-  function buyItem(itemKey, price, isCosmetic = false, directUrl = '') {
-    if(!currentUser) return alert('Войдите в систему!');
-    let saveKey = isCosmetic && directUrl ? directUrl : itemKey;
+  function buyItem(itemKey, price, isCosmetic = false) {
+    if(!currentUser) return alert('Войдите!');
     if(userCoins < price) return alert('Недостаточно коинов!');
-
     db.ref('users/' + userEmailClean).transaction((userData) => {
       if (userData && userData.coins >= price) {
         userData.coins -= price;
-        if(isCosmetic) {
-          if(!userData.ownedCosmetics) userData.ownedCosmetics = [];
-          userData.ownedCosmetics.push(saveKey);
-        } else {
-          if(!userData.items) userData.items = [];
-          userData.items.push(saveKey);
-        }
+        if(isCosmetic) { if(!userData.ownedCosmetics) userData.ownedCosmetics = []; userData.ownedCosmetics.push(itemKey); } 
+        else { if(!userData.items) userData.items = []; userData.items.push(itemKey); }
       }
       return userData;
     });
@@ -556,25 +524,106 @@
     db.ref('users/' + userEmailClean + '/equippedCosmetics/' + type).set(newVal);
   }
 
-  // КОРРЕКТНЫЙ ОТРЕНДЕРЕННЫЙ КЛАСС ДЛЯ НИКА В ТЕРМИНАЛЕ С ТИТУЛОМ С КЛИЕНТА
+  // СЕТЕВАЯ ГЛОБАЛЬНАЯ ЛОГИКА P2P (СТРАНЫ И ГОРОДА)
+  function initP2PRole(role) {
+    myRole = role;
+    
+    if(role === 'host') {
+      // Генерируем короткий 5-значный код комнаты (например 49102)
+      generatedRoomCode = String(Math.floor(10000 + Math.random() * 90000));
+      globalPeerId = 'bunker-room-' + generatedRoomCode;
+      
+      // Инициализируем PeerJS на глобальном облаке с этим ID
+      peer = new Peer(globalPeerId);
+      
+      peer.on('open', () => {
+        document.getElementById('bunker-short-code-txt').innerText = generatedRoomCode;
+        navigate('scr-menu', 'scr-host-lobby');
+      });
+
+      peer.on('connection', (conn) => {
+        connections.push(conn);
+        conn.on('data', (data) => {
+          if(data.type === 'join-request') {
+            activePlayers.push({
+              id: conn.peer, name: data.name, cosmetics: data.cosmetics, prof: '', kicked: false
+            });
+            // Оповещаем всех о новом составе
+            connections.forEach(c => c.open && c.send({ type: 'lobby-update', players: activePlayers }));
+          }
+        });
+      });
+    } 
+    else if(role === 'client') {
+      const inputCode = document.getElementById('inp-target-roomcode').value.trim();
+      if(!inputCode || inputCode.length !== 5) return alert('Введите корректный 5-значный код комнаты!');
+      
+      peer = new Peer(); // Клиент получает случайный глобальный ID
+      peer.on('open', (id) => {
+        let targetPeerId = 'bunker-room-' + inputCode;
+        let conn = peer.connect(targetPeerId);
+        
+        conn.on('open', () => {
+          conn.send({ type: 'join-request', name: myCustomUsername, cosmetics: userEquippedCosmetics });
+          navigate('scr-menu', 'scr-client-wait');
+        });
+
+        conn.on('data', (data) => {
+          if(data.type === 'game-start') {
+            activePlayers = data.players;
+            let myData = activePlayers.find(p => p.id === peer.id);
+            renderCharacterSheet(myData);
+            renderPlayersTerminal();
+            navigate('scr-client-wait', 'scr-game');
+          }
+        });
+      });
+    }
+  }
+
+  function hostStartGame() {
+    if(activePlayers.length === 0) {
+      // Если тестируешь один, добавим тебя в список
+      activePlayers.push({ id: peer.id, name: myCustomUsername, cosmetics: userEquippedCosmetics, prof: '', kicked: false });
+    }
+    
+    // Генерируем характеристики для всех
+    activePlayers.forEach(p => {
+      p.prof = professions[Math.floor(Math.random() * professions.length)];
+    });
+
+    // Отправляем команду старта всем клиентам
+    connections.forEach(c => c.open && c.send({ type: 'game-start', players: activePlayers }));
+    
+    let myData = activePlayers.find(p => p.id === peer.id);
+    renderCharacterSheet(myData);
+    renderPlayersTerminal();
+    navigate('scr-host-lobby', 'scr-game');
+  }
+
+  function renderCharacterSheet(data) {
+    const box = document.getElementById('char-sheet-box');
+    if(!box || !data) return;
+    box.innerHTML = `
+      <div class="trait-card"><label>Профессия</label><div class="trait-value">${data.prof || 'Не определена'}</div></div>
+      <div class="trait-card"><label>Био-Статус</label><div class="trait-value">Засекречено системой</div></div>
+    `;
+  }
+
   function renderPlayersTerminal() {
     const box = document.getElementById('players-terminal-list');
     if(!box) return;
     box.innerHTML = activePlayers.map(p => {
       let titleHTML = p.cosmetics?.title === 'cosm_t_rebel' ? `<span class="p-title">[МЯТЕЖНИК]</span>` : '';
-      
-      // Определяем класс анимации шрифта
       let fxClass = '';
-      if(p.cosmetics?.color === 'cosm_c_pink') fxClass = 'fx-pink';
-      if(p.cosmetics?.color === 'cosm_c_blue') fxClass = 'fx-blue';
       if(p.cosmetics?.color === 'cosm_c_rgb') fxClass = 'fx-rgb';
       if(p.cosmetics?.color === 'cosm_c_pulse') fxClass = 'fx-pulse';
 
-      let avHTML = p.cosmetics?.avatar ? `<img class="p-avatar-img" src="${p.cosmetics.avatar}">` : `<span class="p-avatar-emoji">👤</span>`;
+      let avHTML = p.cosmetics?.avatar ? `<img class="p-avatar-img" src="${p.cosmetics.avatar}">` : `<span class="p-avatar-emoji" style="margin-right:8px;">👤</span>`;
       return `
         <div class="player-row">
           <div>${avHTML}${titleHTML}<span class="${fxClass}">${p.name}</span></div>
-          <span style="font-size:0.75rem; color:var(--grey-text);">${p.prof || 'Подключение...'}</span>
+          <span style="font-size:0.75rem; color:var(--grey-text);">${p.prof || 'В шлюзе...'}</span>
         </div>`;
     }).join('');
   }
