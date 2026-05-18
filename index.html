@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>THE BUNKER V.3 + CYBER SHOP</title>
+<title>THE BUNKER V.3 — HARDCORE EVOLUTION</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -23,9 +23,7 @@
     --grey-text: #707085;
     --white: #f5f5fa;
     --neon-green: #00ff66;
-    --neon-green-glow: rgba(0, 255, 102, 0.4);
     --neon-red: #ff2233;
-    --neon-red-glow: rgba(255, 34, 51, 0.4);
     --neon-blue: #00bfff;
     --neon-pink: #ff007f;
   }
@@ -47,21 +45,64 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 15px;
+    padding: 10px;
   }
 
-  /* Никнеймы со свечением */
-  .nick-glow-pink { color: var(--neon-pink) !important; text-shadow: 0 0 8px var(--neon-pink); font-weight: bold; }
-  .nick-glow-blue { color: var(--neon-blue) !important; text-shadow: 0 0 8px var(--neon-blue); font-weight: bold; }
-  .nick-glow-rgb { 
-    font-weight: bold;
-    background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  /* --- ЭКСКЛЮЗИВНЫЕ АНИМАЦИИ СВЕЧЕНИЯ И ПЕРЕЛИВОВ НИКОВ --- */
+  
+  /* ЭКСКЛЮЗИВ ДЛЯ ЛЁХИ (DEV) */
+  .nick-dev-style {
+    font-weight: 900 !important;
+    background: linear-gradient(90deg, #ff0000, #ff5555, #990000, #ff0000);
+    background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: rgbShift 3s linear infinite;
-    text-shadow: 0 0 5px rgba(255,255,255,0.2);
+    animation: devRedShine 2s linear infinite;
+    filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.6));
   }
-  @keyframes rgbShift {
+  @keyframes devRedShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* РОЗОВЫЙ НЕОН (Пульсация) */
+  .nick-glow-pink { 
+    color: var(--neon-pink) !important; 
+    font-weight: bold;
+    animation: pinkPulse 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes pinkPulse {
+    from { text-shadow: 0 0 2px var(--neon-pink), 0 0 6px rgba(255,0,127,0.3); }
+    to { text-shadow: 0 0 10px var(--neon-pink), 0 0 16px rgba(255,0,127,0.6); }
+  }
+
+  /* СИНИЙ ИМПУЛЬС (Бегущая волна) */
+  .nick-glow-blue { 
+    font-weight: bold;
+    background: linear-gradient(90deg, #00bfff, #ffffff, #00bfff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: blueWave 2s linear infinite;
+    filter: drop-shadow(0 0 4px rgba(0,191,255,0.5));
+  }
+  @keyframes blueWave {
+    0% { background-position: 200% 0; }
+    100% { background-position: 0 0; }
+  }
+
+  /* ЭЛИТНЫЙ RGB (Быстрый перелив радуги) */
+  .nick-glow-rgb { 
+    font-weight: bold;
+    background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+    background-size: 400% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rgbHyperShift 4s linear infinite;
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.3));
+  }
+  @keyframes rgbHyperShift {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
   }
@@ -70,7 +111,7 @@
     width: 100%; 
     max-width: 1100px;
     transition: all 0.3s ease; 
-    margin-top: 10px;
+    margin-top: 5px;
   }
   .hidden { display: none !important; }
   
@@ -78,8 +119,8 @@
     animation: screenReveal 0.4s forwards cubic-bezier(0.25, 1, 0.5, 1);
   }
   @keyframes screenReveal { 
-    from { opacity: 0; transform: translateY(10px) scale(0.99); } 
-    to { opacity: 1; transform: translateY(0) scale(1); } 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
   }
 
   .header-profile-zone {
@@ -89,14 +130,14 @@
     position: relative;
     width: 100%;
     max-width: 1100px;
-    margin: 0 auto 15px auto;
-    padding: 0 10px;
+    margin: 0 auto 10px auto;
+    padding: 0 5px;
     z-index: 100;
   }
 
   .avatar-trigger {
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: #151522;
     border: 2px solid var(--grey-border);
@@ -104,7 +145,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     transition: all 0.3s ease;
   }
@@ -113,16 +154,15 @@
     box-shadow: 0 0 12px var(--orange-glow);
   }
 
-  /* Прокачанный хаб-столбик под авой */
   .profile-dropdown-menu {
     position: absolute;
-    top: 55px;
-    right: 10px;
+    top: 52px;
+    right: 5px;
     background: var(--bg-panel);
     border: 1px solid var(--orange);
     box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px var(--orange-glow);
     border-radius: 10px;
-    width: 290px;
+    width: 285px;
     padding: 12px;
     display: flex;
     flex-direction: column;
@@ -137,11 +177,10 @@
     pointer-events: auto;
   }
 
-  /* Внутренние вкладки меню */
   .hub-tabs { display: flex; border-bottom: 1px solid var(--grey-border); margin-bottom: 10px; padding-bottom: 5px; gap: 2px; }
-  .hub-tab-btn { background: transparent; border: none; color: var(--grey-text); font-family: inherit; font-size: 0.7rem; padding: 6px 4px; cursor: pointer; flex: 1; text-transform: uppercase; text-align: center; border-radius: 4px; transition: all 0.2s; }
+  .hub-tab-btn { background: transparent; border: none; color: var(--grey-text); font-family: inherit; font-size: 0.7rem; padding: 6px 2px; cursor: pointer; flex: 1; text-transform: uppercase; text-align: center; border-radius: 4px; transition: all 0.2s; }
   .hub-tab-btn.active { color: var(--orange); background: rgba(255,85,0,0.1); font-weight: bold; }
-  .hub-content-section { display: none; min-height: 140px; max-height: 260px; overflow-y: auto; padding: 4px 2px; }
+  .hub-content-section { display: none; min-height: 140px; max-height: 250px; overflow-y: auto; padding: 2px; }
   .hub-content-section.active { display: block; }
 
   .dropdown-item-text { font-size: 0.65rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 1px; }
@@ -149,30 +188,29 @@
 
   .menu-logo {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: 900;
     color: var(--orange);
     text-shadow: 0 0 20px var(--orange-glow);
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     text-align: center;
-    margin-bottom: 5px;
-    margin-top: 15px;
+    margin-bottom: 3px;
+    margin-top: 10px;
   }
   @media(min-width: 768px) { .menu-logo { font-size: 3.5rem; letter-spacing: 6px; } }
   
-  .menu-version { font-size: 0.75rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; text-align: center; }
-  .nav-bar { display: flex; gap: 12px; justify-content: center; margin-bottom: 25px; width: 100%; }
+  .menu-version { font-size: 0.7rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; text-align: center; }
+  .nav-bar { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; width: 100%; }
 
   .btn {
     background: linear-gradient(135deg, #151522, #1c1c30); 
     color: var(--white); 
     border: 1px solid var(--grey-border);
-    padding: 12px 24px;
+    padding: 10px 20px;
     font-family: 'Space Mono', monospace; 
     font-weight: bold; 
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     text-transform: uppercase; 
-    letter-spacing: 1px; 
     cursor: pointer; 
     border-radius: 8px; 
     transition: all 0.25s ease;
@@ -180,19 +218,18 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
   }
-  @media(min-width: 768px) { .btn { padding: 16px 32px; font-size: 1rem; letter-spacing: 2px; } }
-  .btn:hover { border-color: var(--orange); color: #000; background: var(--orange); box-shadow: 0 0 20px var(--orange-glow); }
+  @media(min-width: 768px) { .btn { padding: 15px 30px; font-size: 1rem; } }
+  .btn:hover { border-color: var(--orange); color: #000; background: var(--orange); box-shadow: 0 0 15px var(--orange-glow); }
   .btn-accent { border-color: var(--orange); color: var(--orange); }
-  .btn-sm { padding: 8px 14px; font-size: 0.7rem; letter-spacing: 1px; border-radius: 6px; }
+  .btn-sm { padding: 8px 12px; font-size: 0.7rem; border-radius: 6px; }
 
-  .network-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-  @media(min-width: 768px) { .network-grid { grid-template-columns: 1fr 1fr; gap: 30px; } }
+  .network-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+  @media(min-width: 768px) { .network-grid { grid-template-columns: 1fr 1fr; gap: 25px; } }
 
-  .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 20px; position: relative; }
-  @media(min-width: 768px) { .panel { padding: 24px; } }
-  .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--orange); margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1px; }
+  .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 15px; position: relative; }
+  @media(min-width: 768px) { .panel { padding: 22px; } }
+  .panel-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: var(--orange); margin-bottom: 15px; text-transform: uppercase; }
 
   .form-group { margin-bottom: 12px; }
   label { display: block; font-size: 0.65rem; color: var(--grey-text); margin-bottom: 4px; text-transform: uppercase; }
@@ -202,69 +239,66 @@
   }
   input:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
 
-  /* Навигация категорий магазина */
-  .shop-cats { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--grey-border); padding-bottom: 10px; overflow-x: auto; }
-  .cat-btn { background: #11111c; border: 1px solid var(--grey-border); color: var(--grey-text); padding: 8px 16px; border-radius: 6px; font-family: inherit; font-size: 0.8rem; cursor: pointer; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
+  .shop-cats { display: flex; gap: 6px; margin-bottom: 15px; border-bottom: 1px solid var(--grey-border); padding-bottom: 8px; overflow-x: auto; }
+  .cat-btn { background: #11111c; border: 1px solid var(--grey-border); color: var(--grey-text); padding: 6px 12px; border-radius: 6px; font-family: inherit; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; transition: all 0.2s; white-space: nowrap; }
   .cat-btn.active { border-color: var(--orange); color: var(--orange); background: rgba(255,85,0,0.05); }
 
-  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-top: 10px; }
-  .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 15px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; }
+  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-top: 10px; }
+  .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; }
   .shop-item.purchased { border-color: var(--neon-green); background: linear-gradient(180deg, #141420 0%, #0a1c12 100%); }
-  .shop-item-title { font-family: 'Orbitron', sans-serif; font-size: 0.9rem; color: var(--white); margin-bottom: 6px; }
-  .shop-item-desc { font-size: 0.75rem; color: var(--grey-text); margin-bottom: 12px; flex-grow: 1; line-height: 1.4; }
-  .shop-item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-green); font-weight: bold; margin-bottom: 12px; font-size: 0.85rem; }
+  .shop-item-title { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--white); margin-bottom: 6px; }
+  .shop-item-desc { font-size: 0.75rem; color: var(--grey-text); margin-bottom: 10px; flex-grow: 1; line-height: 1.4; }
+  .shop-item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-green); font-weight: bold; margin-bottom: 10px; font-size: 0.8rem; }
 
-  .game-layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
-  @media(min-width: 900px) { .game-layout { grid-template-columns: 1fr 320px; gap: 25px; } }
+  .game-layout { display: grid; grid-template-columns: 1fr; gap: 15px; }
+  @media(min-width: 900px) { .game-layout { grid-template-columns: 1fr 310px; gap: 20px; } }
 
-  .character-sheet { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  @media(min-width: 480px) { .character-sheet { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+  .character-sheet { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  @media(min-width: 480px) { .character-sheet { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
   
-  .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px 16px; }
+  .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 10px 14px; }
   .trait-card label { margin-bottom: 2px; color: var(--orange); font-weight: bold; }
-  .trait-value { font-size: 0.9rem; color: var(--white); word-break: break-word; }
+  .trait-value { font-size: 0.85rem; color: var(--white); word-break: break-word; }
 
-  /* УТОНЧЕННЫЙ И СПУЩЕННЫЙ С НЕБЕС ДИЗАЙН КОЛБОЧЕК БЕЗ УЖАСНОГО ЗАДНЕГО ФОНА */
-  .gui-sidebar { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  .gui-sidebar { display: grid; grid-template-columns: 1fr; gap: 15px; }
   @media(min-width: 600px) and (max-width: 899px) { .gui-sidebar { grid-template-columns: repeat(3, 1fr); } }
   
-  .flask-container { background: transparent; border: none; padding: 0; display: flex; align-items: center; gap: 15px; justify-content: center; }
+  .flask-container { background: transparent; border: none; padding: 0; display: flex; align-items: center; gap: 12px; justify-content: center; }
   .flask-info { display: flex; flex-direction: column; justify-content: center; }
-  .flask-title { font-size: 0.7rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 1px; }
-  .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 700; margin-top: 2px; }
+  .flask-title { font-size: 0.65rem; color: var(--grey-text); text-transform: uppercase; }
+  .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700; margin-top: 2px; }
   .flask-glass { 
-    width: 20px; height: 85px; background: rgba(255,255,255,0.03); border: 1.5px solid #2d2d3d; border-radius: 3px 3px 10px 10px; position: relative; overflow: hidden; flex-shrink: 0; box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+    width: 18px; height: 80px; background: rgba(255,255,255,0.03); border: 1.5px solid #2d2d3d; border-radius: 3px 3px 10px 10px; position: relative; overflow: hidden; flex-shrink: 0;
   }
-  .flask-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 8px rgba(0, 255, 102, 0.5); }
+  .flask-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; box-shadow: 0 0 8px rgba(0, 255, 102, 0.5); }
   .flask-container.danger .flask-liquid { background: var(--neon-red); box-shadow: 0 0 8px rgba(255, 34, 51, 0.5); }
   .flask-container.cold .flask-liquid { background: var(--neon-blue); box-shadow: 0 0 8px rgba(0, 191, 255, 0.5); }
 
-  .global-status { background: #100b0b; border: 1px solid #301515; border-radius: 8px; padding: 12px; margin-bottom: 15px; }
-  .action-cards-box { margin-top: 15px; }
-  .action-deck { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .global-status { background: #100b0b; border: 1px solid #301515; border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+  .action-cards-box { margin-top: 12px; }
+  .action-deck { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
   .action-mini-card { background: #1a110b; border: 1px solid #4a2510; border-radius: 4px; padding: 6px 10px; font-size: 0.75rem; color: #ffaa66; }
-  .action-mini-card.active-item { background: #0c1524; border-color: #1a3a66; color: #66b3ff; font-weight: bold; }
 
   .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 10px; height: 200px; overflow-y: auto; font-size: 0.8rem; }
-  .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; gap: 10px; }
+  .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; gap: 5px; }
   .player-row.exiled { opacity: 0.3; text-decoration: line-through; border-left: 3px solid var(--neon-red); }
-  .player-name-col { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 140px; display: flex; align-items: center; gap: 5px; }
+  .player-name-col { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 150px; display: flex; align-items: center; gap: 5px; }
 
-  /* МОДАЛКА КИНЕМАТОГРАФИЧНОГО ОТКРЫТИЯ КЕЙСА */
-  .case-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(3,3,6,0.95); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-shadow: inset 0 0 100px rgba(0,0,0,0.8); }
-  .roulette-container { width: 100%; max-width: 500px; background: #0d0d14; border: 2px solid var(--orange); border-radius: 12px; padding: 25px 15px; position: relative; overflow: hidden; box-shadow: 0 0 30px var(--orange-glow); }
-  .roulette-track-window { width: 100%; height: 70px; overflow: hidden; position: relative; background: #050508; border-radius: 6px; border: 1px solid #222232; }
-  .roulette-line { position: absolute; top: 0; left: 50%; width: 3px; height: 100%; background: var(--orange); z-index: 10; box-shadow: 0 0 10px var(--orange); transform: translateX(-50%); }
-  .roulette-tape { display: flex; position: absolute; left: 0; top: 10px; height: 50px; transition: transform 0s ease; }
-  .roulette-slot { width: 120px; height: 50px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 1.2rem; border-right: 1px solid #1c1c28; background: #141420; color: #fff; }
-  .case-title-anim { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--orange); margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+  /* АДАПТИВНОЕ ОКНО РУЛЕТКИ КЕЙСОВ */
+  .case-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(3,3,6,0.96); z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; }
+  .roulette-container { width: 100%; max-width: 460px; background: #0d0d14; border: 2px solid var(--orange); border-radius: 12px; padding: 20px 10px; position: relative; overflow: hidden; box-shadow: 0 0 25px var(--orange-glow); }
+  .roulette-track-window { width: 100%; height: 66px; overflow: hidden; position: relative; background: #050508; border-radius: 6px; border: 1px solid #222232; }
+  .roulette-line { position: absolute; top: 0; left: 50%; width: 3px; height: 100%; background: var(--orange); z-index: 10; box-shadow: 0 0 8px var(--orange); transform: translateX(-50%); }
+  .roulette-tape { display: flex; position: absolute; left: 0; top: 8px; height: 50px; transition: transform 0s ease; }
+  .roulette-slot { width: 110px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; border-right: 1px solid #1c1c28; background: #141420; }
+  .case-title-anim { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 15px; text-transform: uppercase; text-align: center; }
   
-  .drop-announce { margin-top: 20px; text-align: center; opacity: 0; transform: scale(0.8); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .drop-announce { margin-top: 15px; text-align: center; opacity: 0; transform: scale(0.85); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2); }
   .drop-announce.reveal { opacity: 1; transform: scale(1); }
-  .drop-tier-text { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; }
-  .drop-name-text { font-family: 'Orbitron', sans-serif; font-size: 1.3rem; margin-top: 5px; font-weight: bold; }
+  .drop-tier-text { font-size: 0.7rem; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
+  .drop-name-text { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; margin-top: 4px; font-weight: bold; }
 
-  .inv-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #171726; border-radius: 6px; margin-bottom: 6px; font-size: 0.8rem; border-left: 3px solid var(--grey-border); }
+  .inv-item-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #171726; border-radius: 6px; margin-bottom: 6px; font-size: 0.75rem; border-left: 3px solid var(--grey-border); }
   .inv-item-row.usable { border-left-color: var(--orange); }
 </style>
 </head>
@@ -290,7 +324,7 @@
 
           <div id="hub-prof" class="hub-content-section active">
             <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-              <div id="hub-avatar-display" style="font-size: 2rem; cursor: pointer; background: #000; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--orange);" onclick="cycleLocalAvatar()" title="Сменить аватарку">👤</div>
+              <div id="hub-avatar-display" style="font-size: 1.8rem; cursor: pointer; background: #000; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--orange);" onclick="cycleLocalAvatar()">👤</div>
               <div style="flex:1;">
                 <p class="dropdown-item-text">Оперативный Позывной</p>
                 <input type="text" id="hub-inp-nickname" style="padding: 4px 8px; font-size: 0.8rem; margin-top: 2px;" value="Выживший" onchange="saveProfileSettings()">
@@ -307,14 +341,7 @@
           </div>
 
           <div id="hub-sett" class="hub-content-section">
-            <div class="form-group" style="margin-bottom: 10px;">
-              <label>Звуковые маркеры (FX)</label>
-              <select id="hub-sel-audio" style="padding: 4px; font-size: 0.75rem;">
-                <option value="1">Включены (По умолч.)</option>
-                <option value="0">Протокол тишины</option>
-              </select>
-            </div>
-            <button class="btn btn-sm" style="border-color: var(--neon-red); color: var(--neon-red); margin-top: 15px; width: 100%;" onclick="logout(); toggleProfileMenu();">Выйти из сети</button>
+            <button class="btn btn-sm" style="border-color: var(--neon-red); color: var(--neon-red); margin-top: 20px; width: 100%;" onclick="logout(); toggleProfileMenu();">Выйти из сети</button>
           </div>
         </div>
       </div>
@@ -338,7 +365,7 @@
               <input type="text" id="inp-email" placeholder="naprimer@gmail.com">
             </div>
             <div class="form-group">
-              <label>Код Доступа (Пароль)</label>
+              <label>Код Доступа</label>
               <input type="password" id="inp-pass" placeholder="••••">
             </div>
             <div style="display:flex; gap:10px;">
@@ -348,14 +375,14 @@
           </div>
           <div id="auth-user-status" style="display:none; text-align: center; padding: 10px 0;">
             <p style="font-size:0.95rem;">Идентификация пройдена успешно.</p>
-            <p style="font-size:0.8rem; color: var(--grey-text); margin-top: 5px;">Настройки профиля, ник и инвентарь доступны в верхнем меню.</p>
+            <p style="font-size:0.8rem; color: var(--grey-text); margin-top: 5px;">Настройки, кастомный ник и кейсы доступны в меню профиля сверху.</p>
           </div>
         </div>
 
         <div class="panel">
-          <div class="panel-title">📡 ИНФО-СПРАВКА И ЛОГИКА</div>
+          <div class="panel-title">📡 ИНФО-СПРАВКА</div>
           <p style="font-size:0.85rem; line-height:1.6; color:var(--grey-text);">
-            Возраст выжившего имеет критическое значение в зависимости от срока жизнеобеспечения бункера. Защищайте эффективных членов команды на голосовании. Помните: коины (<span style="color:var(--neon-green);">+100 🪙</span>) начисляются исключительно живым игрокам в финальном списке спасенных!
+            Уникальный ник разработчика <span class="nick-dev-style">lyohich DEV</span> защищен ядром системы. Испытайте удачу в магазине, открывая Кибер-Кейсы с реальными математическими шансами на редкие модификаторы выживания!
           </p>
         </div>
       </div>
@@ -363,11 +390,11 @@
 
     <div id="scr-shop" class="screen hidden">
       <div class="panel">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; gap: 10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; gap: 10px;">
           <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ</div>
           <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">Назад</button>
         </div>
-        <div style="font-size:1.1rem; margin-bottom: 20px;">Ваш капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
+        <div style="font-size:1rem; margin-bottom: 15px;">Ваш капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
         
         <div class="shop-cats">
           <button id="cat-btn-mods" class="cat-btn active" onclick="switchShopCategory('mods')">Модификаторы</button>
@@ -376,42 +403,36 @@
         </div>
 
         <div id="shop-cat-mods" class="shop-grid">
-          <div class="shop-item" id="item-extra_card">
-            <div class="shop-item-title">Доп. Карта Действия</div>
-            <div class="shop-item-desc">Выдаёт вашему выжившему +1 дополнительную оперативную карту тактики на раунд.</div>
+          <div class="shop-item" id="item-mod_immunity">
+            <div class="shop-item-title">Иммунитет шлюза</div>
+            <div class="shop-item-desc">Защищает вашу ДНК. Если вас выгоняют на самом первом голосовании, вы автоматически остаетесь жив.</div>
             <div class="shop-item-price">150 🪙</div>
-            <button class="btn btn-sm" onclick="buyItem('extra_card', 150, 'mod')">Купить</button>
+            <button class="btn btn-sm" onclick="buyItem('mod_immunity', 150, 'mod')">Купить</button>
           </div>
-          <div class="shop-item" id="item-health_serum">
-            <div class="shop-item-title">Сыворотка Здоровья</div>
-            <div class="shop-item-desc">Модифицирует ДНК. Гарантирует, что ваш персонаж появится со статусом "Абсолютно здоров".</div>
-            <div class="shop-item-price">250 🪙</div>
-            <button class="btn btn-sm" onclick="buyItem('health_serum', 250, 'mod')">Купить</button>
-          </div>
-          <div class="shop-item" id="item-cyber_heart">
-            <div class="shop-item-title">Кибер-Сердце</div>
-            <div class="shop-item-desc">Даже если вы заболеете тяжелым недугом, датчики фильтрации не увидят угрозы для O2.</div>
-            <div class="shop-item-price">400 🪙</div>
-            <button class="btn btn-sm" onclick="buyItem('cyber_heart', 400, 'mod')">Купить</button>
+          <div class="shop-item" id="item-mod_hacker">
+            <div class="shop-item-title">Взломщик данных</div>
+            <div class="shop-item-desc">Позволяет в начале раунда мгновенно узнать скрытые Секреты абсолютно всех игроков.</div>
+            <div class="shop-item-price">300 🪙</div>
+            <button class="btn btn-sm" onclick="buyItem('mod_hacker', 300, 'mod')">Купить</button>
           </div>
         </div>
 
         <div id="shop-cat-custom" class="shop-grid hidden">
           <div class="shop-item" id="item-glow_pink">
-            <div class="shop-item-title" style="color:var(--neon-pink);">Розовый Неон</div>
-            <div class="shop-item-desc">Ваш ник в списке экипажа приобретает яркое розовое свечение киберпанка.</div>
+            <div class="shop-item-title nick-glow-pink">Розовый Неон</div>
+            <div class="shop-item-desc">Ваш позывной плавно и глубоко пульсирует ярким неоновым розовым светом.</div>
             <div class="shop-item-price">100 🪙</div>
             <button class="btn btn-sm" onclick="buyItem('glow_pink', 100, 'custom')">Купить</button>
           </div>
           <div class="shop-item" id="item-glow_blue">
-            <div class="shop-item-title" style="color:var(--neon-blue);">Синий Импульс</div>
-            <div class="shop-item-desc">Ваш ник в списке экипажа приобретает морозное синее неоновое свечение.</div>
+            <div class="shop-item-title nick-glow-blue">Синий Импульс</div>
+            <div class="shop-item-desc">По буквам вашего имени пробегает постоянная световая лазерная волна.</div>
             <div class="shop-item-price">100 🪙</div>
             <button class="btn btn-sm" onclick="buyItem('glow_blue', 100, 'custom')">Купить</button>
           </div>
           <div class="shop-item" id="item-glow_rgb">
-            <div class="shop-item-title" style="background: linear-gradient(to right, red, orange, yellow, green, blue, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Элитный RGB</div>
-            <div class="shop-item-desc">Абсолютно динамический перелив всеми цветами спектра. Максимальный статус в бункере.</div>
+            <div class="shop-item-title nick-glow-rgb">Элитный RGB</div>
+            <div class="shop-item-desc">Динамический перелив всеми цветами радужного спектра. Высший статус.</div>
             <div class="shop-item-price">300 🪙</div>
             <button class="btn btn-sm" onclick="buyItem('glow_rgb', 300, 'custom')">Купить</button>
           </div>
@@ -419,8 +440,8 @@
 
         <div id="shop-cat-cases" class="shop-grid hidden">
           <div class="shop-item" id="item-case_cyber">
-            <div class="shop-item-title" style="color:var(--orange);">Зараженный Кибер-Кейс</div>
-            <div class="shop-item-desc">Содержит ценные военные артефакты, редкие коллекционные скины, плазма-ганы или чистые Кибер-Коины! Лотерея шлюза.</div>
+            <div class="shop-item-title" style="color:var(--orange); text-shadow:0 0 5px var(--orange-glow);">Матричный Кибер-Кейс</div>
+            <div class="shop-item-desc">Лотерея шлюза. Содержит полезные игровые карты, редкие модификаторы или залежи чистых коинов! (Честные шансы).</div>
             <div class="shop-item-price">80 🪙</div>
             <button class="btn btn-sm" onclick="buyItem('case_cyber', 80, 'case')">Купить кейс</button>
           </div>
@@ -430,7 +451,7 @@
     </div>
 
     <div id="scr-network" class="screen hidden">
-      <div class="nav-bar" style="margin-bottom:15px; justify-content: flex-start;">
+      <div class="nav-bar" style="margin-bottom:10px; justify-content: flex-start;">
         <button class="btn btn-sm" onclick="navigate('scr-network', 'scr-menu')">← Назад</button>
       </div>
       <div class="network-grid">
@@ -443,59 +464,58 @@
               <option value="4">4 Игрока (2 выживших)</option>
               <option value="6">6 Игроков (3 выживших)</option>
               <option value="8">8 Игроков (4 выживших)</option>
-              <option value="10">10 Игроков (5 выживших)</option>
             </select>
           </div>
           <button class="btn" style="width: 100%;" id="btn-host-init" onclick="initP2P('host')">Занять Бункер</button>
           
           <div id="host-share-zone" style="display:none; margin-top:15px; background:#000; padding:12px; border-radius:6px; text-align:center;">
-            <label>Передай этот код выжившим:</label>
+            <label>Код для выживших:</label>
             <div id="bunker-code-txt" style="font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--orange); font-weight:bold; margin:5px 0 10px;">-----</div>
             <div id="lobby-players-list" style="font-size:0.85rem; background:#050508; padding:8px; margin-bottom:10px; max-height:100px; overflow-y:auto; text-align:left;"></div>
-            <button class="btn btn-sm btn-accent" style="width:100%; margin-bottom:10px;" onclick="hostStartGame()">Запустить Игру</button>
+            <button class="btn btn-sm btn-accent" style="width:100%;" onclick="hostStartGame()">Запустить Игру</button>
           </div>
         </div>
 
         <div class="panel">
-          <div class="panel-title">Подключить терминал шлюза</div>
+          <div class="panel-title">Подключить терминал</div>
           <div class="form-group">
             <label>Секретный код Бункера</label>
-            <input type="text" id="inp-target-id" placeholder="Вставьте ID хоста...">
+            <input type="text" id="inp-target-id" placeholder="ID хоста...">
           </div>
           <button class="btn" style="width: 100%;" onclick="initP2P('client')">Открыть Шлюз</button>
-          <div id="client-wait-msg" style="display:none; margin-top:15px; color:var(--orange); font-weight:bold; text-align:center;">ОЖИДАНИЕ СТАРТА ИГРЫ ХОСТОМ...</div>
+          <div id="client-wait-msg" style="display:none; margin-top:15px; color:var(--orange); font-weight:bold; text-align:center;">ОЖИДАНИЕ ЗАПУСКА ИГРЫ...</div>
         </div>
       </div>
     </div>
 
     <div id="scr-game" class="screen hidden">
       <div class="global-status">
-        <div style="color:var(--orange); font-family:'Orbitron', sans-serif; font-size:0.85rem; text-transform:uppercase;">⚠ Экстренный протокол: Земля уничтожена</div>
-        <div id="world-disaster-text" style="font-size:0.95rem; font-weight:bold; margin-top:5px; color:#fff;">Сканирование атмосферы...</div>
-        <div id="bunker-condition-text" style="font-size:0.8rem; color:var(--grey-text); margin-top:4px;">Особые условия бункера: загрузка...</div>
-        <div id="bunker-time-text" style="font-size:0.9rem; color:var(--neon-blue); font-weight:bold; margin-top:4px; text-transform:uppercase;">СРОК ЖИЗНЕОБЕСПЕЧЕНИЯ: ЗАГРУЗКА...</div>
+        <div style="color:var(--orange); font-family:'Orbitron', sans-serif; font-size:0.85rem;">⚠ Экстренный протокол: Система жизнеобеспечения</div>
+        <div id="world-disaster-text" style="font-size:0.95rem; font-weight:bold; margin-top:4px;">Сканирование атмосферы...</div>
+        <div id="bunker-condition-text" style="font-size:0.8rem; color:var(--grey-text); margin-top:2px;">Загрузка параметров...</div>
+        <div id="bunker-time-text" style="font-size:0.85rem; color:var(--neon-blue); font-weight:bold; margin-top:2px;">СРОК ИЗОЛЯЦИИ: --</div>
       </div>
 
       <div class="game-layout">
         <div>
-          <div class="panel" style="margin-bottom:20px;">
+          <div class="panel" style="margin-bottom:15px;">
             <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center; gap: 10px;">
               <span>Досье Выжившего</span>
-              <span id="my-name-badge" style="font-size:0.8rem; color:var(--grey-text); max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">---</span>
+              <span id="my-name-badge" style="font-size:0.8rem;">---</span>
             </div>
             <div class="character-sheet" id="char-sheet-box"></div>
             <div class="action-cards-box">
-              <label>Ваши оперативные карты действий и модификаторы:</label>
+              <label>Активные карты и Спец. Свойства:</label>
               <div class="action-deck" id="action-deck-box"></div>
             </div>
           </div>
 
           <div class="panel">
-            <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
               <span>Экипаж Убежища (<span id="total-surv-count">0</span>)</span>
               <div id="host-voting-controls"></div>
             </div>
-            <div id="current-vote-alert" style="background:#1b120c; border:1px solid #ff7700; color:#ffaa55; font-size:0.8rem; padding:6px 12px; margin-bottom:10px; border-radius:4px; display:none; text-align:center; font-weight:bold; text-transform:uppercase;">🚨 ОТКРЫТО ОБЩЕЕ СИНХРОННОЕ ГОЛОСОВАНИЕ!</div>
+            <div id="current-vote-alert" style="background:#1b120c; border:1px solid #ff7700; color:#ffaa55; font-size:0.75rem; padding:6px; margin-bottom:10px; border-radius:4px; display:none; text-align:center; font-weight:bold;">🚨 СИНХРОННОЕ ГОЛОСОВАНИЕ ОТКРЫТО!</div>
             <div class="terminal-box" id="players-terminal-list"></div>
           </div>
         </div>
@@ -519,7 +539,7 @@
   </div>
 
   <div id="case-modal" class="case-overlay hidden">
-    <div class="case-title-anim">Запуск Терминала Распаковки</div>
+    <div class="case-title-anim">Запуск Модуля Распаковки Ресурсов</div>
     <div class="roulette-container">
       <div class="roulette-line"></div>
       <div class="roulette-track-window">
@@ -527,10 +547,10 @@
       </div>
     </div>
     <div id="drop-announce-el" class="drop-announce">
-      <div id="drop-tier" class="drop-tier-text">ОБНАРУЖЕН АРТЕФАКТ</div>
-      <div id="drop-name" class="drop-name-text">Тяжелый плазма-ган «Зевс»</div>
+      <div id="drop-tier" class="drop-tier-text">АРТЕФАКТ СИСТЕМЫ</div>
+      <div id="drop-name" class="drop-name-text">---</div>
     </div>
-    <button class="btn btn-sm" id="btn-close-case-modal" style="margin-top: 30px; display:none;" onclick="closeCaseModal()">Закрыть шлюз кейса</button>
+    <button class="btn btn-sm" id="btn-close-case-modal" style="margin-top: 25px; display:none;" onclick="closeCaseModal()">Закрыть шлюз</button>
   </div>
 
 <script>
@@ -541,8 +561,7 @@
     projectId: "the-bunker-96d5c",
     storageBucket: "the-bunker-96d5c.firebasestorage.app",
     messagingSenderId: "481257011457",
-    appId: "1:481257011457:web:b60b5a1f62d17af1520300",
-    measurementId: "G-ZSR970PRMR"
+    appId: "1:481257011457:web:b60b5a1f62d17af1520300"
   };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
@@ -557,36 +576,36 @@
 
   const availAvatars = ["👤", "👑", "💀", "🤖", "🦊", "🛸", "🕶", "☣", "🥷", "🔥"];
 
-  const genders = ["Мужчина", "Женщина"];
-  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Военный связист", "Программист ИИ", "Охранник-кинолог", "Шеф-повар", "Психолог МЧС", "Спецназовец", "Электрик шлюза", "Гидрогеолог"];
-  const healthBad = ["Туберкулёз (Тяжёлая стадия)", "Открытая лёгочная инфекция (Заразно)", "Тяжелая форма астмы (Испорчен воздух)"];
-  const healthNormal = ["Абсолютно здоров", "Сломана левая рука", "Слепота на левый глаз", "Хронический гастрит", "Легкое заикание"];
-  const hobbies = ["Охота и стрельба", "Гидропоника дома", "Экстремальная медицина", "Радиолюбитель", "Картография"];
-  const phobias = ["Клаустрофобия", "Ахлуофобия", "Гермофобия", "Никтофобия"];
-  const traits = ["Эгоизм", "Вспыльчивость", "Эмпатия", "Гиперответственность", "Хладнокровие"];
-  const baggages = ["Армейская аптечка", "Набор инструментов", "Фляга чистого спирта (5л)", "Запас семян пшеницы", "Дробовик с 3 патронами"];
-  const contrabandBaggages = ["Тяжелый пулемет «Корд»", "Армейский сухпаек на 5 лет", "Экзоскелет", "Хирургический лазер"];
-  const secrets = ["Шпион группировки", "Бесплоден", "Скрывает запасы еды", "Бывший заключенный за саботаж"];
+  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Программист ИИ", "Охранник шлюза", "Электрик"];
+  const healthBad = ["Туберкулёз (Тяжёлая стадия)", "Открытая лёгочная инфекция (Заразно)"];
+  const healthNormal = ["Абсолютно здоров", "Сломана левая рука", "Легкое заикание"];
+  const hobbies = ["Охота и стрельба", "Экстремальная медицина", "Радиолюбитель"];
+  const phobias = ["Клаустрофобия", "Гермофобия"];
+  const traits = ["Эгоизм", "Эмпатия", "Хладнокровие"];
+  const baggages = ["Армейская аптечка", "Набор инструментов", "Фляга спирта (5л)", "Дробовик (3 патрона)"];
   
   const disasters = [
     { title: "Ядерная зима", temp: "-45°C", style: "cold" },
     { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger" }
   ];
-  const bunkerConditions = ["Гидропонный отсек затоплен.", "Система очистки на резервных батареях."];
 
-  let dynamicActionCardsPool = [
-    "Украсть багаж соседа справа", "Узнать секретный факт игрока", "Сменить профессию на случайную", "Уничтожить багаж любого игрока",
-    "Принудительно вскрыть здоровье соседа", "Поменять местами хобби двух выживших", "Заставить игрока зачитать его страх"
-  ];
-
-  // Массив лута для кибер-кейса
+  // ТАБЛИЦА ЛУТА С МАТЕМАТИЧЕСКИМИ ШАНСАМИ (ВЕСАМИ)
   const caseLootTable = [
-    { name: "Ржавый штык-нож", tier: "common", color: "#707085", icon: "🔪" },
-    { name: "Старый дозиметр КП-4", tier: "common", color: "#707085", icon: "📟" },
-    { name: "Тактический лазер", tier: "rare", color: "var(--neon-blue)", icon: "🔦" },
-    { name: "Ядерный мини-заряд", tier: "rare", color: "var(--neon-blue)", icon: "🔋" },
-    { name: "+150 Кибер-Коинов", tier: "epic", color: "var(--neon-pink)", icon: "🪙", type: "coins", value: 150 },
-    { name: "Плазма-ган «ЗЕВС»", tier: "legendary", color: "var(--orange)", icon: "⚡" }
+    // COMMON (Вес 50) — Суммарный шанс 50%
+    { name: "Ржавый штык-нож", tier: "common", color: "#707085", icon: "🔪", weight: 25 },
+    { name: "Старый дозиметр КП-4", tier: "common", color: "#707085", icon: "📟", weight: 25 },
+    
+    // RARE (Вес 30) — Суммарный шанс 30%
+    { name: "Тактический лазер", tier: "rare", color: "var(--neon-blue)", icon: "🔦", weight: 15 },
+    { name: "Экстренный энерго-заряд", tier: "rare", color: "var(--neon-blue)", icon: "🔋", weight: 15 },
+    
+    // EPIC (Вес 15) — Суммарный шанс 15%
+    { name: "Иммунитет шлюза (Мод)", tier: "epic", color: "var(--neon-pink)", icon: "🛡", type: "mod", itemKey: "mod_immunity", weight: 7 },
+    { name: "+150 Кибер-Коинов", tier: "epic", color: "var(--neon-pink)", icon: "🪙", type: "coins", value: 150, weight: 8 },
+    
+    // LEGENDARY (Вес 5) — Суммарный шанс 5%
+    { name: "Взломщик данных (Мод)", tier: "legendary", color: "var(--orange)", icon: "🔑", type: "mod", itemKey: "mod_hacker", weight: 2 },
+    { name: "Плазма-ган «ЗЕВС»", tier: "legendary", color: "var(--orange)", icon: "⚡", weight: 3 }
   ];
 
   function toggleProfileMenu() {
@@ -602,7 +621,7 @@
   });
 
   function switchHubTab(tabId) {
-    document.querySelectorAll('.hub-tab-btn').forEach((b, idx) => {
+    document.querySelectorAll('.hub-tab-btn').forEach(b => {
       b.classList.toggle('active', b.getAttribute('onclick').includes(tabId));
     });
     document.querySelectorAll('.hub-content-section').forEach(s => s.classList.remove('active'));
@@ -612,11 +631,9 @@
   function switchShopCategory(catKey) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('cat-btn-' + catKey).classList.add('active');
-    
     document.getElementById('shop-cat-mods').classList.add('hidden');
     document.getElementById('shop-cat-custom').classList.add('hidden');
     document.getElementById('shop-cat-cases').classList.add('hidden');
-    
     document.getElementById('shop-cat-' + catKey).classList.remove('hidden');
   }
 
@@ -640,12 +657,9 @@
 
   function saveProfileSettings() {
     if(!currentUser) return;
-    const nick = document.getElementById('hub-inp-nickname').value.trim() || "Выживший";
+    let nick = document.getElementById('hub-inp-nickname').value.trim() || "Выживший";
     myName = nick;
-    db.ref('users/' + userEmailClean + '/profile').set({
-      nickname: nick,
-      avatar: userAvatar
-    });
+    db.ref('users/' + userEmailClean + '/profile').set({ nickname: nick, avatar: userAvatar });
   }
 
   auth.onAuthStateChanged((user) => {
@@ -655,7 +669,6 @@
       userEmailClean = user.email.replace(/\./g, '_');
       document.getElementById('auth-form').style.display = 'none';
       document.getElementById('auth-user-status').style.display = 'block';
-      
       document.getElementById('drop-auth-needed').style.display = 'none';
       document.getElementById('drop-auth-logged').style.display = 'block';
       
@@ -667,7 +680,7 @@
         userCustomStyle = data.customStyle || "none";
         
         const prof = data.profile || {};
-        const nick = prof.nickname || user.email.split('@')[0];
+        let nick = prof.nickname || user.email.split('@')[0];
         userAvatar = prof.avatar || "👤";
         myName = nick;
 
@@ -701,7 +714,7 @@
       auth.createUserWithEmailAndPassword(email, pass).then((cred) => {
         let clean = cred.user.email.replace(/\./g, '_');
         db.ref('users/' + clean).set({ coins: 150, mods: [], inventory: [], customStyle: "none" });
-        alert('Успешная регистрация аккаунта! Бонус +150 коинов выдан.');
+        alert('Успешно! Получен бонус +150 коинов.');
       }).catch(err => alert('Ошибка: ' + err.message));
     } else {
       auth.signInWithEmailAndPassword(email, pass).catch(err => alert('Ошибка входа: ' + err.message));
@@ -720,32 +733,30 @@
   }
 
   function buyItem(itemKey, price, type) {
-    if(!currentUser) return alert('Требуется авторизация!');
+    if(!currentUser) return alert('Требуется вход!');
     if(userCoins < price) return alert('Недостаточно коинов!');
 
     db.ref('users/' + userEmailClean).transaction((userData) => {
-      if (userData) {
-        if (userData.coins >= price) {
-          userData.coins -= price;
-          if(type === 'mod') {
-            if(!userData.mods) userData.mods = [];
-            if(!userData.mods.includes(itemKey)) userData.mods.push(itemKey);
-          } else if(type === 'custom') {
-            userData.customStyle = itemKey;
-          } else if(type === 'case') {
-            if(!userData.inventory) userData.inventory = [];
-            userData.inventory.push('case_cyber');
-          }
+      if (userData && userData.coins >= price) {
+        userData.coins -= price;
+        if(type === 'mod') {
+          if(!userData.mods) userData.mods = [];
+          if(!userData.mods.includes(itemKey)) userData.mods.push(itemKey);
+        } else if(type === 'custom') {
+          userData.customStyle = itemKey;
+        } else if(type === 'case') {
+          if(!userData.inventory) userData.inventory = [];
+          userData.inventory.push('case_cyber');
         }
       }
       return userData;
-    }, (err, comm) => { if(comm) alert('Покупка успешно проведена!'); });
+    }, (err, comm) => { if(comm) alert('Ресурс успешно куплен!'); });
   }
 
   function renderHubInventory() {
     const box = document.getElementById('hub-inventory-list');
     if(!userInventory || userInventory.length === 0) {
-      box.innerHTML = `<div style="text-align:center; padding:20px 0;">Инвентарь пуст. Покупайте предметы в Кибер-Маркете.</div>`;
+      box.innerHTML = `<div style="text-align:center; padding:15px 0;">Инвентарь пуст.</div>`;
       return;
     }
     let html = "";
@@ -760,8 +771,8 @@
       } else {
         html += `
           <div class="inv-item-row">
-            <span>🛠 ${item}</span>
-            <span style="color:var(--grey-text); font-size:0.65rem;">Хранение</span>
+            <span>${item}</span>
+            <span style="color:var(--grey-text); font-size:0.65rem;">Ресурс</span>
           </div>
         `;
       }
@@ -769,9 +780,9 @@
     box.innerHTML = html;
   }
 
-  // СУПЕР КИНЕМАТОГРАФИЧНАЯ РУЛЕТКА ДЛЯ КЕЙСА
+  // СУПЕР КИНЕМАТОГРАФИЧЕСКАЯ РУЛЕТКА С ЧЕСТНЫМИ ШАНСАМИ И ВЕСАМИ
   function openCyberCaseAnimation(itemIndex) {
-    toggleProfileMenu(); // Закрываем выпадающий хаб
+    toggleProfileMenu();
     document.getElementById('case-modal').classList.remove('hidden');
     document.getElementById('btn-close-case-modal').style.display = 'none';
     document.getElementById('drop-announce-el').classList.remove('reveal');
@@ -779,8 +790,21 @@
     const tape = document.getElementById('roulette-tape-el');
     tape.style.transition = "none";
     tape.style.transform = "translateX(0px)";
+
+    // Математический выбор предмета на основе весов
+    let totalWeight = caseLootTable.reduce((acc, item) => acc + item.weight, 0);
+    let randomNum = Math.floor(Math.random() * totalWeight);
+    let finalLoot = caseLootTable[0];
     
-    // Генерируем 40 фейковых слотов для ленты
+    for (let i = 0; i < caseLootTable.length; i++) {
+      if (randomNum < caseLootTable[i].weight) {
+        finalLoot = caseLootTable[i];
+        break;
+      }
+      randomNum -= caseLootTable[i].weight;
+    }
+    
+    // Генерируем 45 слотов для эффекта кручения рулетки
     let tapeHtml = "";
     for(let i=0; i<45; i++) {
       let randLoot = caseLootTable[Math.floor(Math.random() * caseLootTable.length)];
@@ -788,11 +812,6 @@
     }
     tape.innerHTML = tapeHtml;
 
-    // Определяем финальный выигрышный предмет
-    const finalLootIdx = Math.floor(Math.random() * caseLootTable.length);
-    const finalLoot = caseLootTable[finalLootIdx];
-
-    // Заменяем слот на позиции 38 на наш реальный выигрыш
     const targetSlotIndex = 38; 
     const slotsArr = tape.getElementsByClassName('roulette-slot');
     
@@ -800,17 +819,14 @@
       slotsArr[targetSlotIndex].innerHTML = finalLoot.icon;
       slotsArr[targetSlotIndex].style.borderBottom = `3px solid ${finalLoot.color}`;
       
-      // Рассчитываем сдвиг ленты
-      let slotWidth = 120;
+      let slotWidth = 110;
       let windowWidth = document.querySelector('.roulette-track-window').offsetWidth;
       let targetLeft = (targetSlotIndex * slotWidth) - (windowWidth / 2) + (slotWidth / 2);
       
-      // Пуск анимации прокрутки
-      tape.style.transition = "transform 4s cubic-bezier(0.1, 0.6, 0.1, 1)";
+      tape.style.transition = "transform 4.2s cubic-bezier(0.1, 0.55, 0.1, 1)";
       tape.style.transform = `translateX(-${targetLeft}px)`;
     }, 50);
 
-    // Завершение анимации и выдача дропа
     setTimeout(() => {
       document.getElementById('drop-announce-el').classList.add('reveal');
       document.getElementById('drop-tier').innerText = `ОБНАРУЖЕН АРТЕФАКТ ТИРА: ${finalLoot.tier.toUpperCase()}`;
@@ -818,14 +834,15 @@
       document.getElementById('drop-name').innerText = finalLoot.name;
       document.getElementById('btn-close-case-modal').style.display = 'inline-flex';
 
-      // Проводим транзакцию выдачи в Firebase БД
+      // Начисление дропа в базу данных Firebase
       db.ref('users/' + userEmailClean).transaction((userData) => {
         if(userData) {
-          if(userData.inventory) {
-            userData.inventory.splice(itemIndex, 1); // Удаляем открытый кейс
-          }
+          if(userData.inventory) userData.inventory.splice(itemIndex, 1);
           if(finalLoot.type === 'coins') {
             userData.coins = (userData.coins || 0) + finalLoot.value;
+          } else if(finalLoot.type === 'mod') {
+            if(!userData.mods) userData.mods = [];
+            if(!userData.mods.includes(finalLoot.itemKey)) userData.mods.push(finalLoot.itemKey);
           } else {
             if(!userData.inventory) userData.inventory = [];
             userData.inventory.push(finalLoot.icon + " " + finalLoot.name);
@@ -833,47 +850,31 @@
         }
         return userData;
       });
-
-    }, 4100);
+    }, 4300);
   }
 
-  function closeCaseModal() {
-    document.getElementById('case-modal').classList.add('hidden');
-  }
-
-  function consumeUserModsInDB() {
-    if(currentUser && userEmailClean) {
-      db.ref('users/' + userEmailClean + '/mods').set([]);
-    }
-  }
+  function closeCaseModal() { document.getElementById('case-modal').classList.add('hidden'); }
+  function consumeUserModsInDB() { if(currentUser && userEmailClean) db.ref('users/' + userEmailClean + '/mods').set([]); }
 
   function createCharacterData(modifiers = []) {
-    let isSick = Math.random() < 0.35;
-    if(modifiers.includes('health_serum')) isSick = false;
-    const health = isSick ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
-    
-    let baggage = baggages[Math.floor(Math.random() * baggages.length)];
-    if(modifiers.includes('contraband')) baggage = contrabandBaggages[Math.floor(Math.random() * contrabandBaggages.length)];
-    
+    let health = Math.random() < 0.35 ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
     const age = Math.floor(Math.random() * (70 - 18 + 1)) + 18;
     return {
-      gender: `${genders[Math.floor(Math.random() * genders.length)]}, ${age} лет`,
+      gender: `Пол: ${Math.random() > 0.5 ? 'Муж' : 'Жен'}, ${age} лет`,
       prof: professions[Math.floor(Math.random() * professions.length)],
       health: health,
       hobby: hobbies[Math.floor(Math.random() * hobbies.length)],
       phobia: phobias[Math.floor(Math.random() * phobias.length)],
       trait: traits[Math.floor(Math.random() * traits.length)],
-      baggage: baggage,
-      secret: secrets[Math.floor(Math.random() * secrets.length)],
-      cards: [dynamicActionCardsPool.pop() || "Карта тактики А", dynamicActionCardsPool.pop() || "Карта тактики Б"],
+      baggage: baggages[Math.floor(Math.random() * baggages.length)],
+      secret: "Скрытый файл зашифрован шлюзом.",
+      cards: ["Перезагрузка фильтров O2", "Запросить проверку досье соседа"],
       modifiers: modifiers
     };
   }
 
   function initP2P(role) {
     myRole = role;
-    shuffleArray(dynamicActionCardsPool);
-    
     peer = new Peer(role === 'host' ? 'bunker-' + Math.floor(1000 + Math.random() * 9000) : null, { debug: 1 });
 
     peer.on('open', (id) => {
@@ -884,21 +885,15 @@
         document.getElementById('bunker-code-txt').innerText = id;
         
         activePlayers.push({
-          id: id,
-          name: myName,
-          avatar: userAvatar,
-          customStyle: userCustomStyle,
-          emailClean: userEmailClean || 'none',
-          data: createCharacterData(userActiveItems),
+          id: id, name: myName, avatar: userAvatar, customStyle: userCustomStyle,
+          emailClean: userEmailClean || 'none', data: createCharacterData(userActiveItems),
           kicked: false, voteCount: 0, votedFor: ''
         });
-        consumeUserModsInDB();
-        renderLobbyList();
+        consumeUserModsInDB(); renderLobbyList();
       } else {
         const targetId = document.getElementById('inp-target-id').value.trim();
-        if(!targetId) return alert('Введите код Бункера!');
-        conn = peer.connect(targetId);
-        setupConnection(conn);
+        if(!targetId) return alert('Введите код!');
+        conn = peer.connect(targetId); setupConnection(conn);
       }
     });
 
@@ -907,9 +902,7 @@
 
   function setupConnection(c) {
     c.on('open', () => {
-      c.send({ 
-        type: 'join', name: myName, avatar: userAvatar, customStyle: userCustomStyle, emailClean: userEmailClean || 'none', modifiers: userActiveItems 
-      });
+      c.send({ type: 'join', name: myName, avatar: userAvatar, customStyle: userCustomStyle, emailClean: userEmailClean || 'none', modifiers: userActiveItems });
       consumeUserModsInDB();
       document.getElementById('client-wait-msg').style.display = 'block';
     });
@@ -945,8 +938,7 @@
         let p = activePlayers.find(pl => pl.id === data.from);
         if(p && !p.votedFor) {
           p.votedFor = data.targetId;
-          let target = activePlayers.find(pl => pl.id === data.targetId);
-          if(target) target.voteCount++;
+          let target = activePlayers.find(pl => pl.id === data.targetId); if(target) target.voteCount++;
           syncAll();
         }
       }
@@ -954,7 +946,10 @@
   }
 
   function renderLobbyList() {
-    document.getElementById('lobby-players-list').innerHTML = activePlayers.map(p => `<div>${p.avatar} ${p.name} готов</div>`).join('');
+    document.getElementById('lobby-players-list').innerHTML = activePlayers.map(p => {
+      let devBadge = (p.name.toLowerCase() === "lyohich") ? ` <span class="nick-dev-style">DEV</span>` : "";
+      return `<div>${p.avatar} <b>${p.name}</b>${devBadge} готов</div>`;
+    }).join('');
   }
 
   function hostStartGame() {
@@ -962,8 +957,8 @@
     gameConfig = {
       limit: limit, targetSurvivors: limit / 2,
       disaster: disasters[Math.floor(Math.random() * disasters.length)],
-      condition: bunkerConditions[Math.floor(Math.random() * bunkerConditions.length)],
-      timeText: `${Math.floor(Math.random() * 18) + 6} МЕСЯЦЕВ`
+      condition: "Шлюзовая фильтрация воздуха работает в штатном режиме.",
+      timeText: `12 МЕСЯЦЕВ`
     };
     connections.forEach(c => c.open && c.send({ type: 'start', config: gameConfig, players: activePlayers }));
     navigate('scr-network', 'scr-game'); initGameUI();
@@ -972,7 +967,7 @@
   function initGameUI() {
     document.getElementById('world-disaster-text').innerText = `КАТАСТРОФА: ${gameConfig.disaster.title} (${gameConfig.disaster.temp})`;
     document.getElementById('bunker-condition-text').innerText = gameConfig.condition;
-    document.getElementById('bunker-time-text').innerText = `СРОК ЖИЗНЕОБЕСПЕЧЕНИЯ: ${gameConfig.timeText}`;
+    document.getElementById('bunker-time-text').innerText = `СРОК ИЗОЛЯЦИИ: ${gameConfig.timeText}`;
 
     const flPower = document.getElementById('flask-power-box');
     const flTemp = document.getElementById('flask-temp-box');
@@ -988,16 +983,16 @@
 
     const me = activePlayers.find(p => p.id === myPeerId);
     if(me) {
-      document.getElementById('my-name-badge').innerText = me.name;
+      let isMeDev = (me.name.toLowerCase() === 'lyohich');
+      document.getElementById('my-name-badge').innerHTML = isMeDev ? `<span class="nick-dev-style">lyohich DEV</span>` : me.name;
       document.getElementById('char-sheet-box').innerHTML = `
-        <div class="trait-card"><label>Пол, Возраст</label><div class="trait-value">${me.data.gender}</div></div>
-        <div class="trait-card"><label>Профессия</label><div class="trait-value">${me.data.prof}</div></div>
-        <div class="trait-card"><label>Здоровье</label><div class="trait-value">${me.data.health}</div></div>
+        <div class="trait-card"><label>Био-Данные</label><div class="trait-value">${me.data.gender}</div></div>
+        <div class="trait-card"><label>Специализация</label><div class="trait-value">${me.data.prof}</div></div>
+        <div class="trait-card"><label>Статус Здоровья</label><div class="trait-value">${me.data.health}</div></div>
         <div class="trait-card"><label>Хобби</label><div class="trait-value">${me.data.hobby}</div></div>
-        <div class="trait-card"><label>Страх</label><div class="trait-value">${me.data.phobia}</div></div>
-        <div class="trait-card"><label>Качество</label><div class="trait-value">${me.data.trait}</div></div>
-        <div class="trait-card" style="grid-column: span 2;"><label>Багаж</label><div class="trait-value">${me.data.baggage}</div></div>
-        <div class="trait-card" style="grid-column: span 2;"><label>Секрет досье</label><div class="trait-value" style="color:var(--orange);">${me.data.secret}</div></div>
+        <div class="trait-card"><label>Психо-Страх</label><div class="trait-value">${me.data.phobia}</div></div>
+        <div class="trait-card"><label>Черта Характера</label><div class="trait-value">${me.data.trait}</div></div>
+        <div class="trait-card" style="grid-column: span 2;"><label>Инвентарь багажа</label><div class="trait-value">${me.data.baggage}</div></div>
       `;
       let cardHtml = me.data.cards.map(c => `<div class="action-mini-card">${c}</div>`).join('');
       document.getElementById('action-deck-box').innerHTML = cardHtml;
@@ -1040,7 +1035,13 @@
     let html = '';
     activePlayers.forEach(p => {
       let styleClass = "";
-      if(p.customStyle === "glow_pink") styleClass = "nick-glow-pink";
+      let pNameClean = p.name;
+      
+      // ЖЕСТКАЯ ПРОВЕРКА НА ЛЁХУ РАЗРАБОТЧИКА
+      if(p.name.toLowerCase() === "lyohich") {
+        styleClass = "nick-dev-style";
+        pNameClean = "lyohich DEV";
+      } else if(p.customStyle === "glow_pink") styleClass = "nick-glow-pink";
       else if(p.customStyle === "glow_blue") styleClass = "nick-glow-blue";
       else if(p.customStyle === "glow_rgb") styleClass = "nick-glow-rgb";
 
@@ -1051,7 +1052,7 @@
 
       html += `
         <div class="player-row ${p.kicked ? 'exiled' : ''}">
-          <div class="player-name-col">${p.avatar} <span class="${styleClass}">${p.name}</span> ${voteIndicators}</div>
+          <div class="player-name-col">${p.avatar} <span class="${styleClass}">${pNameClean}</span> ${voteIndicators}</div>
           <div>${statusText} ${voteBtn} ${hostKickBtn}</div>
         </div>
       `;
@@ -1067,8 +1068,6 @@
     document.getElementById('f-txt-o2').innerText = pct <= 50 ? "КРИТ. О2" : "НОРМА";
     document.getElementById('flask-o2-box').className = pct <= 50 ? "flask-container danger" : "flask-container";
   }
-
-  function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[arr[j]]] = [arr[j], arr[i]]; } }
 
   function syncAll() {
     renderPlayersTerminal(); checkOxygenStatus();
@@ -1088,11 +1087,11 @@
 
   function showGameOver(msg) {
     document.body.innerHTML = `
-      <div class="screen fade-in" style="text-align:center; max-width:650px; margin:20px auto; padding: 20px;">
+      <div class="screen fade-in" style="text-align:center; max-width:650px; margin:20px auto; padding: 15px;">
         <div class="menu-logo" style="color:var(--neon-green);">СЕССИЯ ЗАВЕРШЕНА</div>
         <div class="panel" style="margin-top:20px; border-color: var(--neon-green);">
-          <p style="font-size:1.1rem; line-height:1.6;">${msg}</p>
-          <button class="btn" style="margin-top:25px; width: 100%;" onclick="window.location.reload()">Перезапуск</button>
+          <p style="font-size:1rem; line-height:1.6;">${msg}</p>
+          <button class="btn" style="margin-top:20px; width: 100%;" onclick="window.location.reload()">Перезапуск</button>
         </div>
       </div>
     `;
