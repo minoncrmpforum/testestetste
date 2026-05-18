@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>THE BUNKER V.3 — HARDCORE EVOLUTION</title>
+<title>THE BUNKER V3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -331,7 +331,7 @@
               </div>
             </div>
             <div style="border-top: 1px solid var(--grey-border); padding-top: 6px;">
-              <p class="dropdown-item-text">Финансовый Счет</p>
+              <p class="dropdown-item-text">Счет</p>
               <p id="drop-coins" class="dropdown-item-val" style="color: var(--neon-green);">0 🪙</p>
             </div>
           </div>
@@ -348,8 +348,8 @@
     </div>
 
     <div id="scr-menu" class="screen">
-      <div class="menu-logo">THE BUNKER V.3</div>
-      <div class="menu-version">УБЕЖИЩЕ • СИСТЕМА СИНХРОННОГО ГОЛОСОВАНИЯ</div>
+      <div class="menu-logo">THE BUNKER V3</div>
+      <div class="menu-version">ИГРА ПО СТРАТЕГИИ</div>
       
       <div class="nav-bar">
         <button class="btn btn-accent" onclick="navigate('scr-menu', 'scr-network')">В бункер</button>
@@ -391,10 +391,10 @@
     <div id="scr-shop" class="screen hidden">
       <div class="panel">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; gap: 10px;">
-          <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ</div>
+          <div class="panel-title" style="margin:0;">🛒 ЧЕРНЫЙ МАРКЕТ</div>
           <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">Назад</button>
         </div>
-        <div style="font-size:1rem; margin-bottom: 15px;">Ваш капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
+        <div style="font-size:1rem; margin-bottom: 15px;">Ваш баланс: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
         
         <div class="shop-cats">
           <button id="cat-btn-mods" class="cat-btn active" onclick="switchShopCategory('mods')">Модификаторы</button>
@@ -441,7 +441,7 @@
         <div id="shop-cat-cases" class="shop-grid hidden">
           <div class="shop-item" id="item-case_cyber">
             <div class="shop-item-title" style="color:var(--orange); text-shadow:0 0 5px var(--orange-glow);">Матричный Кибер-Кейс</div>
-            <div class="shop-item-desc">Лотерея шлюза. Содержит полезные игровые карты, редкие модификаторы или залежи чистых коинов! (Честные шансы).</div>
+            <div class="shop-item-desc"> Содержит полезные игровые карты, редкие модификаторы или залежи чистых коинов! (Честные шансы).</div>
             <div class="shop-item-price">80 🪙</div>
             <button class="btn btn-sm" onclick="buyItem('case_cyber', 80, 'case')">Купить кейс</button>
           </div>
@@ -456,7 +456,7 @@
       </div>
       <div class="network-grid">
         <div class="panel">
-          <div class="panel-title">Инициализировать Убежище</div>
+          <div class="panel-title">Создать Убежище</div>
           <div class="form-group">
             <label>Количество участников</label>
             <select id="sel-player-limit">
@@ -477,7 +477,7 @@
         </div>
 
         <div class="panel">
-          <div class="panel-title">Подключить терминал</div>
+          <div class="panel-title">Подключиться</div>
           <div class="form-group">
             <label>Секретный код Бункера</label>
             <input type="text" id="inp-target-id" placeholder="ID хоста...">
@@ -764,7 +764,7 @@
       if(item === 'case_cyber') {
         html += `
           <div class="inv-item-row usable">
-            <span>📦 Кибер-Кейс</span>
+            <span>📦 Кейс</span>
             <button class="btn btn-sm btn-accent" style="padding:2px 6px; font-size:0.65rem;" onclick="openCyberCaseAnimation(${idx})">Открыть</button>
           </div>
         `;
