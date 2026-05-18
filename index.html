@@ -8,9 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <style>
   :root {
@@ -62,7 +62,6 @@
 
   .nav-bar { display: flex; gap: 15px; justify-content: center; margin-bottom: 30px; }
 
-  /* КНОПКИ */
   .btn {
     background: linear-gradient(135deg, #151522, #1c1c30); color: var(--white); border: 1px solid var(--grey-border);
     padding: 16px 32px; font-family: 'Space Mono', monospace; font-weight: bold; font-size: 1rem;
@@ -73,7 +72,6 @@
   .btn-accent { border-color: var(--orange); color: var(--orange); }
   .btn-sm { padding: 8px 16px; font-size: 0.75rem; letter-spacing: 1px; }
 
-  /* СЕТКА НАСТРОЕК */
   .network-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
   .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 24px; position: relative; }
   .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
@@ -85,14 +83,12 @@
   }
   input:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
 
-  /* ИНТЕРФЕЙС МАГАЗИНА */
   .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
   .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
   .shop-item-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--white); margin-bottom: 8px; }
   .shop-item-desc { font-size: 0.8rem; color: var(--grey-text); margin-bottom: 15px; flex-grow: 1; line-height: 1.4; }
   .shop-item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-green); font-weight: bold; margin-bottom: 15px; }
 
-  /* ИГРОВОЙ ИНТЕРФЕЙС */
   .game-layout { display: grid; grid-template-columns: 1fr 320px; gap: 25px; }
   .character-sheet { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px 16px; }
@@ -158,7 +154,7 @@
       <div class="panel">
         <div class="panel-title">📡 ИНФО-СПРАВКА</div>
         <p style="font-size:0.85rem; line-height:1.6; color:var(--grey-text);">
-          Зарегистрируй личный терминал, чтобы сохранять заработанные баллы. За каждую победу в бункере система начислит тебе <span style="color:var(--neon-green);">+100 Кибер-Коинов</span>.<br><br>Потратить валюту можно во вкладке "Магазин".
+          Зарегистрируй личный терминал, чтобы сохранять заработанные баллы. За каждую победу в бункере система начислит тебе <span style="color:var(--neon-green);">+100 Кибер-Коинов</span>.<br><br><b>Важно:</b> Если в браузере включен автоматический перевод страниц, обязательно отключи его для этого сайта, чтобы кнопки не блокировались.
         </p>
       </div>
     </div>
@@ -277,7 +273,7 @@
   </div>
 
 <script>
-  // === КОНФИГУРАЦИЯ FIREBASE ===
+  // === КОНФИГУРАЦИЯ FIREBASE С ОРИГИНАЛЬНЫМ КЛЮЧОМ ===
   const firebaseConfig = {
     apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us1OUoc2ij6I",
     authDomain: "the-bunker-96d5c.firebaseapp.com",
@@ -289,20 +285,16 @@
     databaseURL: "https://the-bunker-96d5c-default-rtdb.firebaseio.com"
   };
   
-  // Инициализация с защитой от сбоев
-  try {
-    firebase.initializeApp(firebaseConfig);
-  } catch(e) { console.error("Firebase init error:", e); }
-  
+  // Инициализация
+  firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   const auth = firebase.auth();
 
   let currentUser = null, userCoins = 0, userEmailClean = "";
   let peer = null, conn = null, connections = [];
-  let myRole = '', myName = '', gameConfig = null;
+  let myRole = '', myName = 'Выживший', gameConfig = null;
   let activePlayers = [];
 
-  // Датасеты игры
   const genders = ["Мужчина, 23 года", "Мужчина, 45 лет", "Мужчина, 31 год", "Женщина, 19 лет", "Женщина, 28 лет", "Женщина, 38 лет", "Мужчина, 60 лет", "Женщина, 52 года"];
   const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Военный связист", "Программист ИИ", "Охранник-кинолог", "Шеф-повар", "Психолог МЧС"];
   const healthBad = ["Туберкулёз (Заразно)", "Открытая лёгочная инфекция (Заразно)", "Тяжелая форма астмы (Испорчен воздух)", "Хроническая пневмония (Заразно)"];
@@ -314,10 +306,10 @@
   const secrets = ["Шпион враждебной группировки", "Бесплоден", "Скрывает запасы еды", "Гениальный изобретатель", "Знает пароль от оружейной комнаты бункера"];
   
   const disasters = [
-    { title: "Ядерная зима", temp: "-45°C", style: "cold", desc: "Планета скована многовековым льдом и радиационной пылью." },
-    { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger", desc: "Атмосфера выжжена радиацией, поверхность — сплошная пустыня." },
-    { title: "Падение Ледяного Кометного Осколка", temp: "-20°C", style: "cold", desc: "Климат резко изменился, постоянные метели." },
-    { title: "Прорыв магматических разломов", temp: "+40°C", style: "danger", desc: "Воздух отравлен серой, тектонические плиты плавятся." }
+    { title: "Ядерная зима", temp: "-45°C", style: "cold", desc: "Планета скована многовековым льдом." },
+    { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger", desc: "Атмосфера выжжена радиацией." },
+    { title: "Падение Ледяного Кометного Осколка", temp: "-20°C", style: "cold", desc: "Постоянные метели." },
+    { title: "Прорыв магматических разломов", temp: "+40°C", style: "danger", desc: "Воздух отравлен серой." }
   ];
   const bunkerConditions = [
     "Гидропонный отсек затоплен. Ограничен запас пищи.",
@@ -327,7 +319,6 @@
   ];
   const actionCardsPool = ["Украсть багаж соседа", "Узнать секрет на выбор", "Сменить профессию", "Убить чужого питомца", "Изолировать игрока"];
 
-  // Навигация
   function navigate(fromId, toId) {
     document.getElementById(fromId).classList.add('hidden');
     const toEl = document.getElementById(toId);
@@ -337,50 +328,48 @@
 
   function openShop() { navigate('scr-menu', 'scr-shop'); }
 
-  // Слушатель состояния авторизации
-  try {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        currentUser = user;
-        userEmailClean = user.email.replace(/\./g, '_');
-        document.getElementById('auth-form').style.display = 'none';
-        document.getElementById('auth-user-status').style.display = 'block';
-        document.getElementById('user-display-email').innerText = user.email;
-        
-        db.ref('users/' + userEmailClean + '/coins').on('value', (snap) => {
-          userCoins = snap.val() || 0;
-          document.getElementById('user-display-coins').innerText = userCoins;
-          document.getElementById('shop-balance-holder').innerText = userCoins;
-        }, (err) => { console.log("Database status: waiting setup"); });
-      } else {
-        currentUser = null;
-        document.getElementById('auth-form').style.display = 'block';
-        document.getElementById('auth-user-status').style.display = 'none';
-      }
-    });
-  } catch(e) { console.error(e); }
+  // Отслеживание сессии авторизации
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      currentUser = user;
+      userEmailClean = user.email.replace(/\./g, '_');
+      document.getElementById('auth-form').style.display = 'none';
+      document.getElementById('auth-user-status').style.display = 'block';
+      document.getElementById('user-display-email').innerText = user.email;
+      
+      db.ref('users/' + userEmailClean + '/coins').on('value', (snap) => {
+        userCoins = snap.val() || 0;
+        document.getElementById('user-display-coins').innerText = userCoins;
+        document.getElementById('shop-balance-holder').innerText = userCoins;
+      });
+    } else {
+      currentUser = null;
+      document.getElementById('auth-form').style.display = 'block';
+      document.getElementById('auth-user-status').style.display = 'none';
+    }
+  });
 
   function handleAuth(type) {
     const email = document.getElementById('inp-email').value.trim();
     const pass = document.getElementById('inp-pass').value.trim();
-    if(!email || !pass) return alert('Заполни поля авторизации!');
+    if(!email || !pass) return alert('Заполните поля!');
 
     if(type === 'register') {
       auth.createUserWithEmailAndPassword(email, pass).then((cred) => {
         let clean = cred.user.email.replace(/\./g, '_');
-        db.ref('users/' + clean).set({ coins: 0, items: [] }).catch(e => console.log("Data save skipped"));
-        alert('Регистрация прошла успешно!');
-      }).catch(err => alert('Ошибка: ' + err.message));
+        db.ref('users/' + clean).set({ coins: 0, items: [] });
+        alert('Успешная регистрация аккаунта!');
+      }).catch(err => alert('Ошибка регистрации: ' + err.message + '\n\nУбедитесь, что автоперевод страниц выключен!'));
     } else {
-      auth.signInWithEmailAndPassword(email, pass).catch(err => alert('Ошибка: ' + err.message));
+      auth.signInWithEmailAndPassword(email, pass).catch(err => alert('Ошибка входа: ' + err.message));
     }
   }
 
   function logout() { auth.signOut(); }
 
   function buyItem(itemKey, price) {
-    if(!currentUser) return alert('Авторизуйтесь в меню для покупок!');
-    if(userCoins < price) return alert('Недостаточно коинов!');
+    if(!currentUser) return alert('Сначала войдите в систему аккаунтов!');
+    if(userCoins < price) return alert('Недостаточно Кибер-Коинов!');
 
     db.ref('users/' + userEmailClean).transaction((userData) => {
       if (userData) {
@@ -391,12 +380,9 @@
         }
       }
       return userData;
-    }, (error, committed) => {
-      if(committed) alert('Успешно куплено!');
-    });
+    }, (error, committed) => { if(committed) alert('Товар успешно добавлен на терминал!'); });
   }
 
-  // Генерация досье выжившего
   function createCharacterData() {
     const isSick = Math.random() < 0.35;
     const health = isSick ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
@@ -416,6 +402,7 @@
 
   function renderCharacter(char) {
     const box = document.getElementById('char-sheet-box');
+    if(!box || !char) return;
     const fields = [
       { l: "Пол и Возраст", v: char.gender },
       { l: "Профессия", v: char.prof },
@@ -435,10 +422,14 @@
     `;
   }
 
-  // СЕТЕВАЯ ЛОГИКА P2P
+  // СЕТЬ P2P МЕЖДУ ИГРОКАМИ
   function initP2P(role) {
     myRole = role;
-    myName = currentUser ? currentUser.email.split('@')[0] : (role === 'host' ? 'Смотритель' : 'Выживший');
+    if(currentUser) {
+      myName = currentUser.email.split('@')[0];
+    } else {
+      myName = role === 'host' ? 'Смотритель' : 'Выживший_' + Math.floor(Math.random()*900);
+    }
 
     if(role === 'host') {
       const maxP = parseInt(document.getElementById('sel-player-limit').value);
@@ -479,7 +470,7 @@
       });
     } else {
       const tId = document.getElementById('inp-target-id').value.trim();
-      if(!tId) return alert('Введите код бункера!');
+      if(!tId) return alert('Введите секретный код бункера!');
 
       peer = new Peer();
       peer.on('open', () => {
@@ -516,7 +507,7 @@
     connections.forEach(c => {
       if(c.open) {
         let pData = activePlayers.find(p => p.id === c.peer);
-        c.send({ type: 'init-game', char: pData.char, config: gameConfig });
+        if(pData) c.send({ type: 'init-game', char: pData.char, config: gameConfig });
       }
     });
     navigate('scr-network', 'scr-game');
@@ -524,6 +515,7 @@
   }
 
   function applyWorldConfig(cfg) {
+    if(!cfg) return;
     document.getElementById('world-disaster-text').innerText = `КАТАСТРОФА: ${cfg.disaster.title} (${cfg.disaster.desc})`;
     document.getElementById('bunker-condition-text').innerText = `Особые условия: ${cfg.condition}`;
     document.getElementById('f-txt-temp').innerText = cfg.disaster.temp;
@@ -540,24 +532,25 @@
     const o2Txt = document.getElementById('f-txt-o2');
 
     if(hasInfected) {
-      o2Box.classList.add('danger');
-      o2Liq.style.height = "25%";
-      o2Txt.innerText = "КРИТ (ИНФЕКЦИЯ)";
+      if(o2Box) o2Box.classList.add('danger');
+      if(o2Liq) o2Liq.style.height = "25%";
+      if(o2Txt) o2Txt.innerText = "КРИТ (ИНФЕКЦИЯ)";
     } else {
-      o2Box.classList.remove('danger');
-      o2Liq.style.height = "100%";
-      o2Txt.innerText = "НОРМА";
+      if(o2Box) o2Box.classList.remove('danger');
+      if(o2Liq) o2Liq.style.height = "100%";
+      if(o2Txt) o2Txt.innerText = "НОРМА";
     }
   }
 
   function renderPlayersTerminal() {
     const box = document.getElementById('players-terminal-list');
+    if(!box) return;
     const aliveCount = activePlayers.filter(p => !p.kicked).length;
     document.getElementById('total-surv-count').innerText = `${aliveCount}/${gameConfig ? gameConfig.maxPlayers : activePlayers.length}`;
 
     box.innerHTML = activePlayers.map(p => `
       <div class="player-row ${p.kicked ? 'exiled' : ''}">
-        <span>${p.name}</span>
+        <span>${p.name} <small style="color:var(--orange); font-size:0.65rem;">[${p.role.toUpperCase()}]</small></span>
         <div>
           ${myRole === 'host' && !p.kicked ? `<button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="kickPlayer('${p.id}')">Изгнать</button>` : ''}
           ${p.kicked ? `<span style="color:var(--neon-red); font-size:0.75rem;">ИЗГНАН</span>` : `<span style="color:var(--neon-green); font-size:0.75rem;">В БУНКЕРЕ</span>`}
@@ -567,6 +560,7 @@
   }
 
   function kickPlayer(id) {
+    if(myRole !== 'host') return;
     const target = activePlayers.find(p => p.id === id);
     if(target) {
       target.kicked = true;
@@ -585,11 +579,11 @@
         if(p.emailClean && p.emailClean !== 'none') {
           db.ref('users/' + p.emailClean + '/coins').transaction((current) => {
             return (current || 0) + 100;
-          }).catch(e => console.log("Transaction skipped (offline)"));
+          }).catch(e => console.log("Database update deferred"));
         }
       });
 
-      let msg = `Шлюз закрыт! Выжившие: ` + remaining.map(p => p.name).join(', ') + `. Начислено по +100 коинов!`;
+      let msg = `Шлюз закрыт! Выжившие: ` + remaining.map(p => p.name).join(', ') + `. Система начислила по +100 коинов!`;
       connections.forEach(c => c.open && c.send({ type: 'game-end', msg: msg }));
       showGameOver(msg);
     }
