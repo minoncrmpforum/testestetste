@@ -44,6 +44,117 @@
     padding: 20px;
   }
 
+  /* АНИМАЦИИ ДЛЯ УНИКАЛЬНЫХ НИКОВ */
+  @keyframes rgb-flow {
+    0% { color: #ff0055; text-shadow: 0 0 8px rgba(255,0,85,0.6); }
+    33% { color: #00ff66; text-shadow: 0 0 8px rgba(0,255,102,0.6); }
+    66% { color: #00bfff; text-shadow: 0 0 8px rgba(0,191,255,0.6); }
+    100% { color: #ff0055; text-shadow: 0 0 8px rgba(255,0,85,0.6); }
+  }
+  @keyframes neon-pulse {
+    0% { color: #ffff00; text-shadow: 0 0 3px #ffff00, 0 0 12px #ff5500; }
+    50% { color: #ff3300; text-shadow: 0 0 6px #ff3300, 0 0 18px #ff0055; }
+    100% { color: #ffff00; text-shadow: 0 0 3px #ffff00, 0 0 12px #ff5500; }
+  }
+
+  .fx-rgb { animation: rgb-flow 4s infinite linear !important; font-weight: 900 !important; }
+  .fx-pulse { animation: neon-pulse 2s infinite ease-in-out !important; font-weight: 900 !important; }
+  .fx-pink { color: var(--neon-pink) !important; text-shadow: 0 0 5px rgba(255,0,127,0.5); }
+  .fx-blue { color: var(--neon-blue) !important; text-shadow: 0 0 5px rgba(0,191,255,0.5); }
+
+  /* ИКОНКА ПРОФИЛЯ СЛЕВА СВЕРХУ */
+  .profile-corner-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-panel);
+    border: 1px solid var(--grey-border);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    transition: all 0.2s ease;
+    overflow: hidden;
+  }
+  .profile-corner-btn:hover {
+    border-color: var(--orange);
+    box-shadow: 0 0 10px var(--orange-glow);
+  }
+  .profile-corner-btn img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-corner-btn span { font-size: 1.5rem; }
+
+  /* МОДАЛЬНОЕ ОКНО ПРОФИЛЯ */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(3, 3, 5, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal-box {
+    background: var(--bg-panel);
+    border: 1px solid var(--orange);
+    box-shadow: 0 0 30px var(--orange-glow);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+  }
+  .modal-overlay.active .modal-box { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 15px; right: 15px;
+    background: none; border: none; color: var(--grey-text);
+    font-size: 1.5rem; cursor: pointer;
+  }
+  .modal-close:hover { color: var(--neon-red); }
+
+  .profile-avatar-big {
+    width: 90px; height: 90px;
+    border-radius: 8px;
+    border: 2px solid var(--orange);
+    margin: 0 auto 15px;
+    display: flex; justify-content: center; align-items: center;
+    background: var(--bg-dark);
+    overflow: hidden;
+  }
+  .profile-avatar-big img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-avatar-big span { font-size: 3rem; }
+
+  .avatar-selector-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    max-height: 120px; overflow-y: auto;
+    background: var(--bg-dark); padding: 10px; border-radius: 6px; border: 1px solid var(--grey-border);
+    margin-bottom: 15px;
+  }
+  .avatar-option-card {
+    border: 1px solid var(--grey-border); border-radius: 4px; padding: 3px; cursor: pointer; text-align: center; background: var(--bg-card);
+  }
+  .avatar-option-card.active { border-color: var(--neon-green); box-shadow: 0 0 5px var(--neon-green-glow); }
+  .avatar-option-card img { width: 100%; height: 40px; object-fit: cover; border-radius: 2px; }
+
+  /* СЕТКИ ДЛЯ КАСТОМИЗАЦИИ В МОДАЛКЕ */
+  .cosm-customizer-section {
+    background: var(--bg-dark); padding: 10px; border-radius: 6px; border: 1px solid var(--grey-border);
+    max-height: 110px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px;
+  }
+  .cosm-row-item {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg-card); padding: 6px 10px; border-radius: 4px; font-size: 0.75rem; border: 1px solid transparent; cursor: pointer;
+  }
+  .cosm-row-item.active { border-color: var(--orange); background: #1b120c; }
+
+  /* ОСТАЛЬНЫЕ СТИЛИ */
   .screen { width: 100%; max-width: 1100px; transition: all 0.3s ease; }
   .hidden { display: none !important; }
   .fade-in { animation: screenReveal 0.4s forwards ease-out; }
@@ -73,7 +184,7 @@
   .btn-accent { border-color: var(--orange); color: var(--orange); }
   .btn-sm { padding: 8px 16px; font-size: 0.75rem; letter-spacing: 1px; }
 
-  .network-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .network-grid { display: grid; grid-template-columns: 1fr; max-width: 600px; margin: auto; gap: 30px; }
   .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 24px; position: relative; }
   .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
   .form-group { margin-bottom: 20px; }
@@ -107,26 +218,16 @@
   .flask-title { font-size: 0.75rem; color: var(--grey-text); text-transform: uppercase; }
   .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-top: 2px; }
   .flask-glass { width: 32px; height: 90px; background: rgba(255,255,255,0.03); border: 2px solid #333345; border-radius: 4px 4px 16px 16px; position: relative; overflow: hidden; }
-  .flask-liquid { absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; }
-  .flask-container.danger .flask-liquid { background: var(--neon-red); }
-  .flask-container.cold .flask-liquid { background: var(--neon-blue); }
-
-  .global-status { background: #100b0b; border: 1px solid #301515; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-  .action-cards-box { margin-top: 15px; }
-  .action-deck { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-  .action-mini-card { background: #1a110b; border: 1px solid #4a2510; border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #ffaa66; }
-  .action-mini-card.active-item { background: #0c1524; border-color: #1a3a66; color: #66b3ff; font-weight: bold; }
-  .action-mini-card.cancel { background: #0b1a13; border-color: #104a2b; color: #66ffaa; }
+  .flask-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; }
 
   .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 220px; overflow-y: auto; font-size: 0.8rem; }
   .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; }
-  .player-row.exiled { opacity: 0.3; text-decoration: line-through; border-left: 3px solid var(--neon-red); }
   
-  .p-avatar { font-size: 1.1rem; margin-right: 6px; vertical-align: middle; }
+  .p-avatar-img { width: 30px; height: 30px; border-radius: 4px; object-fit: cover; vertical-align: middle; margin-right: 8px; border: 1px solid var(--grey-border); }
+  .p-avatar-emoji { font-size: 1.2rem; margin-right: 8px; vertical-align: middle; }
   .p-title { font-size: 0.65rem; background: #222235; color: var(--white); padding: 2px 5px; border-radius: 3px; margin-right: 6px; font-weight: bold; font-family: 'Orbitron', sans-serif; }
 
   @media (max-width: 850px) {
-    .network-grid { grid-template-columns: 1fr; gap: 15px; }
     .game-layout { grid-template-columns: 1fr; }
     .gui-sidebar { order: -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   }
@@ -134,37 +235,66 @@
 </head>
 <body>
 
+  <div class="profile-corner-btn" id="corner-profile-btn" onclick="toggleProfileModal(true)">
+    <span id="corner-avatar-placeholder">👤</span>
+  </div>
+
+  <div class="modal-overlay" id="profile-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="toggleProfileModal(false)">&times;</button>
+      <div class="panel-title" style="text-align:center;">Личное Досье Игрока</div>
+      
+      <div class="profile-avatar-big" id="profile-avatar-big-box">
+        <span>👤</span>
+      </div>
+
+      <div id="profile-modal-authenticated" style="display:none;">
+        <div style="text-align:center; margin-bottom:15px;">
+          <p id="profile-user-email" style="color:var(--orange); font-weight:bold;">---</p>
+          <p style="font-family:'Orbitron', sans-serif; font-size:1.2rem; margin-top:5px; color:var(--neon-green);">Баланс: <span id="profile-user-coins">0</span> 🪙</p>
+        </div>
+
+        <label>Гардероб Аватарок</label>
+        <div class="avatar-selector-grid" id="modal-avatar-options"></div>
+
+        <label>Доступные Титулы</label>
+        <div class="cosm-customizer-section" id="modal-titles-options"></div>
+
+        <label>Эффекты и Цвета Ника</label>
+        <div class="cosm-customizer-section" id="modal-colors-options"></div>
+
+        <button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red); width:100%; margin-top:5px;" onclick="logout()">Выйти из терминала</button>
+      </div>
+
+      <div id="profile-modal-anonymous" style="text-align:center; padding:20px 0;">
+        <p style="color:var(--grey-text); font-size:0.85rem; margin-bottom:15px;">Вход в сеть не выполнен.</p>
+        <button class="btn btn-sm btn-accent" onclick="toggleProfileModal(false); navigate('scr-game', 'scr-menu'); navigate('scr-network', 'scr-menu');">Авторизоваться</button>
+      </div>
+    </div>
+  </div>
+
   <div id="scr-menu" class="screen">
     <div class="menu-logo">THE BUNKER V.3</div>
-    <div class="menu-version">УБЕЖИЩЕ • КОСМЕТИКА И СИНХРОННОЕ ГОЛОСОВАНИЕ</div>
+    <div class="menu-version">УБЕЖИЩЕ • КИБЕРМАРКЕТ И СТИЛИ НИКОВ</div>
     
     <div class="nav-bar">
       <button class="btn btn-accent" onclick="navigate('scr-menu', 'scr-network')">В бункер</button>
       <button class="btn" onclick="openShop()">Магазин</button>
     </div>
 
-    <div class="network-grid" style="max-width: 900px; margin: auto;">
+    <div class="network-grid">
       <div class="panel">
         <div class="panel-title">🔒 Терминал Идентификации</div>
         <div id="auth-form">
           <div class="form-group"><label>Шлюзовой Email</label><input type="text" id="inp-email" placeholder="naprimer@gmail.com"></div>
-          <div class="form-group"><label>Код Доступа (Пароль)</label><input type="password" id="inp-pass" placeholder="••••"></div>
+          <div class="form-group"><label>Код Доступа</label><input type="password" id="inp-pass" placeholder="••••"></div>
           <div style="display:flex; gap:10px;">
             <button class="btn btn-sm" onclick="handleAuth('login')">Войти</button>
             <button class="btn btn-sm btn-accent" onclick="handleAuth('register')">Регистрация</button>
           </div>
         </div>
-        <div id="auth-user-status" style="display:none;">
-          <p style="font-size:0.95rem;">Вы вошли как: <span id="user-display-email" style="color:var(--orange);">---</span></p>
-          <p style="font-size:1.3rem; margin:15px 0; font-family:'Orbitron',sans-serif;">Баланс: <span id="user-display-coins" style="color:var(--neon-green);">0</span> 🪙</p>
-          <button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="logout()">Выйти из системы</button>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">📡 ТЕКУЩИЙ НАДЕТЫЙ СТИЛЬ</div>
-        <div id="active-cosmetics-preview" style="font-size:0.9rem; line-height:1.8;">
-          Вход не выполнен. Снаряжение профиля недоступно.
+        <div id="auth-user-status" style="display:none; text-align:center;">
+          <p style="font-size:0.95rem;">Статус соединения: <span style="color:var(--neon-green); font-weight:bold;">АКТИВЕН</span></p>
         </div>
       </div>
     </div>
@@ -173,20 +303,20 @@
   <div id="scr-shop" class="screen hidden">
     <div class="panel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ И КАСТОМИЗАЦИЯ</div>
+        <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ</div>
         <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">Назад в меню</button>
       </div>
       <div style="font-size:1.1rem; margin-bottom: 20px;">Твой капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
       
       <div class="shop-tabs">
         <button class="shop-tab-btn active" id="tab-btn-upgrades" onclick="switchShopTab('upgrades')">Модификаторы Раунда</button>
-        <button class="shop-tab-btn" id="tab-btn-cosmetics" onclick="switchShopTab('cosmetics')">Косметика Профиля (Навсегда)</button>
+        <button class="shop-tab-btn" id="tab-btn-cosmetics" onclick="switchShopTab('cosmetics')">Косметика и Стили (Навсегда)</button>
       </div>
 
       <div class="shop-grid" id="shop-grid-upgrades">
         <div class="shop-item" id="item-extra_card">
           <div class="shop-item-title">Доп. Карта Действия</div>
-          <div class="shop-item-desc">Выдаёт вам +1 дополнительную уникальную оперативную карту тактики на раунд. Тратится при старте.</div>
+          <div class="shop-item-desc">Выдаёт вам +1 дополнительную оперативную карту тактики на раунд. Тратится при старте.</div>
           <div class="shop-item-price">150 🪙</div>
           <button class="btn btn-sm" id="btn-buy-extra_card" onclick="buyItem('extra_card', 150, false)">Купить</button>
         </div>
@@ -196,62 +326,46 @@
           <div class="shop-item-price">250 🪙</div>
           <button class="btn btn-sm" id="btn-buy-health_serum" onclick="buyItem('health_serum', 250, false)">Купить</button>
         </div>
-        <div class="shop-item" id="item-cyber_heart">
-          <div class="shop-item-title">Кибер-Сердце</div>
-          <div class="shop-item-desc">Даже если вы родитесь больным, датчики фильтрации не увидят угрозы для O2 бункера.</div>
-          <div class="shop-item-price">400 🪙</div>
-          <button class="btn btn-sm" id="btn-buy-cyber_heart" onclick="buyItem('cyber_heart', 400, false)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-shield_protocol">
-          <div class="shop-item-title">Защитный Протокол</div>
-          <div class="shop-item-desc">Защитная турель шлюза. Полный иммунитет к изгнанию в самом первом раунде игры.</div>
-          <div class="shop-item-price">500 🪙</div>
-          <button class="btn btn-sm" id="btn-buy-shield_protocol" onclick="buyItem('shield_protocol', 500, false)">Купить</button>
-        </div>
       </div>
 
       <div class="shop-grid hidden" id="shop-grid-cosmetics">
         <div class="shop-item" id="item-cosm_av_drone">
-          <div class="shop-item-title">Аватар: 🤖 [ИИ-Дрон]</div>
-          <div class="shop-item-desc">Редкий неоновый кибер-интерфейс дрона-разведчика перед вашим никнеймом.</div>
+          <div class="shop-item-title">🤖 Аватар: ИИ-Дрон</div>
+          <div class="shop-item-desc">Уникальный арт разведывательного дрона.</div>
           <div class="shop-item-price">300 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_av_drone" onclick="buyItem('cosm_av_drone', 300, true)">Купить</button>
+          <button class="btn btn-sm" id="btn-cosm-cosm_av_drone" onclick="buyItem('cosm_av_drone', 300, true, 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=150')">Купить</button>
         </div>
-        <div class="shop-item" id="item-cosm_av_bio">
-          <div class="shop-item-title">Аватар: ☣ [Био-Маска]</div>
-          <div class="shop-item-desc">Иконка зараженной зоны и противогаза высшего уровня хим-защиты.</div>
-          <div class="shop-item-price">350 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_av_bio" onclick="buyItem('cosm_av_bio', 350, true)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-cosm_av_skull">
-          <div class="shop-item-title">Аватар: 💀 [Кибер-Череп]</div>
-          <div class="shop-item-desc">Голографический череп. Знак того, что вы готовы выживать по головам сокомандников.</div>
+
+        <div class="shop-item" id="item-cosm_c_rgb">
+          <div class="shop-item-title">✨ Шрифты: RGB Перелив</div>
+          <div class="shop-item-desc">Ник плавно переливается всеми цветами радуги. Настоящий кибер-люкс.</div>
           <div class="shop-item-price">500 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_av_skull" onclick="buyItem('cosm_av_skull', 500, true)">Купить</button>
+          <button class="btn btn-sm" id="btn-cosm-cosm_c_rgb" onclick="buyItem('cosm_c_rgb', 500, true)">Купить</button>
         </div>
-        <div class="shop-item" id="item-cosm_t_rebel">
-          <div class="shop-item-title">Титул: [МЯТЕЖНИК]</div>
-          <div class="shop-item-desc">Добавляет брутальный текстовый статус [МЯТЕЖНИК] перед вашим именем.</div>
-          <div class="shop-item-price">200 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_t_rebel" onclick="buyItem('cosm_t_rebel', 200, true)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-cosm_t_stalker">
-          <div class="shop-item-title">Титул: [ПРИЗРАК]</div>
-          <div class="shop-item-desc">Уникальный элитный префикс [ПРИЗРАК] для настоящих мастеров блефа.</div>
-          <div class="shop-item-price">250 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_t_stalker" onclick="buyItem('cosm_t_stalker', 250, true)">Купить</button>
+        <div class="shop-item" id="item-cosm_c_pulse">
+          <div class="shop-item-title">🚨 Шрифты: Пульсар</div>
+          <div class="shop-item-desc">Огненно-неоновый ник, плавно пульсирующий яркостью. Излучает угрозу.</div>
+          <div class="shop-item-price">450 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_c_pulse" onclick="buyItem('cosm_c_pulse', 450, true)">Купить</button>
         </div>
         <div class="shop-item" id="item-cosm_c_pink">
-          <div class="shop-item-title">Цвет: Неоново-Розовый ник</div>
-          <div class="shop-item-desc">Перекрашивает ваш шрифт в списке экипажа в яркий неоновый кислотно-розовый цвет.</div>
-          <div class="shop-item-price">400 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_pink" onclick="buyItem('cosm_c_pink', 400, true)">Купить</button>
+          <div class="shop-item-title">Цвет: Неоново-Розовый</div>
+          <div class="shop-item-desc">Перекрашивает ваш шрифт в ядовито-розовый цвет.</div>
+          <div class="shop-item-price">300 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_c_pink" onclick="buyItem('cosm_c_pink', 300, true)">Купить</button>
         </div>
         <div class="shop-item" id="item-cosm_c_blue">
-          <div class="shop-item-title">Цвет: Электрический Синий ник</div>
-          <div class="shop-item-desc">Перекрашивает ваш шрифт в списке экипажа в яркий цвет высоковольтной дуги.</div>
-          <div class="shop-item-price">400 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_blue" onclick="buyItem('cosm_c_blue', 400, true)">Купить</button>
+          <div class="shop-item-title">Цвет: Электрический Синий</div>
+          <div class="shop-item-desc">Шрифт цвета высоковольтной дуги.</div>
+          <div class="shop-item-price">300 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_c_blue" onclick="buyItem('cosm_c_blue', 300, true)">Купить</button>
+        </div>
+
+        <div class="shop-item" id="item-cosm_t_rebel">
+          <div class="shop-item-title">Префикс: [МЯТЕЖНИК]</div>
+          <div class="shop-item-desc">Добавляет статус перед вашим именем.</div>
+          <div class="shop-item-price">200 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_t_rebel" onclick="buyItem('cosm_t_rebel', 200, true)">Купить</button>
         </div>
       </div>
     </div>
@@ -262,148 +376,33 @@
     <div class="network-grid">
       <div class="panel">
         <div class="panel-title">Инициализировать Убежище</div>
-        <div class="form-group">
-          <label>Количество участников</label>
-          <select id="sel-player-limit">
-            <option value="2">2 Игрока (1 выживший)</option>
-            <option value="4">4 Игрока (2 выживших)</option>
-            <option value="6">6 Игроков (3 выживших)</option>
-            <option value="8">8 Игроков (4 выживших)</option>
-            <option value="10">10 Игроков (5 выживших)</option>
-          </select>
+        <button class="btn" onclick="initP2P('host')">Занять Бункер</button>
+        <div id="host-share-zone" style="display:none; margin-top:15px; text-align:center;">
+          <div id="bunker-code-txt" style="font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--orange); font-weight:bold; margin-bottom:10px;">-----</div>
+          <button class="btn btn-sm btn-accent" onclick="hostStartGame()">Запустить Игру</button>
         </div>
-        <button class="btn" id="btn-host-init" onclick="initP2P('host')">Занять Бункер</button>
-        
-        <div id="host-share-zone" style="display:none; margin-top:15px; background:#000; padding:12px; border-radius:6px; text-align:center;">
-          <label>Передай этот код выжившим:</label>
-          <div id="bunker-code-txt" style="font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--orange); font-weight:bold; margin:5px 0 10px;">-----</div>
-          <div id="lobby-players-list" style="font-size:0.85rem; background:#050508; padding:8px; margin-bottom:10px; max-height:100px; overflow-y:auto; text-align:left;"></div>
-          <button class="btn btn-sm btn-accent" style="width:100%; margin-bottom:10px;" onclick="hostStartGame()">Запустить Игру</button>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">Подключить терминал шлюза</div>
-        <div class="form-group">
-          <label>Секретный код Бункера</label>
-          <input type="text" id="inp-target-id" placeholder="Вставьте ID хоста...">
-        </div>
-        <button class="btn" onclick="initP2P('client')">Открыть Шлюз</button>
-        <div id="client-wait-msg" style="display:none; margin-top:15px; color:var(--orange); font-weight:bold; text-align:center;">ОЖИДАНИЕ СТАРТА ИГРЫ ХОСТОМ...</div>
       </div>
     </div>
   </div>
 
   <div id="scr-game" class="screen hidden">
-    <div class="global-status">
-      <div style="color:var(--orange); font-family:'Orbitron', sans-serif; font-size:0.9rem; text-transform:uppercase;">⚠ Экстренный протокол: Земля уничтожена</div>
-      <div id="world-disaster-text" style="font-size:0.95rem; font-weight:bold; margin-top:5px; color:#fff;">Сканирование атмосферы...</div>
-      <div id="bunker-condition-text" style="font-size:0.8rem; color:var(--grey-text); margin-top:4px;">Особые условия бункера: загрузка...</div>
-      <div id="bunker-time-text" style="font-size:0.9rem; color:var(--neon-blue); font-weight:bold; margin-top:4px; text-transform:uppercase;">СРОК ЖИЗНЕОБЕСПЕЧЕНИЯ: ЗАГРУЗКА...</div>
+    <div class="panel" style="margin-bottom:20px;">
+      <div class="panel-title">Ваше Досье Выжившего</div>
+      <div class="character-sheet" id="char-sheet-box"></div>
     </div>
-
-    <div class="game-layout">
-      <div>
-        <div class="panel" style="margin-bottom:20px;">
-          <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>Ваше Досье Выжившего</span>
-            <span id="my-name-badge" style="font-size:0.8rem; color:var(--grey-text);">---</span>
-          </div>
-          <div class="character-sheet" id="char-sheet-box"></div>
-          <div class="action-cards-box">
-            <label>Ваши оперативные карты действий и модификаторы:</label>
-            <div class="action-deck" id="action-deck-box"></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-            <span>Мониторинг Экипажа Убежища (<span id="total-surv-count">0</span>)</span>
-            <div id="host-voting-controls"></div>
-          </div>
-          <div id="current-vote-alert" style="background:#1b120c; border:1px solid #ff7700; color:#ffaa55; font-size:0.8rem; padding:6px 12px; margin-bottom:10px; border-radius:4px; display:none; text-align:center; font-weight:bold; text-transform:uppercase;">🚨 ОТКРЫТО ОБЩЕЕ СИНХРОННОЕ ГОЛОСОВАНИЕ! СДЕЛАЙТЕ СВОЙ ВЫБОР В СПИСКЕ НИЖЕ</div>
-          <div class="terminal-box" id="players-terminal-list"></div>
-        </div>
-      </div>
-
-      <div class="gui-sidebar">
-        <div class="flask-container" id="flask-o2-box">
-          <div class="flask-glass"><div class="flask-liquid" id="f-liq-o2" style="height:100%;"></div></div>
-          <div class="flask-info"><div class="flask-title">Фильтрация O₂</div><div class="flask-val" id="f-txt-o2">НОРМА</div></div>
-        </div>
-        <div class="flask-container" id="flask-power-box">
-          <div class="flask-glass"><div class="flask-liquid" id="f-liq-power" style="height:100%;"></div></div>
-          <div class="flask-info"><div class="flask-title">Ядро питания</div><div class="flask-val" id="f-txt-power">100%</div></div>
-        </div>
-        <div class="flask-container" id="flask-temp-box">
-          <div class="flask-glass"><div class="flask-liquid" id="f-liq-temp" style="height:50%;"></div></div>
-          <div class="flask-info"><div class="flask-title">Термостат</div><div class="flask-val" id="f-txt-temp">+22°C</div></div>
-        </div>
-      </div>
+    <div class="panel">
+      <div class="panel-title">Мониторинг Экипажа Убежища</div>
+      <div class="terminal-box" id="players-terminal-list"></div>
     </div>
   </div>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us10Uocp2iuser6I",
-    authDomain: "the-bunker-96d5c.firebaseapp.com",
-    databaseURL: "https://the-bunker-96d5c-default-rtdb.firebaseio.com",
-    projectId: "the-bunker-96d5c",
-    storageBucket: "the-bunker-96d5c.firebasestorage.app",
-    messagingSenderId: "481257011457",
-    appId: "1:481257011457:web:b60b5a1f62d17af1520300",
-    measurementId: "G-ZSR970PRMR"
-  };
-  
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-  const auth = firebase.auth();
-
   let currentUser = null, userCoins = 0, userEmailClean = "";
-  let userActiveItems = []; // Расходники на 1 раунд
-  let userOwnedCosmetics = []; // Купленная косметика навсегда
-  let userEquippedCosmetics = { avatar: '', title: '', color: '' }; // Надетая косметика
+  let userActiveItems = [];
+  let userOwnedCosmetics = []; 
+  let userEquippedCosmetics = { avatar: '', title: '', color: '' }; 
 
-  let peer = null, conn = null, connections = [];
-  let myRole = '', myName = 'Выживший', gameConfig = null, myPeerId = '';
-  let activePlayers = [];
-  let votingActive = false, hasVoted = false;
-
-  const genders = ["Мужчина", "Женщина"];
-  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Военный связист", "Программист ИИ", "Охранник-кинолог", "Шеф-повар", "Психолог МЧС", "Спецназовец", "Электрик шлюза", "Гидрогеолог", "Шахтёр-взрывотехник", "Пилот разведывательного дрона"];
-  const healthBad = ["Туберкулёз (Тяжёлая стадия)", "Открытая лёгочная инфекция (Заразно)", "Тяжелая форма астмы (Испорчен воздух)", "Хроническая пневмония (Повреждены лёгкие)"];
-  const healthNormal = ["Абсолютно здоров", "Сломана левая рука", "Слепота на левый глаз", "Хронический гастрит", "Легкое заикание", "Аллергия на пыль", "Шрам через все лицо"];
-  const hobbies = ["Охота и стрельба", "Гидропоника дома", "Экстремальная медицина", "Радиолюбитель", "Картография", "Коллекционирование ножей", "Боевые искусства", "Игра на гитаре", "Взлом замков", "Создание самодельных фильтров"];
-  const phobias = ["Клаустрофобия", "Ахлуофобия (Страх темноты)", "Гермофобия", "Никтофобия", "Страх остаться одному"];
-  const traits = ["Эгоизм", "Вспыльчивость", "Эмпатия (всегда помогает слабым)", "Гиперответственность", "Жадность", "Хладнокровие", "Лидерские качества", "Трусость"];
-  const baggages = ["Армейская аптечка", "Набор презизионных инструментов", "Фляга чистого спирта (5л)", "Запас семян пшеницы", "Дробовик с 3 патронами", "Защищенный ноутбук", "Газовый резак", "Счетчик Гейгера", "Портативная рация"];
-  const contrabandBaggages = ["Тяжелый пулемет «Корд»", "Армейский сухпаек НАТО на 5 лет", "Противорадиационный экзоскелет", "Хирургический лазерный комплекс"];
-  const secrets = ["Шпион враждебной группировки", "Бесплоден", "Скрывает запасы еды", "Гениальный изобретатель", "Знает пароль от оружейной", "Бывший заключенный за саботаж"];
-  
-  const disasters = [
-    { title: "Ядерная зима", temp: "-45°C", style: "cold", desc: "Планета скована многовековым льдом." },
-    { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger", desc: "Атмосфера выжжена радиацией." },
-    { title: "Падение Ледяного Осколка", temp: "-20°C", style: "cold", desc: "Постоянные метели." },
-    { title: "Прорыв магматических разломов", temp: "+40°C", style: "danger", desc: "Воздух отравлен серой." }
-  ];
-  const bunkerConditions = [
-    "Гидропонный отсек затоплен. Ограничен запас пищи.",
-    "Система очистки воды работает на резервных батареях.",
-    "В бункере всего половина спальных мест."
-  ];
-
-  let dynamicActionCardsPool = [
-    "Украсть багаж соседа справа", "Узнать секретный факт игрока", "Сменить профессию на случайную", "Уничтожить багаж любого игрока",
-    "Принудительно вскрыть здоровье соседа", "Поменять местами хобби двух выживших", "Заставить игрока зачитать его страх", 
-    "Скрытый датчик: узнать точный возраст любого игрока", "Заразить багаж соседа плесенью", "Забаррикадировать дверь: лишить игрока слова"
-  ];
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-  }
+  let peer = null, myRole = '', myName = 'Выживший', activePlayers = [];
 
   function navigate(fromId, toId) {
     document.getElementById(fromId).classList.add('hidden');
@@ -421,13 +420,19 @@
     document.getElementById('shop-grid-cosmetics').classList.toggle('hidden', tab !== 'cosmetics');
   }
 
+  function toggleProfileModal(show) {
+    const modal = document.getElementById('profile-modal');
+    if(show) { modal.classList.add('active'); renderProfileModalContent(); } 
+    else { modal.classList.remove('active'); }
+  }
+
+  // СВЯЗЬ С FIREBASE
   auth.onAuthStateChanged((user) => {
     if (user) {
       currentUser = user;
       userEmailClean = user.email.replace(/\./g, '_');
       document.getElementById('auth-form').style.display = 'none';
       document.getElementById('auth-user-status').style.display = 'block';
-      document.getElementById('user-display-email').innerText = user.email;
       
       db.ref('users/' + userEmailClean).on('value', (snap) => {
         const data = snap.val() || {};
@@ -436,17 +441,11 @@
         userOwnedCosmetics = data.ownedCosmetics || [];
         userEquippedCosmetics = data.equippedCosmetics || { avatar: '', title: '', color: '' };
         
-        document.getElementById('user-display-coins').innerText = userCoins;
         document.getElementById('shop-balance-holder').innerText = userCoins;
-        
         updateShopCardsUI();
-        updateMenuCosmeticsPreview();
+        updateInterfaceAvatars();
+        if(document.getElementById('profile-modal').classList.contains('active')) renderProfileModalContent();
       });
-    } else {
-      currentUser = null;
-      document.getElementById('auth-form').style.display = 'block';
-      document.getElementById('auth-user-status').style.display = 'none';
-      document.getElementById('active-cosmetics-preview').innerText = "Вход не выполнен.";
     }
   });
 
@@ -454,417 +453,130 @@
     const email = document.getElementById('inp-email').value.trim();
     const pass = document.getElementById('inp-pass').value.trim();
     if(!email || !pass) return alert('Заполните поля!');
-
     if(type === 'register') {
       auth.createUserWithEmailAndPassword(email, pass).then((cred) => {
         let clean = cred.user.email.replace(/\./g, '_');
-        db.ref('users/' + clean).set({ coins: 0, items: [], ownedCosmetics: [], equippedCosmetics: { avatar: '', title: '', color: '' } });
-        alert('Успешная регистрация аккаунта!');
-      }).catch(err => alert('Ошибка регистрации: ' + err.message));
-    } else {
-      auth.signInWithEmailAndPassword(email, pass).catch(err => alert('Ошибка входа: ' + err.message));
-    }
+        db.ref('users/' + clean).set({ coins: 1000, items: [], ownedCosmetics: [], equippedCosmetics: { avatar: '', title: '', color: '' } });
+      });
+    } else { auth.signInWithEmailAndPassword(email, pass); }
   }
 
-  function logout() { auth.signOut(); }
+  function logout() { auth.signOut(); window.location.reload(); }
 
-  function updateMenuCosmeticsPreview() {
-    let avIcon = userEquippedCosmetics.avatar === 'cosm_av_drone' ? '🤖' : (userEquippedCosmetics.avatar === 'cosm_av_bio' ? '☣' : (userEquippedCosmetics.avatar === 'cosm_av_skull' ? '💀' : '👤'));
-    let tText = userEquippedCosmetics.title === 'cosm_t_rebel' ? '[МЯТЕЖНИК]' : (userEquippedCosmetics.title === 'cosm_t_stalker' ? '[ПРИЗРАК]' : '');
-    let cStyle = userEquippedCosmetics.color === 'cosm_c_pink' ? 'color: var(--neon-pink);' : (userEquippedCosmetics.color === 'cosm_c_blue' ? 'color: var(--neon-blue);' : 'color: var(--white);');
+  function updateInterfaceAvatars() {
+    const cornerBox = document.getElementById('corner-avatar-placeholder');
+    const bigBox = document.getElementById('profile-avatar-big-box');
+    let avatarHTML = '<span>👤</span>';
+    if(currentUser && userEquippedCosmetics.avatar) {
+      avatarHTML = `<img src="${userEquippedCosmetics.avatar}" alt="av">`;
+    }
+    if(cornerBox) cornerBox.innerHTML = avatarHTML;
+    if(bigBox) bigBox.innerHTML = avatarHTML;
+    if(currentUser) myName = currentUser.email.split('@')[0];
+  }
 
-    document.getElementById('active-cosmetics-preview').innerHTML = `
-      Текущий аватар: <span style="font-size:1.2rem;">${avIcon}</span><br>
-      Текущий титул: <span style="color:var(--orange); font-weight:bold;">${tText || 'Нет'}</span><br>
-      Шрифт никнейма: <span style="${cStyle} font-weight:bold;">${myName}</span>
-    `;
+  // ДИНАМИЧЕСКИЙ КНОПКИ КАСТОМИЗАЦИИ В МОДАЛКЕ
+  function renderProfileModalContent() {
+    if(!currentUser) return;
+    document.getElementById('profile-user-email').innerText = currentUser.email;
+    document.getElementById('profile-user-coins').innerText = userCoins;
+
+    // Аватарки
+    const optionsGrid = document.getElementById('modal-avatar-options');
+    let avOwned = userOwnedCosmetics.filter(id => id.startsWith('http://') || id.startsWith('https://'));
+    optionsGrid.innerHTML = avOwned.map(url => `
+      <div class="avatar-option-card ${userEquippedCosmetics.avatar === url ? 'active' : ''}" onclick="equipCosmetic('${url}', 'avatar')">
+        <img src="${url}">
+      </div>
+    `).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных аватарок</div>';
+
+    // Титулы
+    const titlesGrid = document.getElementById('modal-titles-options');
+    let titlesOwned = userOwnedCosmetics.filter(id => id.startsWith('cosm_t_'));
+    titlesGrid.innerHTML = titlesOwned.map(tId => {
+      let tName = tId === 'cosm_t_rebel' ? '[МЯТЕЖНИК]' : '[ПРИЗРАК]';
+      return `<div class="cosm-row-item ${userEquippedCosmetics.title === tId ? 'active' : ''}" onclick="equipCosmetic('${tId}', 'title')"><span>${tName}</span></div>`;
+    }).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных префиксов</div>';
+
+    // Цвета и Шрифты
+    const colorsGrid = document.getElementById('modal-colors-options');
+    let colorsOwned = userOwnedCosmetics.filter(id => id.startsWith('cosm_c_'));
+    colorsGrid.innerHTML = colorsOwned.map(cId => {
+      let cName = 'Обычный';
+      let previewClass = '';
+      if(cId === 'cosm_c_pink') { cName = 'Розовый'; previewClass = 'fx-pink'; }
+      if(cId === 'cosm_c_blue') { cName = 'Синий'; previewClass = 'fx-blue'; }
+      if(cId === 'cosm_c_rgb') { cName = '🌈 RGB Перелив'; previewClass = 'fx-rgb'; }
+      if(cId === 'cosm_c_pulse') { cName = '🚨 Пульсар'; previewClass = 'fx-pulse'; }
+      return `<div class="cosm-row-item ${userEquippedCosmetics.color === cId ? 'active' : ''}" onclick="equipCosmetic('${cId}', 'color')"><span class="${previewClass}">${cName}</span></div>`;
+    }).join('') || '<div style="font-size:0.7rem;color:var(--grey-text)">Нет купленных эффектов</div>';
   }
 
   function updateShopCardsUI() {
-    // Обновляем расходники
-    document.querySelectorAll('#shop-grid-upgrades .shop-item').forEach(card => card.classList.remove('purchased'));
     userActiveItems.forEach(itemKey => {
       const card = document.getElementById('item-' + itemKey);
       if(card) card.classList.add('purchased');
     });
 
-    // Обновляем косметику
     document.querySelectorAll('#shop-grid-cosmetics .shop-item').forEach(card => {
       const id = card.id.replace('item-', '');
       const btn = document.getElementById('btn-cosm-' + id);
-      
-      if(userOwnedCosmetics.includes(id)) {
+      let checkKey = id; 
+      if(id === 'cosm_av_drone') checkKey = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=150';
+
+      if(userOwnedCosmetics.includes(checkKey)) {
         card.classList.add('purchased');
-        
-        // Проверяем, надета ли она
-        let isEquipped = (userEquippedCosmetics.avatar === id || userEquippedCosmetics.title === id || userEquippedCosmetics.color === id);
-        if(isEquipped) {
-          btn.innerText = "Надето";
-          btn.style.background = "var(--neon-blue)";
-          btn.disabled = true;
-        } else {
-          btn.innerText = "Надеть";
-          btn.style.background = "var(--orange)";
-          btn.disabled = false;
-          btn.setAttribute('onclick', `equipCosmetic('${id}')`);
-        }
+        btn.innerText = "Куплено"; btn.disabled = true;
       }
     });
   }
 
-  function buyItem(itemKey, price, isCosmetic = false) {
-    if(!currentUser) return alert('Сначала войдите в систему аккаунтов!');
-    if(!isCosmetic && userActiveItems.includes(itemKey)) return alert('Этот модификатор уже активен на следующий раунд!');
-    if(isCosmetic && userOwnedCosmetics.includes(itemKey)) return alert('Вы уже приобрели эту деталь кастомизации!');
-    if(userCoins < price) return alert('Недостаточно Кибер-Коинов!');
+  function buyItem(itemKey, price, isCosmetic = false, directUrl = '') {
+    if(!currentUser) return alert('Войдите в систему!');
+    let saveKey = isCosmetic && directUrl ? directUrl : itemKey;
+    if(userCoins < price) return alert('Недостаточно коинов!');
 
     db.ref('users/' + userEmailClean).transaction((userData) => {
-      if (userData) {
-        if (userData.coins >= price) {
-          userData.coins -= price;
-          if(isCosmetic) {
-            if(!userData.ownedCosmetics) userData.ownedCosmetics = [];
-            userData.ownedCosmetics.push(itemKey);
-          } else {
-            if(!userData.items) userData.items = [];
-            userData.items.push(itemKey);
-          }
+      if (userData && userData.coins >= price) {
+        userData.coins -= price;
+        if(isCosmetic) {
+          if(!userData.ownedCosmetics) userData.ownedCosmetics = [];
+          userData.ownedCosmetics.push(saveKey);
+        } else {
+          if(!userData.items) userData.items = [];
+          userData.items.push(saveKey);
         }
       }
       return userData;
-    }, (error, committed) => { if(committed) alert(isCosmetic ? 'Косметика добавлена в гардероб!' : 'Улучшение готово к раунду!'); });
-  }
-
-  function equipCosmetic(id) {
-    let type = id.startsWith('cosm_av_') ? 'avatar' : (id.startsWith('cosm_t_') ? 'title' : 'color');
-    db.ref('users/' + userEmailClean + '/equippedCosmetics/' + type).set(id);
-  }
-
-  function consumeUserItemsInDB() {
-    if(currentUser && userEmailClean) {
-      db.ref('users/' + userEmailClean + '/items').set([]);
-    }
-  }
-
-  function createCharacterData(modifiers = []) {
-    let isSick = Math.random() < 0.35;
-    if(modifiers.includes('health_serum')) isSick = false;
-
-    const health = isSick ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
-    let baggage = baggages[Math.floor(Math.random() * baggages.length)];
-    if(modifiers.includes('contraband')) baggage = contrabandBaggages[Math.floor(Math.random() * contrabandBaggages.length)];
-
-    const age = Math.floor(Math.random() * (70 - 18 + 1)) + 18;
-    const genderBase = genders[Math.floor(Math.random() * genders.length)];
-
-    let card1 = dynamicActionCardsPool.pop() || "⚡ Срочный ремонт вентиляции";
-    let card2 = dynamicActionCardsPool.pop() || "⚡ Защитный протокол шлюза";
-
-    return {
-      gender: `${genderBase}, ${age} лет`,
-      ageRaw: age,
-      prof: professions[Math.floor(Math.random() * professions.length)],
-      health: health,
-      hobby: hobbies[Math.floor(Math.random() * hobbies.length)],
-      phobia: phobias[Math.floor(Math.random() * phobias.length)],
-      trait: traits[Math.floor(Math.random() * traits.length)],
-      baggage: baggage,
-      secret: secrets[Math.floor(Math.random() * secrets.length)],
-      isAirPolluter: modifiers.includes('cyber_heart') ? false : isSick,
-      kicked: false,
-      modifiers: modifiers,
-      cards: { card1, card2 }
-    };
-  }
-
-  function renderCharacter(char) {
-    const box = document.getElementById('char-sheet-box');
-    if(!box || !char) return;
-    const fields = [
-      { l: "Пол и Возраст", v: char.gender }, { l: "Профессия", v: char.prof },
-      { l: "Состояние здоровья", v: char.health }, { l: "Хобби / Увлечение", v: char.hobby },
-      { l: "Страх / Фобия", v: char.phobia }, { l: "Человеческое качество", v: char.trait },
-      { l: "Багаж (Инвентарь)", v: char.baggage }, { l: "Секретный факт", v: char.secret }
-    ];
-    box.innerHTML = fields.map(f => `<div class="trait-card"><label>${f.l}</label><div class="trait-value">${f.v}</div></div>`).join('');
-    
-    let deckHTML = `
-      <div class="action-mini-card">⚡ Карта 1: ${char.cards.card1}</div>
-      <div class="action-mini-card">⚡ Карта 2: ${char.cards.card2}</div>
-      <div class="action-mini-card cancel">🛡 Карта Отмены: БЛОК ДЕЙСТВИЯ</div>
-    `;
-    if(char.modifiers.includes('shield_protocol')) {
-      deckHTML += `<div class="action-mini-card active-item" style="border-color:var(--neon-blue); color:var(--neon-blue);">🛡 Иммунитет 1 раунда</div>`;
-    }
-    document.getElementById('action-deck-box').innerHTML = deckHTML;
-  }
-
-  function initP2P(role) {
-    myRole = role;
-    shuffleArray(dynamicActionCardsPool);
-
-    if(currentUser) {
-      myName = currentUser.email.split('@')[0];
-    } else {
-      myName = role === 'host' ? 'Смотритель' : 'Выживший_' + Math.floor(Math.random()*900);
-    }
-
-    if(role === 'host') {
-      const maxP = parseInt(document.getElementById('sel-player-limit').value);
-      const disaster = disasters[Math.floor(Math.random() * disasters.length)];
-      const isolationYears = [3, 5, 10, 15, 25][Math.floor(Math.random() * 5)];
-
-      gameConfig = {
-        disaster: disaster,
-        condition: bunkerConditions[Math.floor(Math.random() * bunkerConditions.length)],
-        energy: [60, 80, 100][Math.floor(Math.random() * 3)],
-        maxPlayers: maxP,
-        targetSurvivors: Math.max(1, Math.floor(maxP / 2)),
-        isolationYears: isolationYears
-      };
-
-      peer = new Peer();
-      peer.on('open', (id) => {
-        myPeerId = 'Host';
-        document.getElementById('bunker-code-txt').innerText = id;
-        document.getElementById('host-share-zone').style.display = 'block';
-        document.getElementById('btn-host-init').style.display = 'none';
-        
-        let myChar = createCharacterData(userActiveItems);
-        consumeUserItemsInDB();
-
-        activePlayers.push({ 
-          id: 'Host', name: myName, emailClean: userEmailClean || 'none', role: 'host', 
-          char: myChar, kicked: false, votesReceived: 0,
-          cosmetics: userEquippedCosmetics 
-        });
-        
-        renderCharacter(myChar);
-        applyWorldConfig(gameConfig);
-        updateHostLobbyUI();
-      });
-
-      peer.on('connection', (c) => {
-        if(connections.length >= gameConfig.maxPlayers - 1) return;
-        connections.push(c);
-        c.on('data', (pack) => {
-          if(pack.type === 'join') {
-            let clientChar = createCharacterData(pack.items || []);
-            activePlayers.push({ 
-              id: c.peer, name: pack.name, emailClean: pack.emailClean, role: 'client', 
-              char: clientChar, kicked: false, votesReceived: 0,
-              cosmetics: pack.cosmetics || { avatar: '', title: '', color: '' }
-            });
-            updateHostLobbyUI();
-          }
-          if(pack.type === 'submit-vote') {
-            let target = activePlayers.find(p => p.id === pack.targetId);
-            if(target) target.votesReceived++;
-            hostSyncVoteState();
-          }
-        });
-      });
-    } else {
-      const tId = document.getElementById('inp-target-id').value.trim();
-      if(!tId) return alert('Введите код бункера!');
-
-      peer = new Peer();
-      peer.on('open', (id) => {
-        myPeerId = id;
-        conn = peer.connect(tId);
-        conn.on('open', () => {
-          conn.send({ type: 'join', name: myName, emailClean: userEmailClean || 'none', items: userActiveItems, cosmetics: userEquippedCosmetics });
-          consumeUserItemsInDB();
-          document.getElementById('client-wait-msg').style.display = 'block';
-        });
-        
-        conn.on('data', (pack) => {
-          if(pack.type === 'init-game') {
-            renderCharacter(pack.char);
-            applyWorldConfig(pack.config);
-            gameConfig = pack.config;
-            document.getElementById('my-name-badge').innerText = myName;
-            navigate('scr-network', 'scr-game');
-          }
-          if(pack.type === 'sync') {
-            activePlayers = pack.players;
-            votingActive = pack.votingActive;
-            renderPlayersTerminal();
-            checkOxygenStatus();
-          }
-          if(pack.type === 'game-end') showGameOver(pack.msg);
-        });
-      });
-    }
-  }
-
-  function updateHostLobbyUI() {
-    document.getElementById('lobby-players-list').innerHTML = activePlayers.map((p, i) => `${i+1}. ${p.name}`).join('<br>');
-  }
-
-  function hostStartGame() {
-    connections.forEach(c => {
-      if(c.open) {
-        let pData = activePlayers.find(p => p.id === c.peer);
-        if(pData) c.send({ type: 'init-game', char: pData.char, config: gameConfig });
-      }
     });
-    document.getElementById('host-voting-controls').innerHTML = `<button class="btn btn-sm btn-accent" id="btn-toggle-vote" onclick="hostToggleVoting()">🚨 Запустить голосование</button>`;
-    navigate('scr-network', 'scr-game');
-    syncAll();
   }
 
-  function applyWorldConfig(cfg) {
-    if(!cfg) return;
-    document.getElementById('world-disaster-text').innerText = `КАТАСТРОФА: ${cfg.disaster.title} (${cfg.disaster.desc})`;
-    document.getElementById('bunker-condition-text').innerText = `Условия систем: ${cfg.condition}`;
-    document.getElementById('bunker-time-text').innerText = `⏳ СРОК ИЗОЛЯЦИИ ЭКИПАЖА В БУНКЕРЕ: ${cfg.isolationYears} ЛЕТ`;
-    document.getElementById('f-txt-temp').innerText = cfg.disaster.temp;
-    document.getElementById('flask-temp-box').className = "flask-container " + cfg.disaster.style;
-    document.getElementById('f-txt-power').innerText = cfg.energy + "%";
-    document.getElementById('f-liq-power').style.height = cfg.energy + "%";
+  function equipCosmetic(id, type) {
+    let newVal = userEquippedCosmetics[type] === id ? '' : id;
+    db.ref('users/' + userEmailClean + '/equippedCosmetics/' + type).set(newVal);
   }
 
-  function checkOxygenStatus() {
-    if(!gameConfig) return;
-    let baseLoad = 0;
-    activePlayers.filter(p => !p.kicked).forEach(p => {
-      if(p.char) {
-        if(p.char.isAirPolluter) baseLoad += 30;
-        if(p.char.ageRaw + gameConfig.isolationYears > 73) baseLoad += 20;
-      }
-    });
-
-    const o2Box = document.getElementById('flask-o2-box');
-    const o2Liq = document.getElementById('f-liq-o2');
-    const o2Txt = document.getElementById('f-txt-o2');
-    let currentO2Height = Math.max(10, 100 - baseLoad);
-
-    if(currentO2Height < 55) {
-      if(o2Box) o2Box.className = "flask-container danger";
-      if(o2Liq) o2Liq.style.height = currentO2Height + "%";
-      if(o2Txt) o2Txt.innerText = `КРИТ`;
-    } else {
-      if(o2Box) o2Box.className = "flask-container";
-      if(o2Liq) o2Liq.style.height = currentO2Height + "%";
-      if(o2Txt) o2Txt.innerText = "НОРМА";
-    }
-  }
-
-  function hostToggleVoting() {
-    if(myRole !== 'host') return;
-    if(!votingActive) {
-      votingActive = true;
-      hasVoted = false;
-      activePlayers.forEach(p => p.votesReceived = 0);
-      document.getElementById('btn-toggle-vote').innerText = "🛑 Закончить выбор и выгнать";
-      document.getElementById('btn-toggle-vote').style.borderColor = "var(--neon-red)";
-    } else {
-      votingActive = false;
-      document.getElementById('btn-toggle-vote').innerText = "🚨 Запустить голосование";
-      document.getElementById('btn-toggle-vote').style.borderColor = "var(--orange)";
-      hostExecuteExile();
-    }
-    syncAll();
-  }
-
-  function hostExecuteExile() {
-    let alive = activePlayers.filter(p => !p.kicked);
-    if(alive.length === 0) return;
-    let maxVotes = -1, targetToKick = null;
-    alive.forEach(p => { if(p.votesReceived > maxVotes) { maxVotes = p.votesReceived; targetToKick = p; } });
-
-    if(targetToKick && maxVotes > 0) {
-      targetToKick.kicked = true;
-      alert(`Из бункера изгнан: ${targetToKick.name} (Голосов: ${maxVotes})`);
-    }
-  }
-
-  function castVote(targetId) {
-    if(hasVoted) return alert("Вы уже проголосовали!");
-    hasVoted = true;
-    if(myRole === 'host') {
-      let target = activePlayers.find(p => p.id === targetId);
-      if(target) target.votesReceived++;
-      syncAll();
-    } else {
-      if(conn && conn.open) conn.send({ type: 'submit-vote', targetId: targetId });
-    }
-    renderPlayersTerminal();
-  }
-
-  function hostSyncVoteState() { if(myRole === 'host') syncAll(); }
-
-  // ОТРИСОВКА ИГРОКОВ С УЧЕТОМ СИНХРОНИЗИРОВАННОЙ КОСМЕТИКИ И АВАТАРОК
+  // КОРРЕКТНЫЙ ОТРЕНДЕРЕННЫЙ КЛАСС ДЛЯ НИКА В ТЕРМИНАЛЕ С ТИТУЛОМ С КЛИЕНТА
   function renderPlayersTerminal() {
     const box = document.getElementById('players-terminal-list');
     if(!box) return;
-    
-    const alertBox = document.getElementById('current-vote-alert');
-    if(alertBox) alertBox.style.display = votingActive ? 'block' : 'none';
-
-    const aliveCount = activePlayers.filter(p => !p.kicked).length;
-    document.getElementById('total-surv-count').innerText = `${aliveCount}/${gameConfig ? gameConfig.maxPlayers : activePlayers.length}`;
-
     box.innerHTML = activePlayers.map(p => {
-      let voteBtnHTML = '';
-      if(votingActive && !p.kicked && !hasVoted) {
-        voteBtnHTML = `<button class="btn btn-sm" style="border-color:var(--orange); color:var(--orange);" onclick="castVote('${p.id}')">Выбрать</button>`;
-      }
-      let voteCounters = votingActive ? `<span style="color:var(--grey-text); font-size:0.75rem; margin-right:10px;">[Голосов: ${p.votesReceived}]</span>` : '';
-
-      // Парсинг косметики
-      let c = p.cosmetics || { avatar: '', title: '', color: '' };
-      let avHTML = c.avatar === 'cosm_av_drone' ? '🤖' : (c.avatar === 'cosm_av_bio' ? '☣' : (c.avatar === 'cosm_av_skull' ? '💀' : '👤'));
-      let titleHTML = c.title === 'cosm_t_rebel' ? `<span class="p-title" style="border: 1px solid var(--neon-red); color: var(--neon-red);">МЯТЕЖНИК</span>` : (c.title === 'cosm_t_stalker' ? `<span class="p-title" style="border: 1px solid var(--neon-blue); color: var(--neon-blue);">ПРИЗРАК</span>` : '');
+      let titleHTML = p.cosmetics?.title === 'cosm_t_rebel' ? `<span class="p-title">[МЯТЕЖНИК]</span>` : '';
       
-      let nameStyle = 'color: var(--white);';
-      if(c.color === 'cosm_c_pink') nameStyle = 'color: var(--neon-pink); font-weight: bold; text-shadow: 0 0 5px rgba(255,0,127,0.3);';
-      if(c.color === 'cosm_c_blue') nameStyle = 'color: var(--neon-blue); font-weight: bold; text-shadow: 0 0 5px rgba(0,191,255,0.3);';
+      // Определяем класс анимации шрифта
+      let fxClass = '';
+      if(p.cosmetics?.color === 'cosm_c_pink') fxClass = 'fx-pink';
+      if(p.cosmetics?.color === 'cosm_c_blue') fxClass = 'fx-blue';
+      if(p.cosmetics?.color === 'cosm_c_rgb') fxClass = 'fx-rgb';
+      if(p.cosmetics?.color === 'cosm_c_pulse') fxClass = 'fx-pulse';
 
+      let avHTML = p.cosmetics?.avatar ? `<img class="p-avatar-img" src="${p.cosmetics.avatar}">` : `<span class="p-avatar-emoji">👤</span>`;
       return `
-        <div class="player-row ${p.kicked ? 'exiled' : ''}">
-          <div>
-            <span class="p-avatar">${avHTML}</span>
-            ${titleHTML}
-            <span style="${nameStyle}">${p.name}</span>
-          </div>
-          <div>
-            ${voteCounters}
-            ${voteBtnHTML}
-            ${p.kicked ? `<span style="color:var(--neon-red); font-size:0.75rem; font-weight:bold;">☠ КИКНУТ</span>` : `<span style="color:var(--neon-green); font-size:0.75rem;">В СЕТИ</span>`}
-          </div>
-        </div>
-      `;
+        <div class="player-row">
+          <div>${avHTML}${titleHTML}<span class="${fxClass}">${p.name}</span></div>
+          <span style="font-size:0.75rem; color:var(--grey-text);">${p.prof || 'Подключение...'}</span>
+        </div>`;
     }).join('');
-  }
-
-  function syncAll() {
-    renderPlayersTerminal();
-    checkOxygenStatus();
-    connections.forEach(c => { if(c.open) c.send({ type: 'sync', players: activePlayers, votingActive: votingActive }); });
-
-    const remaining = activePlayers.filter(p => !p.kicked);
-    if(gameConfig && remaining.length === gameConfig.targetSurvivors && myRole === 'host') {
-      remaining.forEach(p => {
-        if(p.emailClean && p.emailClean !== 'none' && !p.kicked) {
-          db.ref('users/' + p.emailClean + '/coins').transaction((current) => { return (current || 0) + 100; });
-        }
-      });
-      let msg = `Выжили в изоляции бункера: ` + remaining.map(p => p.name).join(', ') + `. Победителям начислено по +100 коинов!`;
-      connections.forEach(c => c.open && c.send({ type: 'game-end', msg: msg }));
-      showGameOver(msg);
-    }
-  }
-
-  function showGameOver(msg) {
-    document.body.innerHTML = `
-      <div class="screen fade-in" style="text-align:center; max-width:650px; margin:auto;">
-        <div class="menu-logo" style="color:var(--neon-green);">ФИНАЛ СЕССИИ</div>
-        <div class="panel" style="margin-top:20px; border-color:var(--neon-green);"><p style="font-size:0.95rem; line-height:1.6;">${msg}</p></div>
-        <button class="btn btn-accent" style="margin-top:25px;" onclick="window.location.reload()">В меню</button>
-      </div>
-    `;
   }
 </script>
 </body>
