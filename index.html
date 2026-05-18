@@ -388,10 +388,6 @@
               <button class="btn btn-sm btn-accent" style="flex:1;" onclick="handleAuth('register')">Создать профиль</button>
             </div>
           </div>
-          <div id="auth-user-status" style="display:none; text-align: center; padding: 10px 0;">
-            <p style="font-size:0.95rem; color:var(--neon-green);">Синхронизация успешна.</p>
-            <p style="font-size:0.75rem; color: var(--grey-text); margin-top: 5px;">Профиль подключен к ядру бункера.</p>
-          </div>
         </div>
 
         <div class="panel" style="display:flex; flex-direction:column; justify-content:center; gap:12px;">
@@ -519,7 +515,7 @@
     "Падение астероида: Температура упала до -40°C. Поверхность скована льдом на десятилетие.",
     "Биологическая угроза: Вирус превращает ткани в пепел. Наземная биосфера мертва.",
     "Восстание машин: Дроны выжигают всё живое. Выживание возможно только глубоко под землей.",
-    "Solnechnaya вспышка: Сгорела вся атмосфера. Адская температура и смертоносное УФ-излучение.",
+    "Солнечная вспышка: Сгорела вся атмосфера. Адская температура и смертоносное УФ-излучение.",
     "Глобальный потоп: Вся суша ушла под воду. Бункер — это герметичная подводная капсула."
   ];
 
@@ -624,8 +620,6 @@
     } else {
       auth.createUserWithEmailAndPassword(email, pass).then(cred => {
         let clean = email.replace(/[.#$\[\]]/g, "_");
-        
-        // ПОЛНАЯ АВТОМАТИКА: Для всех по дефолту ставим обычные параметры
         let short = Math.floor(1000 + Math.random() * 9000);
 
         db.ref('users/' + clean).set({
@@ -651,8 +645,6 @@
       document.getElementById('prof-trigger').classList.add('logged-in');
       document.getElementById('drop-auth-needed').style.display = 'none';
       document.getElementById('drop-auth-logged').style.display = 'block';
-      document.getElementById('auth-form').style.display = 'none';
-      document.getElementById('auth-user-status').style.display = 'block';
 
       db.ref('users/' + emailClean).on('value', snap => {
         userData = snap.val();
@@ -686,7 +678,7 @@
             idDisplay.style.color = "var(--gold)";
             idDisplay.style.textShadow = "0 0 15px rgba(255, 215, 0, 0.8)";
             idDisplay.style.fontWeight = "900";
-            document.getElementById('tab-dev-toggle').style.display = 'block'; // открываем терминал админа
+            document.getElementById('tab-dev-toggle').style.display = 'block'; 
           } else {
             idDisplay.style.color = "var(--neon-blue)";
             idDisplay.style.textShadow = "none";
@@ -829,7 +821,7 @@
     }
   }
 
-  // --- ОСТАЛЬНОЙ ИГРОВОЙ ДВИЖОК ---
+  // --- ИГРОВОЙ ДВИЖОК ---
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
@@ -1023,7 +1015,7 @@
     if(userData && userData.muteTime) {
       let now = Date.now();
       if(userData.muteTime === "perm") {
-        alert("Ваш терминал заблокирован администратором (Перманентный мут).");
+        alert("Ваш terminal заблокирован администратором (Перманентный мут).");
         return false;
       } else if(userData.muteTime > now) {
         let left = Math.ceil((userData.muteTime - now) / 1000 / 60);
