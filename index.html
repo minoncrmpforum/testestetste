@@ -27,6 +27,7 @@
     --neon-red: #ff2233;
     --neon-red-glow: rgba(255, 34, 51, 0.4);
     --neon-blue: #00bfff;
+    --neon-pink: #ff007f;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -83,9 +84,13 @@
   }
   input:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
 
-  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
+  .shop-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--grey-border); padding-bottom: 10px; }
+  .shop-tab-btn { background: none; border: none; color: var(--grey-text); font-family: inherit; font-weight: bold; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; padding: 5px 10px; }
+  .shop-tab-btn.active { color: var(--orange); border-bottom: 2px solid var(--orange); }
+
+  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 10px; }
   .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s; }
-  .shop-item.purchased { border-color: var(--neon-green); background: linear-gradient(180deg, #141420 0%, #0a1c12 100%); }
+  .shop-item.purchased { border-color: var(--neon-blue); background: linear-gradient(180deg, #141420 0%, #0c1724 100%); }
   .shop-item-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: var(--white); margin-bottom: 8px; }
   .shop-item-desc { font-size: 0.75rem; color: var(--grey-text); margin-bottom: 15px; flex-grow: 1; line-height: 1.4; }
   .shop-item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-green); font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
@@ -102,7 +107,7 @@
   .flask-title { font-size: 0.75rem; color: var(--grey-text); text-transform: uppercase; }
   .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-top: 2px; }
   .flask-glass { width: 32px; height: 90px; background: rgba(255,255,255,0.03); border: 2px solid #333345; border-radius: 4px 4px 16px 16px; position: relative; overflow: hidden; }
-  .flask-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; }
+  .flask-liquid { absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; }
   .flask-container.danger .flask-liquid { background: var(--neon-red); }
   .flask-container.cold .flask-liquid { background: var(--neon-blue); }
 
@@ -116,6 +121,9 @@
   .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 220px; overflow-y: auto; font-size: 0.8rem; }
   .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; }
   .player-row.exiled { opacity: 0.3; text-decoration: line-through; border-left: 3px solid var(--neon-red); }
+  
+  .p-avatar { font-size: 1.1rem; margin-right: 6px; vertical-align: middle; }
+  .p-title { font-size: 0.65rem; background: #222235; color: var(--white); padding: 2px 5px; border-radius: 3px; margin-right: 6px; font-weight: bold; font-family: 'Orbitron', sans-serif; }
 
   @media (max-width: 850px) {
     .network-grid { grid-template-columns: 1fr; gap: 15px; }
@@ -128,7 +136,7 @@
 
   <div id="scr-menu" class="screen">
     <div class="menu-logo">THE BUNKER V.3</div>
-    <div class="menu-version">УБЕЖИЩЕ • СИСТЕМА СИНХРОННОГО ГОЛОСОВАНИЯ</div>
+    <div class="menu-version">УБЕЖИЩЕ • КОСМЕТИКА И СИНХРОННОЕ ГОЛОСОВАНИЕ</div>
     
     <div class="nav-bar">
       <button class="btn btn-accent" onclick="navigate('scr-menu', 'scr-network')">В бункер</button>
@@ -154,10 +162,10 @@
       </div>
 
       <div class="panel">
-        <div class="panel-title">📡 ИНФО-СПРАВКА И ЛОГИКА</div>
-        <p style="font-size:0.85rem; line-height:1.6; color:var(--grey-text);">
-          Внимание! Возраст выжившего имеет критическое значение в зависимости от срока жизнеобеспечения бункера. Защищайте эффективных членов команды на общем голосовании. Помните: коины (<span style="color:var(--neon-green);">+100 🪙</span>) начисляются исключительно тем, кто дошёл до конца и попал в финальный список спасенных!
-        </p>
+        <div class="panel-title">📡 ТЕКУЩИЙ НАДЕТЫЙ СТИЛЬ</div>
+        <div id="active-cosmetics-preview" style="font-size:0.9rem; line-height:1.8;">
+          Вход не выполнен. Снаряжение профиля недоступно.
+        </div>
       </div>
     </div>
   </div>
@@ -165,59 +173,85 @@
   <div id="scr-shop" class="screen hidden">
     <div class="panel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ СНАРЯЖЕНИЯ</div>
+        <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ И КАСТОМИЗАЦИЯ</div>
         <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">Назад в меню</button>
       </div>
       <div style="font-size:1.1rem; margin-bottom: 20px;">Твой капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
       
-      <div class="shop-grid">
+      <div class="shop-tabs">
+        <button class="shop-tab-btn active" id="tab-btn-upgrades" onclick="switchShopTab('upgrades')">Модификаторы Раунда</button>
+        <button class="shop-tab-btn" id="tab-btn-cosmetics" onclick="switchShopTab('cosmetics')">Косметика Профиля (Навсегда)</button>
+      </div>
+
+      <div class="shop-grid" id="shop-grid-upgrades">
         <div class="shop-item" id="item-extra_card">
           <div class="shop-item-title">Доп. Карта Действия</div>
-          <div class="shop-item-desc">Выдаёт вашему выжившему +1 дополнительную уникальную оперативную карту тактики на раунд.</div>
+          <div class="shop-item-desc">Выдаёт вам +1 дополнительную уникальную оперативную карту тактики на раунд. Тратится при старте.</div>
           <div class="shop-item-price">150 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('extra_card', 150)">Купить</button>
+          <button class="btn btn-sm" id="btn-buy-extra_card" onclick="buyItem('extra_card', 150, false)">Купить</button>
         </div>
         <div class="shop-item" id="item-health_serum">
           <div class="shop-item-title">Сыворотка Здоровья</div>
           <div class="shop-item-desc">Модифицирует ДНК. Гарантирует, что ваш персонаж появится со статусом "Абсолютно здоров".</div>
           <div class="shop-item-price">250 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('health_serum', 250)">Купить</button>
+          <button class="btn btn-sm" id="btn-buy-health_serum" onclick="buyItem('health_serum', 250, false)">Купить</button>
         </div>
         <div class="shop-item" id="item-cyber_heart">
-          <div class="shop-item-title">Кибер-Сердце (Био-Иммунитет)</div>
-          <div class="shop-item-desc">Даже если вы заболеете тяжелым недугом, датчики фильтрации не увидят угрозы для O2.</div>
+          <div class="shop-item-title">Кибер-Сердце</div>
+          <div class="shop-item-desc">Даже если вы родитесь больным, датчики фильтрации не увидят угрозы для O2 бункера.</div>
           <div class="shop-item-price">400 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('cyber_heart', 400)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-fake_docs">
-          <div class="shop-item-title">Фальшивые Документы</div>
-          <div class="shop-item-desc">Добавляет активную карту, позволяющую один раз за игру полностью перебросить профессию.</div>
-          <div class="shop-item-price">300 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('fake_docs', 300)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-contraband">
-          <div class="shop-item-title">Контрабандный Кейс</div>
-          <div class="shop-item-desc">Гарантирует получение тяжелого военного инвентаря/оружия вместо гражданского хлама.</div>
-          <div class="shop-item-price">200 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('contraband', 200)">Купить</button>
-        </div>
-        <div class="shop-item" id="item-terminal_hack">
-          <div class="shop-item-title">Взлом Терминала Хоста</div>
-          <div class="shop-item-desc">Добавляет карту, позволяющую тайно вскрыть и прочесть "Секретный факт" любого игрока.</div>
-          <div class="shop-item-price">350 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('terminal_hack', 350)">Купить</button>
+          <button class="btn btn-sm" id="btn-buy-cyber_heart" onclick="buyItem('cyber_heart', 400, false)">Купить</button>
         </div>
         <div class="shop-item" id="item-shield_protocol">
           <div class="shop-item-title">Защитный Протокол</div>
           <div class="shop-item-desc">Защитная турель шлюза. Полный иммунитет к изгнанию в самом первом раунде игры.</div>
           <div class="shop-item-price">500 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('shield_protocol', 500)">Купить</button>
+          <button class="btn btn-sm" id="btn-buy-shield_protocol" onclick="buyItem('shield_protocol', 500, false)">Купить</button>
         </div>
-        <div class="shop-item" id="item-signal_jammer">
-          <div class="shop-item-title">Глушитель Радиочастот</div>
-          <div class="shop-item-desc">Тактический девайс. Позволяет один раз полностью аннулировать текущие итоги голосования.</div>
-          <div class="shop-item-price">600 🪙</div>
-          <button class="btn btn-sm" onclick="buyItem('signal_jammer', 600)">Купить</button>
+      </div>
+
+      <div class="shop-grid hidden" id="shop-grid-cosmetics">
+        <div class="shop-item" id="item-cosm_av_drone">
+          <div class="shop-item-title">Аватар: 🤖 [ИИ-Дрон]</div>
+          <div class="shop-item-desc">Редкий неоновый кибер-интерфейс дрона-разведчика перед вашим никнеймом.</div>
+          <div class="shop-item-price">300 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_av_drone" onclick="buyItem('cosm_av_drone', 300, true)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-cosm_av_bio">
+          <div class="shop-item-title">Аватар: ☣ [Био-Маска]</div>
+          <div class="shop-item-desc">Иконка зараженной зоны и противогаза высшего уровня хим-защиты.</div>
+          <div class="shop-item-price">350 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_av_bio" onclick="buyItem('cosm_av_bio', 350, true)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-cosm_av_skull">
+          <div class="shop-item-title">Аватар: 💀 [Кибер-Череп]</div>
+          <div class="shop-item-desc">Голографический череп. Знак того, что вы готовы выживать по головам сокомандников.</div>
+          <div class="shop-item-price">500 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_av_skull" onclick="buyItem('cosm_av_skull', 500, true)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-cosm_t_rebel">
+          <div class="shop-item-title">Титул: [МЯТЕЖНИК]</div>
+          <div class="shop-item-desc">Добавляет брутальный текстовый статус [МЯТЕЖНИК] перед вашим именем.</div>
+          <div class="shop-item-price">200 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_t_rebel" onclick="buyItem('cosm_t_rebel', 200, true)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-cosm_t_stalker">
+          <div class="shop-item-title">Титул: [ПРИЗРАК]</div>
+          <div class="shop-item-desc">Уникальный элитный префикс [ПРИЗРАК] для настоящих мастеров блефа.</div>
+          <div class="shop-item-price">250 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_t_stalker" onclick="buyItem('cosm_t_stalker', 250, true)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-cosm_c_pink">
+          <div class="shop-item-title">Цвет: Неоново-Розовый ник</div>
+          <div class="shop-item-desc">Перекрашивает ваш шрифт в списке экипажа в яркий неоновый кислотно-розовый цвет.</div>
+          <div class="shop-item-price">400 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_c_pink" onclick="buyItem('cosm_c_pink', 400, true)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-cosm_c_blue">
+          <div class="shop-item-title">Цвет: Электрический Синий ник</div>
+          <div class="shop-item-desc">Перекрашивает ваш шрифт в списке экипажа в яркий цвет высоковольтной дуги.</div>
+          <div class="shop-item-price">400 🪙</div>
+          <button class="btn btn-sm" id="btn-cosm-cosm_c_blue" onclick="buyItem('cosm_c_blue', 400, true)">Купить</button>
         </div>
       </div>
     </div>
@@ -325,46 +359,43 @@
   const db = firebase.database();
   const auth = firebase.auth();
 
-  let currentUser = null, userCoins = 0, userEmailClean = "", userActiveItems = [];
+  let currentUser = null, userCoins = 0, userEmailClean = "";
+  let userActiveItems = []; // Расходники на 1 раунд
+  let userOwnedCosmetics = []; // Купленная косметика навсегда
+  let userEquippedCosmetics = { avatar: '', title: '', color: '' }; // Надетая косметика
+
   let peer = null, conn = null, connections = [];
   let myRole = '', myName = 'Выживший', gameConfig = null, myPeerId = '';
   let activePlayers = [];
-  let votingActive = false;
-  let hasVoted = false;
+  let votingActive = false, hasVoted = false;
 
   const genders = ["Мужчина", "Женщина"];
   const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Военный связист", "Программист ИИ", "Охранник-кинолог", "Шеф-повар", "Психолог МЧС", "Спецназовец", "Электрик шлюза", "Гидрогеолог", "Шахтёр-взрывотехник", "Пилот разведывательного дрона"];
   const healthBad = ["Туберкулёз (Тяжёлая стадия)", "Открытая лёгочная инфекция (Заразно)", "Тяжелая форма астмы (Испорчен воздух)", "Хроническая пневмония (Повреждены лёгкие)"];
   const healthNormal = ["Абсолютно здоров", "Сломана левая рука", "Слепота на левый глаз", "Хронический гастрит", "Легкое заикание", "Аллергия на пыль", "Шрам через все лицо"];
   const hobbies = ["Охота и стрельба", "Гидропоника дома", "Экстремальная медицина", "Радиолюбитель", "Картография", "Коллекционирование ножей", "Боевые искусства", "Игра на гитаре", "Взлом замков", "Создание самодельных фильтров"];
-  const phobias = ["Клаустрофобия (Страх замкнутых пространств)", "Ахлуофобия (Страх темноты)", "Гермофобия (Страх микробов)", "Никтофобия", "Страх остаться одному"];
-  const traits = ["Эгоизм (ставит себя выше выживания группы)", "Вспыльчивость (провоцирует конфликты)", "Эмпатия (всегда помогает слабым)", "Гиперответственность", "Жадность", "Хладнокровие", "Лидерские качества", "Трусость"];
-  const baggages = ["Армейская аптечка", "Набор презизионных инструментов", "Фляга чистого спирта (5л)", "Запас семян пшеницы", "Дробовик с 3 патронами", "Защищенный ноутбук", "Газовый резак", "Счетчик Гейгера", "Портативная рация", "Надувная лодка"];
-  const contrabandBaggages = ["Тяжелый пулемет «Корд» с патронами", "Армейский сухпаек НАТО на 5 лет", "Противорадиационный экзоскелет", "Хирургический лазерный комплекс", "Шифровальная станция спутниковой связи"];
-  const secrets = ["Шпион враждебной группировки", "Бесплоден", "Скрывает запасы еды", "Гениальный изобретатель", "Знает пароль от оружейной комнаты бункера", "Бывший заключенный за саботаж"];
+  const phobias = ["Клаустрофобия", "Ахлуофобия (Страх темноты)", "Гермофобия", "Никтофобия", "Страх остаться одному"];
+  const traits = ["Эгоизм", "Вспыльчивость", "Эмпатия (всегда помогает слабым)", "Гиперответственность", "Жадность", "Хладнокровие", "Лидерские качества", "Трусость"];
+  const baggages = ["Армейская аптечка", "Набор презизионных инструментов", "Фляга чистого спирта (5л)", "Запас семян пшеницы", "Дробовик с 3 патронами", "Защищенный ноутбук", "Газовый резак", "Счетчик Гейгера", "Портативная рация"];
+  const contrabandBaggages = ["Тяжелый пулемет «Корд»", "Армейский сухпаек НАТО на 5 лет", "Противорадиационный экзоскелет", "Хирургический лазерный комплекс"];
+  const secrets = ["Шпион враждебной группировки", "Бесплоден", "Скрывает запасы еды", "Гениальный изобретатель", "Знает пароль от оружейной", "Бывший заключенный за саботаж"];
   
   const disasters = [
     { title: "Ядерная зима", temp: "-45°C", style: "cold", desc: "Планета скована многовековым льдом." },
     { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger", desc: "Атмосфера выжжена радиацией." },
-    { title: "Падение Ледяного Кометного Осколка", temp: "-20°C", style: "cold", desc: "Постоянные метели." },
+    { title: "Падение Ледяного Осколка", temp: "-20°C", style: "cold", desc: "Постоянные метели." },
     { title: "Прорыв магматических разломов", temp: "+40°C", style: "danger", desc: "Воздух отравлен серой." }
   ];
   const bunkerConditions = [
     "Гидропонный отсек затоплен. Ограничен запас пищи.",
     "Система очистки воды работает на резервных батареях.",
-    "В бункере всего половина спальных мест.",
-    "Герметизация идеальная, но оружейный сейф заблокирован."
+    "В бункере всего половина спальных мест."
   ];
 
-  // ГИГАНТСКИЙ ПУЛ ДЛЯ НЕПОВТОРЯЮЩИХСЯ КАРТ ДЕЙСТВИЙ
   let dynamicActionCardsPool = [
     "Украсть багаж соседа справа", "Узнать секретный факт игрока", "Сменить профессию на случайную", "Уничтожить багаж любого игрока",
     "Принудительно вскрыть здоровье соседа", "Поменять местами хобби двух выживших", "Заставить игрока зачитать его страх", 
-    "Скрытый датчик: узнать точный возраст любого игрока", "Заразить багаж соседа плесенью", "Забаррикадировать дверь: лишить игрока слова на раунд",
-    "Имплант лжи: изменить свое человеческое качество", "Выкрасть карту действия у соперника", "Провести обыск личных вещей игрока",
-    "Перебросить черту характера", "Заблокировать чужую карту отмены", "Выдать ложную тревогу: заставить переголосовать",
-    "Вскрыть свой секрет и получить +50 коинов в конце", "Заменить свое хобби на киберспорт", "Устроить саботаж вентиляции",
-    "Проверить ДНК игрока на скрытые мутации", "Вколоть сыворотку правды", "Анонимно подбросить улику против лидера"
+    "Скрытый датчик: узнать точный возраст любого игрока", "Заразить багаж соседа плесенью", "Забаррикадировать дверь: лишить игрока слова"
   ];
 
   function shuffleArray(array) {
@@ -381,7 +412,14 @@
     toEl.classList.add('fade-in');
   }
 
-  function openShop() { navigate('scr-menu', 'scr-shop'); }
+  function openShop() { navigate('scr-menu', 'scr-shop'); switchShopTab('upgrades'); }
+
+  function switchShopTab(tab) {
+    document.getElementById('tab-btn-upgrades').classList.toggle('active', tab === 'upgrades');
+    document.getElementById('tab-btn-cosmetics').classList.toggle('active', tab === 'cosmetics');
+    document.getElementById('shop-grid-upgrades').classList.toggle('hidden', tab !== 'upgrades');
+    document.getElementById('shop-grid-cosmetics').classList.toggle('hidden', tab !== 'cosmetics');
+  }
 
   auth.onAuthStateChanged((user) => {
     if (user) {
@@ -395,14 +433,20 @@
         const data = snap.val() || {};
         userCoins = data.coins || 0;
         userActiveItems = data.items || [];
+        userOwnedCosmetics = data.ownedCosmetics || [];
+        userEquippedCosmetics = data.equippedCosmetics || { avatar: '', title: '', color: '' };
+        
         document.getElementById('user-display-coins').innerText = userCoins;
         document.getElementById('shop-balance-holder').innerText = userCoins;
+        
         updateShopCardsUI();
+        updateMenuCosmeticsPreview();
       });
     } else {
       currentUser = null;
       document.getElementById('auth-form').style.display = 'block';
       document.getElementById('auth-user-status').style.display = 'none';
+      document.getElementById('active-cosmetics-preview').innerText = "Вход не выполнен.";
     }
   });
 
@@ -414,7 +458,7 @@
     if(type === 'register') {
       auth.createUserWithEmailAndPassword(email, pass).then((cred) => {
         let clean = cred.user.email.replace(/\./g, '_');
-        db.ref('users/' + clean).set({ coins: 0, items: [] });
+        db.ref('users/' + clean).set({ coins: 0, items: [], ownedCosmetics: [], equippedCosmetics: { avatar: '', title: '', color: '' } });
         alert('Успешная регистрация аккаунта!');
       }).catch(err => alert('Ошибка регистрации: ' + err.message));
     } else {
@@ -424,29 +468,76 @@
 
   function logout() { auth.signOut(); }
 
+  function updateMenuCosmeticsPreview() {
+    let avIcon = userEquippedCosmetics.avatar === 'cosm_av_drone' ? '🤖' : (userEquippedCosmetics.avatar === 'cosm_av_bio' ? '☣' : (userEquippedCosmetics.avatar === 'cosm_av_skull' ? '💀' : '👤'));
+    let tText = userEquippedCosmetics.title === 'cosm_t_rebel' ? '[МЯТЕЖНИК]' : (userEquippedCosmetics.title === 'cosm_t_stalker' ? '[ПРИЗРАК]' : '');
+    let cStyle = userEquippedCosmetics.color === 'cosm_c_pink' ? 'color: var(--neon-pink);' : (userEquippedCosmetics.color === 'cosm_c_blue' ? 'color: var(--neon-blue);' : 'color: var(--white);');
+
+    document.getElementById('active-cosmetics-preview').innerHTML = `
+      Текущий аватар: <span style="font-size:1.2rem;">${avIcon}</span><br>
+      Текущий титул: <span style="color:var(--orange); font-weight:bold;">${tText || 'Нет'}</span><br>
+      Шрифт никнейма: <span style="${cStyle} font-weight:bold;">${myName}</span>
+    `;
+  }
+
   function updateShopCardsUI() {
-    document.querySelectorAll('.shop-item').forEach(card => card.classList.remove('purchased'));
+    // Обновляем расходники
+    document.querySelectorAll('#shop-grid-upgrades .shop-item').forEach(card => card.classList.remove('purchased'));
     userActiveItems.forEach(itemKey => {
       const card = document.getElementById('item-' + itemKey);
       if(card) card.classList.add('purchased');
     });
+
+    // Обновляем косметику
+    document.querySelectorAll('#shop-grid-cosmetics .shop-item').forEach(card => {
+      const id = card.id.replace('item-', '');
+      const btn = document.getElementById('btn-cosm-' + id);
+      
+      if(userOwnedCosmetics.includes(id)) {
+        card.classList.add('purchased');
+        
+        // Проверяем, надета ли она
+        let isEquipped = (userEquippedCosmetics.avatar === id || userEquippedCosmetics.title === id || userEquippedCosmetics.color === id);
+        if(isEquipped) {
+          btn.innerText = "Надето";
+          btn.style.background = "var(--neon-blue)";
+          btn.disabled = true;
+        } else {
+          btn.innerText = "Надеть";
+          btn.style.background = "var(--orange)";
+          btn.disabled = false;
+          btn.setAttribute('onclick', `equipCosmetic('${id}')`);
+        }
+      }
+    });
   }
 
-  function buyItem(itemKey, price) {
+  function buyItem(itemKey, price, isCosmetic = false) {
     if(!currentUser) return alert('Сначала войдите в систему аккаунтов!');
-    if(userActiveItems.includes(itemKey)) return alert('Этот модификатор уже куплен!');
+    if(!isCosmetic && userActiveItems.includes(itemKey)) return alert('Этот модификатор уже активен на следующий раунд!');
+    if(isCosmetic && userOwnedCosmetics.includes(itemKey)) return alert('Вы уже приобрели эту деталь кастомизации!');
     if(userCoins < price) return alert('Недостаточно Кибер-Коинов!');
 
     db.ref('users/' + userEmailClean).transaction((userData) => {
       if (userData) {
         if (userData.coins >= price) {
           userData.coins -= price;
-          if(!userData.items) userData.items = [];
-          userData.items.push(itemKey);
+          if(isCosmetic) {
+            if(!userData.ownedCosmetics) userData.ownedCosmetics = [];
+            userData.ownedCosmetics.push(itemKey);
+          } else {
+            if(!userData.items) userData.items = [];
+            userData.items.push(itemKey);
+          }
         }
       }
       return userData;
-    }, (error, committed) => { if(committed) alert('Улучшение активировано!'); });
+    }, (error, committed) => { if(committed) alert(isCosmetic ? 'Косметика добавлена в гардероб!' : 'Улучшение готово к раунду!'); });
+  }
+
+  function equipCosmetic(id) {
+    let type = id.startsWith('cosm_av_') ? 'avatar' : (id.startsWith('cosm_t_') ? 'title' : 'color');
+    db.ref('users/' + userEmailClean + '/equippedCosmetics/' + type).set(id);
   }
 
   function consumeUserItemsInDB() {
@@ -455,24 +546,19 @@
     }
   }
 
-  // УМНАЯ СИСТЕМНАЯ ГЕНЕРАЦИЯ ПЕРСОНАЖА С УЧЕТОМ НЕПОВТОРЯЮЩИХСЯ КАРТ
   function createCharacterData(modifiers = []) {
     let isSick = Math.random() < 0.35;
     if(modifiers.includes('health_serum')) isSick = false;
 
     const health = isSick ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
-    
     let baggage = baggages[Math.floor(Math.random() * baggages.length)];
     if(modifiers.includes('contraband')) baggage = contrabandBaggages[Math.floor(Math.random() * contrabandBaggages.length)];
 
-    // Раздельный чистый рандом возраста от 18 до 70 лет
     const age = Math.floor(Math.random() * (70 - 18 + 1)) + 18;
     const genderBase = genders[Math.floor(Math.random() * genders.length)];
 
-    // Достаем из перемешанного динамического пула уникальные неповторяющиеся карты
     let card1 = dynamicActionCardsPool.pop() || "⚡ Срочный ремонт вентиляции";
     let card2 = dynamicActionCardsPool.pop() || "⚡ Защитный протокол шлюза";
-    let bonusCard = modifiers.includes('extra_card') ? (dynamicActionCardsPool.pop() || "⚡ Внесистемный паёк") : null;
 
     return {
       gender: `${genderBase}, ${age} лет`,
@@ -487,7 +573,7 @@
       isAirPolluter: modifiers.includes('cyber_heart') ? false : isSick,
       kicked: false,
       modifiers: modifiers,
-      cards: { card1, card2, bonusCard }
+      cards: { card1, card2 }
     };
   }
 
@@ -495,14 +581,10 @@
     const box = document.getElementById('char-sheet-box');
     if(!box || !char) return;
     const fields = [
-      { l: "Пол и Возраст", v: char.gender },
-      { l: "Профессия", v: char.prof },
-      { l: "Состояние здоровья", v: char.health },
-      { l: "Хобби / Увлечение", v: char.hobby },
-      { l: "Страх / Фобия", v: char.phobia },
-      { l: "Человеческое качество", v: char.trait },
-      { l: "Багаж (Инвентарь)", v: char.baggage },
-      { l: "Секретный факт", v: char.secret }
+      { l: "Пол и Возраст", v: char.gender }, { l: "Профессия", v: char.prof },
+      { l: "Состояние здоровья", v: char.health }, { l: "Хобби / Увлечение", v: char.hobby },
+      { l: "Страх / Фобия", v: char.phobia }, { l: "Человеческое качество", v: char.trait },
+      { l: "Багаж (Инвентарь)", v: char.baggage }, { l: "Секретный факт", v: char.secret }
     ];
     box.innerHTML = fields.map(f => `<div class="trait-card"><label>${f.l}</label><div class="trait-value">${f.v}</div></div>`).join('');
     
@@ -511,29 +593,15 @@
       <div class="action-mini-card">⚡ Карта 2: ${char.cards.card2}</div>
       <div class="action-mini-card cancel">🛡 Карта Отмены: БЛОК ДЕЙСТВИЯ</div>
     `;
-
-    if(char.cards.bonusCard) {
-      deckHTML += `<div class="action-mini-card">🔥 Бонус Маркета: ${char.cards.bonusCard}</div>`;
-    }
-    if(char.modifiers.includes('fake_docs')) {
-      deckHTML += `<div class="action-mini-card active-item">📂 Куплено: Фальшивые Документы (Смена Профессии)</div>`;
-    }
-    if(char.modifiers.includes('terminal_hack')) {
-      deckHTML += `<div class="action-mini-card active-item">💾 Куплено: Взлом Терминала (Вскрыть Чужой Секрет)</div>`;
-    }
     if(char.modifiers.includes('shield_protocol')) {
       deckHTML += `<div class="action-mini-card active-item" style="border-color:var(--neon-blue); color:var(--neon-blue);">🛡 Иммунитет 1 раунда</div>`;
     }
-    if(char.modifiers.includes('signal_jammer')) {
-      deckHTML += `<div class="action-mini-card active-item" style="border-color:var(--orange); color:var(--orange);">🛰 Глушитель Голосования</div>`;
-    }
-
     document.getElementById('action-deck-box').innerHTML = deckHTML;
   }
 
   function initP2P(role) {
     myRole = role;
-    shuffleArray(dynamicActionCardsPool); // Перемешиваем карты перед раздачей
+    shuffleArray(dynamicActionCardsPool);
 
     if(currentUser) {
       myName = currentUser.email.split('@')[0];
@@ -565,8 +633,11 @@
         let myChar = createCharacterData(userActiveItems);
         consumeUserItemsInDB();
 
-        activePlayers = [];
-        activePlayers.push({ id: 'Host', name: myName, emailClean: userEmailClean || 'none', role: 'host', char: myChar, kicked: false, votesReceived: 0 });
+        activePlayers.push({ 
+          id: 'Host', name: myName, emailClean: userEmailClean || 'none', role: 'host', 
+          char: myChar, kicked: false, votesReceived: 0,
+          cosmetics: userEquippedCosmetics 
+        });
         
         renderCharacter(myChar);
         applyWorldConfig(gameConfig);
@@ -579,7 +650,11 @@
         c.on('data', (pack) => {
           if(pack.type === 'join') {
             let clientChar = createCharacterData(pack.items || []);
-            activePlayers.push({ id: c.peer, name: pack.name, emailClean: pack.emailClean, role: 'client', char: clientChar, kicked: false, votesReceived: 0 });
+            activePlayers.push({ 
+              id: c.peer, name: pack.name, emailClean: pack.emailClean, role: 'client', 
+              char: clientChar, kicked: false, votesReceived: 0,
+              cosmetics: pack.cosmetics || { avatar: '', title: '', color: '' }
+            });
             updateHostLobbyUI();
           }
           if(pack.type === 'submit-vote') {
@@ -591,14 +666,14 @@
       });
     } else {
       const tId = document.getElementById('inp-target-id').value.trim();
-      if(!tId) return alert('Введите секретный код бункера!');
+      if(!tId) return alert('Введите код бункера!');
 
       peer = new Peer();
       peer.on('open', (id) => {
         myPeerId = id;
         conn = peer.connect(tId);
         conn.on('open', () => {
-          conn.send({ type: 'join', name: myName, emailClean: userEmailClean || 'none', items: userActiveItems });
+          conn.send({ type: 'join', name: myName, emailClean: userEmailClean || 'none', items: userActiveItems, cosmetics: userEquippedCosmetics });
           consumeUserItemsInDB();
           document.getElementById('client-wait-msg').style.display = 'block';
         });
@@ -634,12 +709,7 @@
         if(pData) c.send({ type: 'init-game', char: pData.char, config: gameConfig });
       }
     });
-    
-    // Отрисовка админ панели голосования для Хоста
-    document.getElementById('host-voting-controls').innerHTML = `
-      <button class="btn btn-sm btn-accent" id="btn-toggle-vote" onclick="hostToggleVoting()">🚨 Запустить голосование</button>
-    `;
-    
+    document.getElementById('host-voting-controls').innerHTML = `<button class="btn btn-sm btn-accent" id="btn-toggle-vote" onclick="hostToggleVoting()">🚨 Запустить голосование</button>`;
     navigate('scr-network', 'scr-game');
     syncAll();
   }
@@ -649,44 +719,31 @@
     document.getElementById('world-disaster-text').innerText = `КАТАСТРОФА: ${cfg.disaster.title} (${cfg.disaster.desc})`;
     document.getElementById('bunker-condition-text').innerText = `Условия систем: ${cfg.condition}`;
     document.getElementById('bunker-time-text').innerText = `⏳ СРОК ИЗОЛЯЦИИ ЭКИПАЖА В БУНКЕРЕ: ${cfg.isolationYears} ЛЕТ`;
-    
     document.getElementById('f-txt-temp').innerText = cfg.disaster.temp;
     document.getElementById('flask-temp-box').className = "flask-container " + cfg.disaster.style;
     document.getElementById('f-txt-power').innerText = cfg.energy + "%";
     document.getElementById('f-liq-power').style.height = cfg.energy + "%";
   }
 
-  // СЛОЖНЫЙ ДИНАМИЧЕСКИЙ РАСЧЕТ КИСЛОРОДА И ФИЛЬТРАЦИИ ИЗ-ЗА СРОКА И ВОЗРАСТА
   function checkOxygenStatus() {
     if(!gameConfig) return;
-    const alivePlayers = activePlayers.filter(p => !p.kicked);
-    
     let baseLoad = 0;
-    let tooOldCount = 0;
-
-    alivePlayers.forEach(p => {
+    activePlayers.filter(p => !p.kicked).forEach(p => {
       if(p.char) {
-        if(p.char.isAirPolluter) baseLoad += 30; // Болезнь душит воздух
-        
-        // Математика возраста: сможет ли прожить срок изоляции до старости в 75+ лет
-        let prospectiveAge = p.char.ageRaw + gameConfig.isolationYears;
-        if(prospectiveAge > 73) {
-          baseLoad += 20; // Старики требуют больше мед.фильтрации и кислорода
-          tooOldCount++;
-        }
+        if(p.char.isAirPolluter) baseLoad += 30;
+        if(p.char.ageRaw + gameConfig.isolationYears > 73) baseLoad += 20;
       }
     });
 
     const o2Box = document.getElementById('flask-o2-box');
     const o2Liq = document.getElementById('f-liq-o2');
     const o2Txt = document.getElementById('f-txt-o2');
-
     let currentO2Height = Math.max(10, 100 - baseLoad);
 
     if(currentO2Height < 55) {
       if(o2Box) o2Box.className = "flask-container danger";
       if(o2Liq) o2Liq.style.height = currentO2Height + "%";
-      if(o2Txt) o2Txt.innerText = `КРИТ (НАГРУЗКА)`;
+      if(o2Txt) o2Txt.innerText = `КРИТ`;
     } else {
       if(o2Box) o2Box.className = "flask-container";
       if(o2Liq) o2Liq.style.height = currentO2Height + "%";
@@ -694,14 +751,13 @@
     }
   }
 
-  // УПРАВЛЕНИЕ ГОЛОСОВАНИЕМ ХОСТОМ
   function hostToggleVoting() {
     if(myRole !== 'host') return;
     if(!votingActive) {
       votingActive = true;
       hasVoted = false;
-      activePlayers.forEach(p => p.votesReceived = 0); // Обнуляем прошлые результаты
-      document.getElementById('btn-toggle-vote').innerText = "🛑 Завершить голосование и Выгнать";
+      activePlayers.forEach(p => p.votesReceived = 0);
+      document.getElementById('btn-toggle-vote').innerText = "🛑 Закончить выбор и выгнать";
       document.getElementById('btn-toggle-vote').style.borderColor = "var(--neon-red)";
     } else {
       votingActive = false;
@@ -715,46 +771,31 @@
   function hostExecuteExile() {
     let alive = activePlayers.filter(p => !p.kicked);
     if(alive.length === 0) return;
-    
-    // Ищем у кого больше всего голосов
-    let maxVotes = -1;
-    let targetToKick = null;
-    
-    alive.forEach(p => {
-      if(p.votesReceived > maxVotes) {
-        maxVotes = p.votesReceived;
-        targetToKick = p;
-      }
-    });
+    let maxVotes = -1, targetToKick = null;
+    alive.forEach(p => { if(p.votesReceived > maxVotes) { maxVotes = p.votesReceived; targetToKick = p; } });
 
     if(targetToKick && maxVotes > 0) {
       targetToKick.kicked = true;
-      alert(`По результатам открытого голосования из бункера изгнан: ${targetToKick.name} (Голосов: ${maxVotes})`);
-    } else {
-      alert("Голоса равны или никто не проголосовал. Никто не покинул шлюз.");
+      alert(`Из бункера изгнан: ${targetToKick.name} (Голосов: ${maxVotes})`);
     }
   }
 
   function castVote(targetId) {
-    if(hasVoted) return alert("Вы уже отдали свой голос в этом раунде!");
+    if(hasVoted) return alert("Вы уже проголосовали!");
     hasVoted = true;
-    
     if(myRole === 'host') {
       let target = activePlayers.find(p => p.id === targetId);
       if(target) target.votesReceived++;
       syncAll();
     } else {
-      if(conn && conn.open) {
-        conn.send({ type: 'submit-vote', targetId: targetId });
-      }
+      if(conn && conn.open) conn.send({ type: 'submit-vote', targetId: targetId });
     }
     renderPlayersTerminal();
   }
 
-  function hostSyncVoteState() {
-    if(myRole === 'host') syncAll();
-  }
+  function hostSyncVoteState() { if(myRole === 'host') syncAll(); }
 
+  // ОТРИСОВКА ИГРОКОВ С УЧЕТОМ СИНХРОНИЗИРОВАННОЙ КОСМЕТИКИ И АВАТАРОК
   function renderPlayersTerminal() {
     const box = document.getElementById('players-terminal-list');
     if(!box) return;
@@ -768,18 +809,30 @@
     box.innerHTML = activePlayers.map(p => {
       let voteBtnHTML = '';
       if(votingActive && !p.kicked && !hasVoted) {
-        voteBtnHTML = `<button class="btn btn-sm" style="border-color:var(--orange); color:var(--orange);" onclick="castVote('${p.id}')">Голосовать</button>`;
+        voteBtnHTML = `<button class="btn btn-sm" style="border-color:var(--orange); color:var(--orange);" onclick="castVote('${p.id}')">Выбрать</button>`;
       }
-      
       let voteCounters = votingActive ? `<span style="color:var(--grey-text); font-size:0.75rem; margin-right:10px;">[Голосов: ${p.votesReceived}]</span>` : '';
+
+      // Парсинг косметики
+      let c = p.cosmetics || { avatar: '', title: '', color: '' };
+      let avHTML = c.avatar === 'cosm_av_drone' ? '🤖' : (c.avatar === 'cosm_av_bio' ? '☣' : (c.avatar === 'cosm_av_skull' ? '💀' : '👤'));
+      let titleHTML = c.title === 'cosm_t_rebel' ? `<span class="p-title" style="border: 1px solid var(--neon-red); color: var(--neon-red);">МЯТЕЖНИК</span>` : (c.title === 'cosm_t_stalker' ? `<span class="p-title" style="border: 1px solid var(--neon-blue); color: var(--neon-blue);">ПРИЗРАК</span>` : '');
+      
+      let nameStyle = 'color: var(--white);';
+      if(c.color === 'cosm_c_pink') nameStyle = 'color: var(--neon-pink); font-weight: bold; text-shadow: 0 0 5px rgba(255,0,127,0.3);';
+      if(c.color === 'cosm_c_blue') nameStyle = 'color: var(--neon-blue); font-weight: bold; text-shadow: 0 0 5px rgba(0,191,255,0.3);';
 
       return `
         <div class="player-row ${p.kicked ? 'exiled' : ''}">
-          <span>${p.name} <small style="color:var(--orange); font-size:0.65rem;">[${p.role.toUpperCase()}]</small></span>
+          <div>
+            <span class="p-avatar">${avHTML}</span>
+            ${titleHTML}
+            <span style="${nameStyle}">${p.name}</span>
+          </div>
           <div>
             ${voteCounters}
             ${voteBtnHTML}
-            ${p.kicked ? `<span style="color:var(--neon-red); font-size:0.75rem; font-weight:bold;">☠ ИЗГНАН С СЕРВЕРА</span>` : `<span style="color:var(--neon-green); font-size:0.75rem;">В БУНКЕРЕ</span>`}
+            ${p.kicked ? `<span style="color:var(--neon-red); font-size:0.75rem; font-weight:bold;">☠ КИКНУТ</span>` : `<span style="color:var(--neon-green); font-size:0.75rem;">В СЕТИ</span>`}
           </div>
         </div>
       `;
@@ -789,23 +842,16 @@
   function syncAll() {
     renderPlayersTerminal();
     checkOxygenStatus();
-    connections.forEach(c => { 
-      if(c.open) c.send({ type: 'sync', players: activePlayers, votingActive: votingActive }); 
-    });
+    connections.forEach(c => { if(c.open) c.send({ type: 'sync', players: activePlayers, votingActive: votingActive }); });
 
     const remaining = activePlayers.filter(p => !p.kicked);
     if(gameConfig && remaining.length === gameConfig.targetSurvivors && myRole === 'host') {
-      
-      // ИСПРАВЛЕНИЕ: Коины начисляются ИСКЛЮЧИТЕЛЬНО выжившим! (Условие !p.kicked)
       remaining.forEach(p => {
         if(p.emailClean && p.emailClean !== 'none' && !p.kicked) {
-          db.ref('users/' + p.emailClean + '/coins').transaction((current) => {
-            return (current || 0) + 100;
-          }).catch(e => console.log("Ошибка записи монет выжившему"));
+          db.ref('users/' + p.emailClean + '/coins').transaction((current) => { return (current || 0) + 100; });
         }
       });
-
-      let msg = `Квота достигнута. Шлюзы заблокированы! Выжили в изоляции: ` + remaining.map(p => p.name).join(', ') + `. Выжившим начислено по +100 коинов!`;
+      let msg = `Выжили в изоляции бункера: ` + remaining.map(p => p.name).join(', ') + `. Победителям начислено по +100 коинов!`;
       connections.forEach(c => c.open && c.send({ type: 'game-end', msg: msg }));
       showGameOver(msg);
     }
@@ -814,10 +860,8 @@
   function showGameOver(msg) {
     document.body.innerHTML = `
       <div class="screen fade-in" style="text-align:center; max-width:650px; margin:auto;">
-        <div class="menu-logo" style="color:var(--neon-green);">СЕССИЯ ЗАВЕРШЕНА</div>
-        <div class="panel" style="margin-top:20px; border-color:var(--neon-green);">
-          <p style="font-size:0.95rem; line-height:1.6;">${msg}</p>
-        </div>
+        <div class="menu-logo" style="color:var(--neon-green);">ФИНАЛ СЕССИИ</div>
+        <div class="panel" style="margin-top:20px; border-color:var(--neon-green);"><p style="font-size:0.95rem; line-height:1.6;">${msg}</p></div>
         <button class="btn btn-accent" style="margin-top:25px;" onclick="window.location.reload()">В меню</button>
       </div>
     `;
