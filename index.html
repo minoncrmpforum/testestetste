@@ -6,10 +6,10 @@
 <title>THE BUNKER V.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
 <style>
   :root {
@@ -21,15 +21,12 @@
     --grey-border: #222230;
     --grey-text: #707085;
     --white: #f5f5fa;
-    
-    /* Статусы систем */
     --neon-green: #00ff66;
     --neon-green-glow: rgba(0, 255, 102, 0.4);
     --neon-red: #ff2233;
     --neon-red-glow: rgba(255, 34, 51, 0.4);
     --neon-blue: #00bfff;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body {
     background-color: var(--bg-dark);
@@ -37,27 +34,13 @@
     color: var(--white);
     font-family: 'Space Mono', monospace;
     min-height: 100vh;
-    overflow-x: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
   }
-
-  /* ГЛАВНОЕ МЕНЮ И ЭКРАНЫ */
-  .screen {
-    width: 100%;
-    max-width: 1100px;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .hidden { display: none !important; opacity: 0; transform: scale(0.95); }
-  .fade-in { animation: screenReveal 0.6s forwards ease-out; }
-  @keyframes screenReveal { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-
-  #main-menu {
-    text-align: center;
-    max-width: 600px;
-  }
+  .screen { width: 100%; max-width: 1100px; }
+  .hidden { display: none !important; }
   .menu-logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 3.5rem;
@@ -66,176 +49,35 @@
     text-shadow: 0 0 20px var(--orange-glow);
     letter-spacing: 6px;
     margin-bottom: 10px;
+    text-align: center;
   }
-  .menu-version {
-    font-size: 0.85rem;
-    color: var(--grey-text);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 50px;
-  }
-
-  /* КНОПКИ */
+  .menu-version { font-size: 0.85rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 50px; text-align: center; }
   .btn {
-    background: linear-gradient(135deg, #151522, #1c1c30);
-    color: var(--white);
-    border: 1px solid var(--grey-border);
-    padding: 16px 32px;
-    font-family: 'Space Mono', monospace;
-    font-weight: bold;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    background: linear-gradient(135deg, #151522, #1c1c30); color: var(--white); border: 1px solid var(--grey-border);
+    padding: 16px 32px; font-family: 'Space Mono', monospace; font-weight: bold; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border-radius: 8px; transition: all 0.3s ease;
+    display: block; margin: 0 auto;
   }
-  .btn:hover {
-    border-color: var(--orange);
-    color: #000;
-    background: var(--orange);
-    box-shadow: 0 0 20px var(--orange-glow);
-  }
-  .btn-accent { border-color: var(--orange); color: var(--orange); }
-  .btn-sm { padding: 8px 16px; font-size: 0.75rem; letter-spacing: 1px; }
-
-  /* ИНТЕРФЕЙС НАСТРОЙКИ СЕТИ */
-  .network-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-  }
-  .panel {
-    background: var(--bg-panel);
-    border: 1px solid var(--grey-border);
-    border-radius: 12px;
-    padding: 24px;
-    position: relative;
-  }
-  .panel-title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.1rem;
-    color: var(--orange);
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+  .btn:hover { border-color: var(--orange); color: #000; background: var(--orange); box-shadow: 0 0 20px var(--orange-glow); }
+  .network-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 24px; }
+  .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; }
   .form-group { margin-bottom: 20px; }
   label { display: block; font-size: 0.75rem; color: var(--grey-text); margin-bottom: 8px; text-transform: uppercase; }
   input[type="text"] {
-    width: 100%; background: #07070b; border: 1px solid var(--grey-border);
-    color: var(--white); padding: 14px;
-    border-radius: 6px; font-family: inherit; font-size: 16px;
+    width: 100%; background: #07070b; border: 1px solid var(--grey-border); color: var(--white);
+    padding: 14px; border-radius: 6px; font-family: inherit; font-size: 16px;
   }
-  input[type="text"]:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
-
-  /* ИГРОВОЙ ИНТЕРФЕЙС */
-  .game-layout {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 25px;
-  }
-  
-  /* ХАРАКТЕРИСТИКИ ПЕРСОНАЖА */
-  .character-sheet {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  .trait-card {
-    background: var(--bg-card);
-    border: 1px solid var(--grey-border);
-    border-radius: 6px;
-    padding: 12px 16px;
-  }
-  .trait-card label { margin-bottom: 2px; color: var(--orange); font-weight: bold; }
-  .trait-value { font-size: 0.95rem; color: var(--white); }
-
-  /* КОЛБЫ ЖИЗНЕОБЕСПЕЧЕНИЯ */
-  .gui-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .flask-container {
-    background: var(--bg-panel);
-    border: 1px solid var(--grey-border);
-    border-radius: 10px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  .flask-info { flex-grow: 1; }
-  .flask-title { font-size: 0.75rem; color: var(--grey-text); text-transform: uppercase; }
-  .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-top: 2px; }
-  
-  .flask-glass {
-    width: 32px;
-    height: 90px;
-    background: rgba(255,255,255,0.03);
-    border: 2px solid #333345;
-    border-radius: 4px 4px 16px 16px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
-  }
-  .flask-liquid {
-    position: absolute;
-    bottom: 0; left: 0; width: 100%;
-    height: 100%;
-    background: var(--neon-green);
-    box-shadow: 0 0 15px var(--neon-green-glow);
-    transition: height 0.6s ease, background 0.6s ease, box-shadow 0.6s ease;
-  }
-  .flask-container.danger .flask-liquid {
-    background: var(--neon-red);
-    box-shadow: 0 0 15px var(--neon-red-glow);
-  }
-  .flask-container.cold .flask-liquid {
-    background: var(--neon-blue);
-    box-shadow: 0 0 15px rgba(0, 191, 255, 0.5);
-  }
-
-  /* ГЛОБАЛЬНЫЙ СТАТУС МИРА */
-  .global-status {
-    background: #100b0b; border: 1px solid #301515;
-    border-radius: 8px; padding: 15px; margin-bottom: 15px;
-  }
-  
-  /* КАРТЫ ДЕЙСТВИЙ */
-  .action-cards-box { margin-top: 15px; }
-  .action-deck { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-  .action-mini-card {
-    background: #1a110b; border: 1px solid #4a2510; border-radius: 4px; padding: 8px 12px; font-size: 0.75rem;
-    color: #ffaa66;
-  }
-  .action-mini-card.cancel { background: #0b1a13; border-color: #104a2b; color: #66ffaa; }
-
-  /* СПИСОК ИГРОКОВ ТЕРМИНАЛА */
-  .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 160px; overflow-y: auto; font-size: 0.8rem; }
-  .player-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px;
-  }
-  .player-row.exiled { opacity: 0.3; text-decoration: line-through; border-left: 3px solid var(--neon-red); }
-
-  /* ЖУРНАЛ ТЕРМИНАЛА (КАНАЛ ЛОГОВ) */
-  .logs-box { background: #050508; border: 1px solid #1a1a26; padding: 10px; height: 140px; overflow-y: auto; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: #a5a5b5; margin-top: 10px; border-radius: 4px; }
+  .game-layout { display: grid; grid-template-columns: 1fr 320px; gap: 25px; }
+  .character-sheet { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px 16px; }
+  .trait-card label { color: var(--orange); font-weight: bold; }
+  .trait-value { font-size: 0.95rem; }
+  .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 120px; overflow-y: auto; }
+  .logs-box { background: #050508; border: 1px solid #1a1a26; padding: 10px; height: 140px; overflow-y: auto; font-size: 0.75rem; color: #a5a5b5; margin-top: 10px; }
   .log-line { margin-bottom: 4px; }
   .log-time { color: var(--orange); margin-right: 6px; }
-
-  @media (max-width: 850px) {
-    body { padding: 10px; }
-    .menu-logo { font-size: 2.3rem; }
-    .network-grid { grid-template-columns: 1fr; gap: 15px; }
-    .game-layout { grid-template-columns: 1fr; }
-    .character-sheet { grid-template-columns: 1fr; }
-    .gui-sidebar { order: -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .flask-container { padding: 10px; flex-direction: column; text-align: center; }
-    .flask-glass { height: 60px; width: 24px; }
-  }
+  .player-row { display: flex; justify-content: space-between; padding: 6px; background: var(--bg-card); margin-bottom: 4px; }
 </style>
 </head>
 <body>
@@ -243,401 +85,140 @@
   <div id="scr-menu" class="screen">
     <div class="menu-logo">THE BUNKER V.2</div>
     <div class="menu-version">Тактическая игра Выживания.</div>
-    <button class="btn btn-accent" onclick="navigate('scr-menu', 'scr-network')">Создать бункер</button>
+    <button class="btn" onclick="navigate('scr-menu', 'scr-network')">Создать бункер</button>
   </div>
 
   <div id="scr-network" class="screen hidden">
     <div class="network-grid">
       <div class="panel">
-        <div class="panel-title">Инициализировать Убежище</div>
+        <div class="panel-title">Создать Убежище (ХОСТ)</div>
         <div class="form-group">
-          <label>Имя Смотрителя</label>
+          <label>Ваш Позывной</label>
           <input type="text" id="inp-host-name" placeholder="Командир...">
         </div>
-        <div class="form-group">
-          <label>Количество участников</label>
-          <select id="sel-player-limit" style="width:100%; background:#07070b; border:1px solid var(--grey-border); color:#fff; padding:14px; border-radius:6px; font-family:inherit;">
-            <option value="2">2 Игрока (1 выживший)</option>
-            <option value="4">4 Игрока (2 выживших)</option>
-            <option value="6">6 Игрока (3 выживших)</option>
-            <option value="8">8 Игроков (4 выживших)</option>
-            <option value="10">10 Игроков (5 выживших)</option>
-          </select>
-        </div>
-        <button class="btn" onclick="initP2P('host')">Занять Бункер</button>
-        
-        <div id="host-share-zone" style="display:none; margin-top:15px; background:#000; padding:12px; border-radius:6px; text-align:center;">
-          <label>Передай этот код выжившим:</label>
-          <div id="bunker-code-txt" style="font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--orange); font-weight:bold; letter-spacing:1px; margin:5px 0 10px;">-----</div>
-          <button class="btn btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('bunker-code-txt').innerText); alert('Код скопирован!');">Копировать</button>
-        </div>
+        <button class="btn" onclick="startTheGame('host')">Занять Бункер</button>
       </div>
 
-      <div class="panel" style="border-top: 1px solid var(--grey-border);">
-        <div class="panel-title">Подключить терминал шлюза</div>
+      <div class="panel">
+        <div class="panel-title">Подключиться к шлюзу (ИГРОК)</div>
         <div class="form-group">
-          <label>Имя выжившего</label>
-          <input type="text" id="inp-client-name" placeholder="Ваш позывной...">
+          <label>Ваш Позывной</label>
+          <input type="text" id="inp-client-name" placeholder="Выживший...">
         </div>
         <div class="form-group">
           <label>Секретный код Бункера</label>
-          <input type="text" id="inp-target-id" placeholder="Вставьте ID хоста...">
+          <input type="text" id="inp-target-id" placeholder="Вставьте код хоста...">
         </div>
-        <button class="btn" onclick="initP2P('client')">Открыть Шлюз</button>
+        <button class="btn" onclick="startTheGame('client')">Открыть Шлюз</button>
       </div>
     </div>
   </div>
 
   <div id="scr-game" class="screen hidden">
-    <div class="global-status">
-      <div style="color:var(--orange); font-family:'Orbitron', sans-serif; font-size:0.9rem; text-transform:uppercase; font-weight:900;">⚠ Экстренный протокол: Земля уничтожена</div>
-      <div id="world-disaster-text" style="font-size:0.95rem; font-weight:bold; margin-top:5px; color:#fff;">Сканирование атмосферы...</div>
-      <div id="bunker-condition-text" style="font-size:0.8rem; color:var(--grey-text); margin-top:4px;">Особые условия бункера: загрузка...</div>
-    </div>
-
     <div class="game-layout">
       <div>
         <div class="panel" style="margin-bottom:20px;">
-          <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center;">
-            <span>Ваше Досье Выжившего</span>
-            <span id="my-name-badge" style="font-size:0.8rem; color:var(--grey-text);">---</span>
-          </div>
-          
+          <div class="panel-title">Ваша Учетная Запись и Досье: <span id="my-name-badge" style="color:#fff;"></span></div>
           <div class="character-sheet" id="char-sheet-box"></div>
-
-          <div class="action-cards-box">
-            <label>Ваши оперативные карты действий:</label>
-            <div class="action-deck" id="action-deck-box"></div>
-          </div>
         </div>
 
-        <div class="panel" style="margin-bottom: 20px;">
-          <div class="panel-title">Мониторинг Экипажа Убежища (<span id="total-surv-count">0</span>)</div>
+        <div class="panel" style="margin-bottom:20px;">
+          <div class="panel-title">Список Выживших в сети</div>
           <div class="terminal-box" id="players-terminal-list"></div>
         </div>
 
         <div class="panel">
-          <div class="panel-title" style="font-size: 0.85rem; color: var(--grey-text);">Журнал Терминала</div>
-          <div class="logs-box" id="terminal-log-flow">
-            <div class="log-line"><span class="log-time">[СБ ИИ]</span> Терминал запущен. Системы Firebase переведены в режим ожидания.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="gui-sidebar">
-        <div class="flask-container" id="flask-o2-box">
-          <div class="flask-glass"><div class="flask-liquid" id="f-liq-o2" style="height:100%;"></div></div>
-          <div class="flask-info">
-            <div class="flask-title">Фильтрация O₂</div>
-            <div class="flask-val" id="f-txt-o2">НОРМА</div>
-          </div>
-        </div>
-
-        <div class="flask-container" id="flask-power-box">
-          <div class="flask-glass"><div class="flask-liquid" id="f-liq-power" style="height:100%;"></div></div>
-          <div class="flask-info">
-            <div class="flask-title">Ядро питания</div>
-            <div class="flask-val" id="f-txt-power">100%</div>
-          </div>
-        </div>
-
-        <div class="flask-container" id="flask-temp-box">
-          <div class="flask-glass"><div class="flask-liquid" id="f-liq-temp" style="height:50%;"></div></div>
-          <div class="flask-info">
-            <div class="flask-title">Термостат</div>
-            <div class="flask-val" id="f-txt-temp">+22°C</div>
-          </div>
+          <div class="panel-title" style="font-size:0.8rem; color:var(--grey-text);">Системные логи</div>
+          <div class="logs-box" id="terminal-log-flow"></div>
         </div>
       </div>
     </div>
   </div>
 
 <script>
-  // КОНФИГУРАЦИЯ ТВОЕГО ПРОЕКТА FIREBASE
+  // Настройки твоего личного Firebase проекта
   const firebaseConfig = {
     apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us10Uocp2iuser6I",
     authDomain: "the-bunker-96d5c.firebaseapp.com",
+    databaseURL: "https://the-bunker-96d5c-default-rtdb.firebaseio.com/", // Переключили на базу реального времени
     projectId: "the-bunker-96d5c",
     storageBucket: "the-bunker-96d5c.firebasestorage.app",
     messagingSenderId: "481257011457",
-    appId: "1:481257011457:web:b60b5a1f62d17af1520300",
-    measurementId: "G-ZSR970PRMR"
+    appId: "1:481257011457:web:b60b5a1f62d17af1520300"
   };
 
-  // Инициализация Firebase & Firestore
+  // Стартуем базу данных
   firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+  const database = firebase.database();
 
-  let peer = null, conn = null, connections = [];
-  let myRole = '', myName = '', gameConfig = null;
-  let activePlayers = [];
+  let myRole = '', myName = '';
+  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Программист ИИ"];
+  const healths = ["Абсолютно здоров", "Легкое заикание", "Хронический гастрит", "Сломана рука"];
 
-  const genders = ["Мужчина, 23 года", "Мужчина, 45 лет", "Мужчина, 31 год", "Женщина, 19 лет", "Женщина, 28 лет", "Женщина, 38 лет", "Мужчина, 60 лет", "Женщина, 52 года"];
-  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Военный связист", "Программист ИИ", "Охранник-кинолог", "Шеф-повар", "Психолог МЧС"];
-  const healthBad = ["Туберкулёз (Заразно)", "Открытая лёгочная инфекция (Заразно)", "Тяжелая форма астмы (Испорчен воздух)", "Хроническая пневмония (Заразно)"];
-  const healthNormal = ["Абсолютно здоров", "Сломана левая рука", "Слепота на левый глаз", "Хронический гастрит", "Легкое заикание", "Аллергия на пыль"];
-  const hobbies = ["Охота и стрельба", "Гидропоника дома", "Экстремальная медицина", "Радиолюбитель", "Картография", "Коллекционирование ножей", "Боевые искусства"];
-  const phobias = ["Клаустрофобия (Страх замкнутых пространств)", "Ахлуофобия (Страх темноты)", "Гермофобия (Страх микробов)", "Никтофобия", "Страх остаться одному"];
-  const traits = ["Эгоизм (ставит себя выше выживания группы)", "Вспыльчивость (провоцирует конфликты)", "Эмпатия (всегда помогает слабым)", "Гиперответственность", "Жадность", "Хладнокровие"];
-  const baggages = ["Армейская аптечка", "Набор прецизионных инструментов", "Фляга чистого спирта (5л)", "Запас семян пшеницы", "Дробовик с 3 патронами", "Защищенный ноутбук", "Газовый резак"];
-  const secrets = ["Шпион враждебной группировки", "Бесплоден", "Скрывает запасы еды", "Гениальный изобретатель", "Знает пароль от оружейной комнаты бункера"];
-  
-  const disasters = [
-    { title: "Ядерная зима", temp: "-45°C", style: "cold", desc: "Планета скована многовековым льдом и радиационной пылью." },
-    { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger", desc: "Атмосфера выжжена радиацией, поверхность — сплошная пустыня." },
-    { title: "Падение Ледяного Кометного Осколка", temp: "-20°C", style: "cold", desc: "Климат резко изменился, постоянные метели." },
-    { title: "Прорыв магматических разломов", temp: "+40°C", style: "danger", desc: "Воздух отравлен серой, тектонические плиты плавятся." }
-  ];
+  function navigate(fromId, toId) {
+    document.getElementById(fromId).classList.add('hidden');
+    document.getElementById(toId).classList.remove('hidden');
+  }
 
-  const bunkerConditions = [
-    "Гидропонный отсек затоплен. Ограничен запас пищи.",
-    "Система очистки воды работает на резервных батареях.",
-    "В бункере всего половина спальных мест.",
-    "Герметизация идеальная, но оружейный сейф заблокирован."
-  ];
-
-  const actionCardsPool = ["Украсть багаж соседа", "Узнать секрет на выбор", "Сменить профессию", "Убить чужого питомца", "Изолировать игрока"];
-
-  // Функция добавления локального лога на экран
-  function addTerminalLog(sender, text) {
+  function addTerminalLog(text) {
     const logBox = document.getElementById('terminal-log-flow');
     if(!logBox) return;
     const now = new Date();
     const timeStr = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-    logBox.innerHTML += `<div class="log-line"><span class="log-time">[${timeStr}]</span> <b>${sender}:</b> ${text}</div>`;
+    logBox.innerHTML += `<div class="log-line"><span class="log-time">[${timeStr}]</span> ${text}</div>`;
     logBox.scrollTop = logBox.scrollHeight;
   }
 
-  function navigate(fromId, toId) {
-    const fromEl = document.getElementById(fromId);
-    const toEl = document.getElementById(toId);
-    fromEl.classList.add('hidden');
-    setTimeout(() => {
-      toEl.classList.remove('hidden');
-      toEl.classList.add('fade-in');
-    }, 300);
-  }
+  // САМАЯ ГЛАВНАЯ ФУНКЦИЯ: Создает игрока в базе данных Firebase
+  function saveUserInDatabase(name, prof, health) {
+    // Чистим имя от точек и запрещенных знаков, чтобы Firebase не ругался
+    let cleanName = name.replace(/[.#$/\[\]]/g, "_");
 
-  function createCharacterData() {
-    const isSick = Math.random() < 0.35;
-    const health = isSick ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
-    return {
-      gender: genders[Math.floor(Math.random() * genders.length)],
-      prof: professions[Math.floor(Math.random() * professions.length)],
+    // Отправляем данные прямо в облако
+    database.ref('users/' + cleanName).set({
+      username: name,
+      balance: 5000, // Выдаем 5000 монет на баланс учетки
+      profession: prof,
       health: health,
-      hobby: hobbies[Math.floor(Math.random() * hobbies.length)],
-      phobia: phobias[Math.floor(Math.random() * phobias.length)],
-      trait: traits[Math.floor(Math.random() * traits.length)],
-      baggage: baggages[Math.floor(Math.random() * baggages.length)],
-      secret: secrets[Math.floor(Math.random() * secrets.length)],
-      isAirPolluter: isSick,
-      kicked: false
-    };
+      status: "В бункере"
+    })
+    .then(() => {
+      addTerminalLog(`<span style="color:var(--neon-green)">[БАЗА ДАННЫХ] Учетная запись ${name} успешно создана! Баланс: 5000 CC.</span>`);
+    })
+    .catch((err) => {
+      addTerminalLog(`<span style="color:var(--neon-red)">[ОШИБКА БАЗЫ] Данные не ушли. Причина: ${err.message}</span>`);
+    });
   }
 
-  function renderCharacter(char) {
-    const box = document.getElementById('char-sheet-box');
-    const fields = [
-      { l: "Пол и Возраст", v: char.gender },
-      { l: "Профессия", v: char.prof },
-      { l: "Состояние здоровья", v: char.health },
-      { l: "Хобби / Увлечение", v: char.hobby },
-      { l: "Страх / Фобия", v: char.phobia },
-      { l: "Человеческое качество", v: char.trait },
-      { l: "Багаж (Инвентарь)", v: char.baggage },
-      { l: "Секретный факт", v: char.secret }
-    ];
-    
-    box.innerHTML = fields.map(f => `
-      <div class="trait-card">
-        <label>${f.l}</label>
-        <div class="trait-value">${f.v}</div>
-      </div>
-    `).join('');
-
-    const deckBox = document.getElementById('action-deck-box');
-    deckBox.innerHTML = `
-      <div class="action-mini-card">⚡ Карта: ${actionCardsPool[Math.floor(Math.random()*actionCardsPool.length)]}</div>
-      <div class="action-mini-card">⚡ Карта: ${actionCardsPool[Math.floor(Math.random()*actionCardsPool.length)]}</div>
-      <div class="action-mini-card cancel">🛡 Карта: ОТМЕНА ДЕЙСТВИЯ</div>
-    `;
-  }
-
-  function initP2P(role) {
+  function startTheGame(role) {
     myRole = role;
     if(role === 'host') {
       myName = document.getElementById('inp-host-name').value.trim() || 'Смотритель';
-      const maxP = parseInt(document.getElementById('sel-player-limit').value);
-      const disaster = disasters[Math.floor(Math.random() * disasters.length)];
-      gameConfig = {
-        disaster: disaster,
-        condition: bunkerConditions[Math.floor(Math.random() * bunkerConditions.length)],
-        energy: [50, 75, 100][Math.floor(Math.random() * 3)],
-        maxPlayers: maxP,
-        targetSurvivors: Math.max(1, Math.floor(maxP / 2))
-      };
-      peer = new Peer();
-      peer.on('open', (id) => {
-        document.getElementById('bunker-code-txt').innerText = id;
-        document.getElementById('host-share-zone').style.display = 'block';
-        
-        let myChar = createCharacterData();
-        activePlayers.push({ id: 'Host', name: myName, role: 'host', char: myChar, kicked: false });
-        
-        renderCharacter(myChar);
-        applyWorldConfig(gameConfig);
-        checkOxygenStatus();
-        
-        addTerminalLog("ИИ СБ", `Бункер создан. Точка подключения PeerJS: ${id}`);
-        setTimeout(() => navigate('scr-network', 'scr-game'), 4000);
-      });
-      peer.on('connection', (c) => {
-        if(connections.length >= gameConfig.maxPlayers - 1) {
-          c.on('open', () => c.send({ type: 'error', msg: 'Бункер переполнен!' }));
-          return;
-        }
-        connections.push(c);
-        handleHostTraffic(c);
-      });
     } else {
       myName = document.getElementById('inp-client-name').value.trim() || 'Выживший';
-      const tId = document.getElementById('inp-target-id').value.trim();
-      if(!tId) return alert('Введите код бункера!');
-
-      peer = new Peer();
-      peer.on('open', () => {
-        conn = peer.connect(tId);
-        conn.on('open', () => {
-          conn.send({ type: 'join', name: myName });
-        });
-        handleClientTraffic(conn);
-      });
     }
-  }
 
-  function handleHostTraffic(c) {
-    c.on('data', (pack) => {
-      if(pack.type === 'join') {
-        let clientChar = createCharacterData();
-        activePlayers.push({ id: c.peer, name: pack.name, role: 'client', char: clientChar, kicked: false });
-        addTerminalLog("ШЛЮЗ", `Выживший ${pack.name} запрашивает доступ...`);
-        c.send({ type: 'init-game', char: clientChar, config: gameConfig });
-        syncAll();
-      }
-    });
-    c.on('close', () => {
-      activePlayers = activePlayers.filter(p => p.id !== c.peer);
-      syncAll();
-    });
-  }
+    document.getElementById('my-name-badge').innerText = myName;
 
-  function handleClientTraffic(c) {
-    c.on('data', (pack) => {
-      if(pack.type === 'init-game') {
-        renderCharacter(pack.char);
-        applyWorldConfig(pack.config);
-        gameConfig = pack.config;
-        document.getElementById('my-name-badge').innerText = myName;
-        addTerminalLog("ТЕРМИНАЛ", `Успешное подключение под протоколом "${myName}"`);
-        navigate('scr-network', 'scr-game');
-      }
-      if(pack.type === 'sync') {
-        activePlayers = pack.players;
-        renderPlayersTerminal();
-        checkOxygenStatus();
-      }
-      if(pack.type === 'error') {
-        alert(pack.msg);
-        window.location.reload();
-      }
-      if(pack.type === 'game-end') {
-        showGameOver(pack.msg);
-      }
-    });
-  }
+    // Генерируем случайные характеристики персонажа
+    let pProf = professions[Math.floor(Math.random() * professions.length)];
+    let pHealth = healths[Math.floor(Math.random() * healths.length)];
 
-  function syncAll() {
-    renderPlayersTerminal();
-    checkOxygenStatus();
-    connections.forEach(c => {
-      if(c.open) c.send({ type: 'sync', players: activePlayers });
-    });
-    const remaining = activePlayers.filter(p => !p.kicked).length;
-    if(remaining === gameConfig.targetSurvivors) {
-      let msg = `Шлюзовые двери намертво запечатаны. Выжившие внутри: ` + activePlayers.filter(p => !p.kicked).map(p => p.name).join(', ') + `. Ресурсов хватит для построения нового общества!`;
-      connections.forEach(c => c.open && c.send({ type: 'game-end', msg: msg }));
-      showGameOver(msg);
-    }
-  }
-
-  function applyWorldConfig(cfg) {
-    document.getElementById('world-disaster-text').innerText = `КАТАСТРОФА: ${cfg.disaster.title} (${cfg.disaster.desc})`;
-    document.getElementById('bunker-condition-text').innerText = `Особые условия: ${cfg.condition}`;
-    document.getElementById('f-txt-temp').innerText = cfg.disaster.temp;
-    const tempBox = document.getElementById('flask-temp-box');
-    tempBox.className = "flask-container " + cfg.disaster.style;
-    document.getElementById('f-liq-temp').style.height = cfg.disaster.style === 'cold' ? '25%' : '85%';
-
-    document.getElementById('f-txt-power').innerText = cfg.energy + "%";
-    document.getElementById('f-liq-power').style.height = cfg.energy + "%";
-    document.getElementById('f-liq-power').style.background = "#ffaa00";
-  }
-
-  function checkOxygenStatus() {
-    const alivePlayers = activePlayers.filter(p => !p.kicked);
-    const hasInfected = alivePlayers.some(p => p.char.isAirPolluter);
-
-    const o2Box = document.getElementById('flask-o2-box');
-    const o2Liq = document.getElementById('f-liq-o2');
-    const o2Txt = document.getElementById('f-txt-o2');
-    if(hasInfected) {
-      o2Box.classList.add('danger');
-      o2Liq.style.height = "25%";
-      o2Txt.innerText = "КРИТИЧЕСКИЙ (ЗАРАЖЕН)";
-    } else {
-      o2Box.classList.remove('danger');
-      o2Liq.style.height = "100%";
-      o2Txt.innerText = "НОРМА";
-    }
-  }
-
-  function renderPlayersTerminal() {
-    const box = document.getElementById('players-terminal-list');
-    const aliveCount = activePlayers.filter(p => !p.kicked).length;
-    document.getElementById('total-surv-count').innerText = `${aliveCount}/${gameConfig ? gameConfig.maxPlayers : activePlayers.length}`;
-
-    box.innerHTML = activePlayers.map(p => `
-      <div class="player-row ${p.kicked ? 'exiled' : ''}">
-        <span>${p.name} <small style="color:var(--orange); font-size:0.65rem;">[${p.role.toUpperCase()}]</small></span>
-        <div>
-          ${myRole === 'host' && !p.kicked ? `<button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="kickPlayer('${p.id}')">Изгнать</button>` : ''}
-          ${p.kicked ? `<span style="color:var(--neon-red); font-size:0.75rem;">ИЗГНАН</span>` : `<span style="color:var(--neon-green); font-size:0.75rem;">В БУНКЕРЕ</span>`}
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function kickPlayer(id) {
-    if(myRole !== 'host') return;
-    const target = activePlayers.find(p => p.id === id);
-    if(target) {
-      target.kicked = true;
-      addTerminalLog("СИСТЕМА БЕЗОПАСНОСТИ", `Пользователь ${target.name} был принудительно катапультирован из бункера.`);
-      syncAll();
-    }
-  }
-
-  function showGameOver(msg) {
-    document.body.innerHTML = `
-      <div class="screen fade-in" style="text-align:center; max-width:650px; margin:auto;">
-        <div class="menu-logo" style="color:var(--neon-green); text-shadow:0 0 20px var(--neon-green-glow);">СЕССИЯ ЗАВЕРШЕНА</div>
-        <div class="panel" style="margin-top:20px; border-color:var(--neon-green); text-align:left;">
-          <div class="panel-title" style="color:var(--white);">Итоговый отчет главного ИИ:</div>
-          <p style="font-size:0.95rem; line-height:1.6; color:var(--grey-text);">${msg}</p>
-        </div>
-        <button class="btn btn-accent" style="margin-top:25px;" onclick="window.location.reload()">Вернуться в главное меню</button>
-      </div>
+    // Показываем на экране досье
+    document.getElementById('char-sheet-box').innerHTML = `
+      <div class="trait-card"><label>Профессия</label><div class="trait-value">${pProf}</div></div>
+      <div class="trait-card"><label>Здоровье</label><div class="trait-value">${pHealth}</div></div>
     `;
+
+    document.getElementById('players-terminal-list').innerHTML = `
+      <div class="player-row"><span>${myName} (Вы)</span><span style="color:var(--neon-green)">В БУНКЕРЕ</span></div>
+    `;
+
+    navigate('scr-network', 'scr-game');
+    addTerminalLog("Запуск систем терминала...");
+
+    // ТУТ ИДЕТ АВТОМАТИЧЕСКОЕ СОХРАНЕНИЕ В ОБЛАКО FIREBASE
+    saveUserInDatabase(myName, pProf, pHealth);
   }
 </script>
 </body>
