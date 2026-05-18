@@ -51,7 +51,7 @@
     padding: 10px;
   }
 
-  /* --- СИСТЕМА СВЕЧЕНИЯ И ПЕРЕЛИВОВ НИКОВ (НОВЫЕ ЦВЕТА И ЭКСКЛЮЗИВ) --- */
+  /* --- СИСТЕМА СВЕЧЕНИЯ И ПЕРЕЛИВОВ НИКОВ --- */
   .nick-dev-style {
     font-weight: 900 !important;
     background: linear-gradient(90deg, #ff0000, #ff5555, #990000, #ff0000);
@@ -158,7 +158,7 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px var(--orange-glow);
     border-radius: 10px;
     width: 320px;
-    padding: 12px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
     transform: translateY(-10px);
@@ -172,20 +172,16 @@
     pointer-events: auto;
   }
 
-  .dev-admin-block {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 2px dashed var(--neon-red);
-    background: rgba(255, 0, 51, 0.04);
-    border-radius: 4px;
-    padding: 6px;
-  }
-
-  .hub-tabs { display: flex; border-bottom: 1px solid var(--grey-border); margin-bottom: 10px; padding-bottom: 5px; gap: 2px; }
-  .hub-tab-btn { background: transparent; border: none; color: var(--grey-text); font-family: inherit; font-size: 0.65rem; padding: 6px 1px; cursor: pointer; flex: 1; text-transform: uppercase; text-align: center; border-radius: 4px; transition: all 0.2s; }
+  .hub-tabs { display: flex; border-bottom: 1px solid var(--grey-border); margin-bottom: 12px; padding-bottom: 5px; gap: 4px; }
+  .hub-tab-btn { background: transparent; border: none; color: var(--grey-text); font-family: inherit; font-size: 0.68rem; padding: 6px 2px; cursor: pointer; flex: 1; text-transform: uppercase; text-align: center; border-radius: 4px; transition: all 0.2s; }
   .hub-tab-btn.active { color: var(--orange); background: rgba(255,85,0,0.1); font-weight: bold; }
-  .hub-content-section { display: none; min-height: 140px; max-height: 320px; overflow-y: auto; padding: 2px; }
+  
+  /* Исправленные секции контента выпадающего меню */
+  .hub-content-section { display: none; padding: 2px; }
   .hub-content-section.active { display: block; }
+  
+  /* Для склада и опций оставляем аккуратный скролл, если там много контента */
+  #hub-inv, #hub-sett { max-height: 280px; overflow-y: auto; }
 
   .dropdown-item-text { font-size: 0.65rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 1px; }
   .dropdown-item-val { font-size: 0.85rem; color: var(--white); word-break: break-all; font-weight: bold; margin-top: 2px; }
@@ -307,8 +303,10 @@
   .rules-content p { margin-bottom: 8px; }
   .rules-content ul { margin-left: 15px; margin-bottom: 8px; }
   
-  /* Стили админ-контроля блокировок */
-  .punish-list-item { font-size: 0.7rem; display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 4px; margin-top: 3px; border-radius: 3px; border: 1px solid #222; }
+  /* Аккуратные стили админ-контроля блокировок */
+  .admin-panel-box { border: 1px dashed var(--neon-red); padding: 8px; border-radius: 6px; margin-top: 8px; background: rgba(255, 34, 51, 0.02); }
+  .punish-scroll-list { max-height: 110px; overflow-y: auto; margin-top: 5px; border: 1px solid #1c1c28; border-radius: 4px; padding: 2px; background: #050508; }
+  .punish-list-item { font-size: 0.68rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-card); padding: 5px 8px; margin-bottom: 4px; border-radius: 4px; border: 1px solid var(--grey-border); }
 </style>
 </head>
 <body>
@@ -358,24 +356,38 @@
         </div>
 
         <div id="hub-dev" class="hub-content-section">
-          <p class="dropdown-item-text" style="color:var(--neon-red); font-weight:bold;">Панель Создателя</p>
-          <div style="display:flex; flex-direction:column; gap:6px; margin-top:5px;">
-            <button class="btn btn-sm" onclick="adminGiveCoins()" style="font-size:0.6rem; padding:4px;">+1000 коинов себе</button>
+          <p class="dropdown-item-text" style="color:var(--neon-red); font-weight:bold; margin-bottom: 5px;">Панель Создателя</p>
+          <button class="btn btn-sm" onclick="adminGiveCoins()" style="font-size:0.65rem; padding:5px; width:100%; margin-bottom:10px;">+1000 коинов себе</button>
+          
+          <div class="admin-panel-box">
+            <p class="dropdown-item-text" style="color: var(--neon-yellow); margin-bottom: 6px;">Управление ограничениями</p>
             
-            <div style="border: 1px solid rgba(255,34,51,0.3); padding: 5px; border-radius: 4px; margin-top: 5px; background: rgba(0,0,0,0.2);">
-              <p class="dropdown-item-text" style="color: var(--neon-yellow); margin-bottom: 4px;">Управление игроками</p>
-              <select id="admin-target-user" style="font-size: 0.7rem; padding: 4px; margin-bottom: 4px;"></select>
-              <input type="text" id="admin-punish-time" placeholder="Минут (0 = навсегда)" style="font-size: 0.7rem; padding: 4px; margin-bottom: 4px;">
-              <div style="display: flex; gap: 4px;">
-                <button class="btn btn-sm" onclick="executePunish('mute')" style="flex:1; padding:3px; font-size:0.6rem; border-color:var(--neon-purple);">Мут</button>
-                <button class="btn btn-sm" onclick="executePunish('ban')" style="flex:1; padding:3px; font-size:0.6rem; border-color:var(--neon-red);">Бан</button>
-              </div>
+            <div class="form-group" style="margin-bottom: 6px;">
+              <label>Выбрать нарушителя</label>
+              <select id="admin-target-user" style="font-size: 0.75rem; padding: 5px;"></select>
             </div>
+            
+            <div class="form-group" style="margin-bottom: 8px;">
+              <label>Срок блокировки</label>
+              <select id="admin-punish-time" style="font-size: 0.75rem; padding: 5px;">
+                <option value="5">5 Минут</option>
+                <option value="15">15 Минут</option>
+                <option value="30">30 Минут</option>
+                <option value="60">1 Час</option>
+                <option value="1440">1 Сутки</option>
+                <option value="0">Навсегда (Перманент)</option>
+              </select>
+            </div>
+            
+            <div style="display: flex; gap: 6px;">
+              <button class="btn btn-sm" onclick="executePunish('mute')" style="flex:1; padding:5px; font-size:0.65rem; border-color:var(--neon-purple); background:transparent; color:var(--neon-purple);">Выдать Мут</button>
+              <button class="btn btn-sm" onclick="executePunish('ban')" style="flex:1; padding:5px; font-size:0.65rem; border-color:var(--neon-red); background:transparent; color:var(--neon-red);">Выдать Бан</button>
+            </div>
+          </div>
 
-            <div style="margin-top: 5px;">
-              <p class="dropdown-item-text" style="color: var(--neon-blue);">Активные Муты / Баны:</p>
-              <div id="admin-punish-lists" style="max-height: 80px; overflow-y: auto; margin-top: 2px;"></div>
-            </div>
+          <div style="margin-top: 8px;">
+            <p class="dropdown-item-text" style="color: var(--neon-blue);">Черный список терминалов:</p>
+            <div id="admin-punish-lists" class="punish-scroll-list"></div>
           </div>
         </div>
 
@@ -673,9 +685,8 @@
 </div>
 
 <script>
-  // КОНФИГУРАЦИЯ FIREBASE (Твоя база)
   const firebaseConfig = {
-    apiKey: "AIzaSyAs7...", // Замени на свои реальные ключи, если они слетели
+    apiKey: "AIzaSyAs7...", 
     authDomain: "bunker-v3.firebaseapp.com",
     databaseURL: "https://bunker-v3-default-rtdb.firebaseio.com",
     projectId: "bunker-v3",
@@ -688,7 +699,6 @@
   const auth = firebase.auth();
   const db = firebase.database();
 
-  // Локальные переменные
   let currentUser = null;
   let userData = null;
   let peer = null;
@@ -701,7 +711,6 @@
   let myCard = null;
   let votingActive = false;
 
-  // Хранилище предметов для открытия кейсов
   const LOOT_POOL = {
     standart: [
       { id: 'glow-grey', name: 'Серый пепел', tier: 'Common', color: '#8a8a9e', type: 'glow' },
@@ -726,18 +735,15 @@
     ]
   };
 
-  // Инициализация при загрузке страницы
   window.addEventListener('DOMContentLoaded', () => {
     auth.onAuthStateChanged(user => {
       if (user) {
         currentUser = user;
         const emailClean = user.email.replace(/[.#$\[\]]/g, "_");
         
-        // Слушаем профиль игрока из БД
         db.ref('users/' + emailClean).on('value', snapshot => {
           if(snapshot.exists()) {
             userData = snapshot.val();
-            // Генерируем красивый числовой ID на основе почты игрока
             if(!userData.uid_num) {
               let hash = 0;
               for (let i = 0; i < emailClean.length; i++) {
@@ -747,7 +753,6 @@
               db.ref('users/' + emailClean + '/uid_num').set(userData.uid_num);
             }
             
-            // ПРОВЕРКА НА БАН
             if(userData.bannedUntil) {
               const now = Date.now();
               if(userData.bannedUntil === -1 || userData.bannedUntil > now) {
@@ -762,7 +767,6 @@
             updateProfileDropdownUI();
             checkAdminPermissions();
           } else {
-            // Создание дефолтной записи
             const defaultProfile = {
               nickname: "Survivor_" + Math.floor(1000 + Math.random() * 9000),
               avatar: "👤",
@@ -790,13 +794,11 @@
       }
     });
     
-    // Подгрузка активных наказаний для админов
     db.ref('punishments').on('value', () => {
       if(userData && userData.role === 'admin') renderAdminPunishLists();
     });
   });
 
-  // Авторизация / Регистрация
   function handleAuth(type) {
     const email = document.getElementById('auth-email').value.trim();
     const pass = document.getElementById('auth-pass').value.trim();
@@ -816,7 +818,6 @@
     toggleProfileMenu();
   }
 
-  // Обновление интерфейса верхнего профиля
   function updateProfileDropdownUI() {
     document.getElementById('prof-trigger').classList.add('logged-in');
     document.getElementById('drop-auth-needed').style.display = 'none';
@@ -840,7 +841,6 @@
       rankText.style.color = "var(--grey-text)";
     }
     
-    // Обновление отображения купленных товаров
     updateShopItemsState();
   }
 
@@ -853,7 +853,6 @@
     }
   }
 
-  // Сохранение кастомизации
   function saveProfileChanges() {
     if(!currentUser) return;
     const emailClean = currentUser.email.replace(/[.#$\[\]]/g, "_");
@@ -873,7 +872,6 @@
     }
   }
 
-  // Настройка PeerJS
   function setupPeerConnection() {
     peer = new Peer({ debug: 1 });
     peer.on('open', id => {
@@ -890,7 +888,6 @@
     });
   }
 
-  // Переключение экранов
   function showScreen(id) {
     document.getElementById('screen-auth').classList.add('hidden');
     document.getElementById('screen-menu').classList.add('hidden');
@@ -909,7 +906,6 @@
     event.currentTarget.classList.add('active');
   }
 
-  // ЛОГИКА СЕССИЙ (ХОСТ И КЛИЕНТ)
   function initiateHostSession() {
     myRole = 'host';
     showScreen('screen-game');
@@ -918,7 +914,6 @@
     document.getElementById('host-voting-controls').style.display = 'flex';
     document.getElementById('game-status-header').style.display = 'block';
     
-    // Добавляем себя в список игроков
     activePlayers = [{
       peerId: localPeerId,
       id_num: userData.uid_num,
@@ -946,7 +941,6 @@
       showScreen('screen-game');
       document.getElementById('game-status-header').style.display = 'block';
       
-      // Отправляем свои биометрические данные
       conn.send({
         type: 'join-request',
         name: userData.nickname,
@@ -967,10 +961,8 @@
     });
   }
 
-  // События на Хосте
   function setupHostConnectionEvents(c) {
     c.on('data', data => {
-      // ПРОВЕРКА НА БАН ПЕРЕД ОБРАБОТКОЙ ДАННЫХ
       if(data.emailClean) {
         db.ref('users/' + data.emailClean).get().then(snap => {
           if(snap.exists()) {
@@ -981,7 +973,6 @@
               return;
             }
             
-            // ПРОВЕРКА НА МУТ
             if(data.type === 'chat-msg' || data.type === 'vote-submit') {
               if(pData.mutedUntil && (pData.mutedUntil === -1 || pData.mutedUntil > Date.now())) {
                 c.send({ type: 'muted-notice' });
@@ -1008,7 +999,6 @@
   function processHostDataPayload(c, data) {
     if(data.type === 'join-request') {
       c.peerId = c.peer;
-      // Проверяем дубликат
       if(activePlayers.some(p => p.emailClean === data.emailClean)) {
         c.send({ type: 'error-msg', msg: 'Этот профиль уже внутри сессии.' });
         c.close();
@@ -1078,12 +1068,10 @@
     }
   }
 
-  // Синхронизация хоста
   function syncAll() {
     renderPlayersTerminal();
     connections.forEach(c => c.open && c.send({ type: 'sync', players: activePlayers, votingActive: votingActive }));
     
-    // Авто-проверка завершения игры по квоте
     const remaining = activePlayers.filter(p => !p.kicked);
     if(gameConfig && remaining.length === gameConfig.targetSurvivors && myRole === 'host') {
       if(activePlayers.length < 2) {
@@ -1107,7 +1095,6 @@
     }
   }
 
-  // Генерация контента бункера
   function hostTriggerGameStart() {
     if(activePlayers.length < 1) return alert("Недостаточно выживших!");
     
@@ -1116,7 +1103,6 @@
     
     gameConfig = { targetSurvivors: parseInt(targetCount) };
     
-    // Датасеты характеристик
     const professions = ["Биолог-генетик", "Инженер ядерных реакторов", "Военный хирург", "Агроном очистных сооружений", "Программист ИИ", "Слесарь-техник", "Повар гидропоники", "Охранник периметры"];
     const healths = ["Идеальное здоровье", "Хроническая астма (легкая форма)", "Порок сердца (стабильный)", "Слепота на один глаз", "Аллергия на пыль", "Абсолютно здоров"];
     const hobbies = ["Робототехника", "Стрельба из лука", "Фильтрация жидкостей", "Игра на гитаре", "Кулинария", "Разведение насекомых"];
@@ -1151,7 +1137,6 @@
     document.getElementById('disaster-desc').innerText = disaster.desc;
   }
 
-  // Рендеринг карточек характеристик
   function renderClientCharacterSheet(me) {
     const box = document.getElementById('char-sheet-box');
     const revContainer = document.getElementById('reveal-buttons-container');
@@ -1195,7 +1180,6 @@
     }
   }
 
-  // Отрисовка Био-Терминала выживших с ID игрока
   function renderPlayersTerminal() {
     const term = document.getElementById('players-terminal');
     const voteSelect = document.getElementById('vote-target-select');
@@ -1290,7 +1274,7 @@
     `;
   }
 
-  // АДМИНИСТРАТИВНАЯ СИСТЕМА НАКАЗАНИЙ (БАНЫ И МУТЫ)
+  // ОБНОВЛЕННАЯ СИСТЕМА НАКАЗАНИЙ С СЕЛЕКТОРОМ И ID ИГРОКОВ
   function updateAdminUserSelect() {
     const select = document.getElementById('admin-target-user');
     if(!select) return;
@@ -1302,27 +1286,28 @@
 
   function executePunish(type) {
     const targetEmailClean = document.getElementById('admin-target-user').value;
-    const timeInput = document.getElementById('admin-punish-time').value.trim();
+    const timeSelect = document.getElementById('admin-punish-time').value;
     if(!targetEmailClean) return alert("Нет выбранной цели для наказания!");
     
-    const minutes = timeInput ? parseInt(timeInput) : 0;
-    const untilTimestamp = minutes > 0 ? (Date.now() + minutes * 60000) : -1; // -1 значит перманентно
+    const minutes = parseInt(timeSelect);
+    const untilTimestamp = minutes > 0 ? (Date.now() + minutes * 60000) : -1;
     
     const dbPath = type === 'mute' ? 'mutedUntil' : 'bannedUntil';
+    const playerObj = activePlayers.find(p => p.emailClean === targetEmailClean);
+    const targetNameWithId = playerObj ? `${playerObj.name} [#${playerObj.id_num}]` : targetEmailClean;
     
     db.ref('users/' + targetEmailClean + '/' + dbPath).set(untilTimestamp).then(() => {
-      // Регистрируем лог в базу данных
       const pRef = db.ref('punishments').push();
       pRef.set({
         emailClean: targetEmailClean,
+        targetDisplay: targetNameWithId,
         type: type,
         until: untilTimestamp,
         timestamp: Date.now()
       });
       
-      alert(`Операция выполнена: ${type.toUpperCase()} для ${targetEmailClean}`);
+      alert(`Операция выполнена: ${type.toUpperCase()} для ${targetNameWithId}`);
       
-      // Сразу кикаем из сессии, если это бан
       if(type === 'ban') {
         const foundConn = connections.find(c => c.peer === activePlayers.find(p => p.emailClean === targetEmailClean)?.peerId);
         if(foundConn) {
@@ -1330,7 +1315,6 @@
           foundConn.close();
         }
       }
-      document.getElementById('admin-punish-time').value = "";
     });
   }
 
@@ -1341,7 +1325,7 @@
     
     db.ref('punishments').once('value', snapshot => {
       if(!snapshot.exists()) {
-        block.innerHTML = `<p style="font-size:0.65rem; color:var(--grey-text);">Нарушителей не обнаружено</p>`;
+        block.innerHTML = `<p style="font-size:0.65rem; color:var(--grey-text); text-align:center; padding:10px;">Нарушителей не обнаружено</p>`;
         return;
       }
       
@@ -1349,12 +1333,13 @@
         const item = child.val();
         const key = child.key;
         const typeText = item.type === 'mute' ? 'МУТ' : 'БАН';
-        const expiresText = item.until === -1 ? 'НАВСЕГДА' : new Date(item.until).toLocaleTimeString();
+        const expiresText = item.until === -1 ? 'ПЕРМ' : new Date(item.until).toLocaleTimeString();
+        const displayName = item.targetDisplay || item.emailClean;
         
         block.innerHTML += `
           <div class="punish-list-item">
-            <span>[${typeText}] ${item.emailClean.substring(0,10)}.. (${expiresText})</span>
-            <button class="btn btn-sm" onclick="removePunish('${item.emailClean}', '${item.type}', '${key}')" style="padding:2px 4px; font-size:0.55rem; border-color:var(--neon-green); background:transparent;">Снять</button>
+            <span style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:180px;">[${typeText}] ${displayName} (${expiresText})</span>
+            <button class="btn btn-sm" onclick="removePunish('${item.emailClean}', '${item.type}', '${key}')" style="padding:3px 6px; font-size:0.55rem; border-color:var(--neon-green); background:transparent; color:var(--neon-green);">Снять</button>
           </div>
         `;
       });
@@ -1377,7 +1362,6 @@
     db.ref('users/' + emailClean + '/coins').transaction(c => (c || 0) + 1000);
   }
 
-  // РАБОТА С МАГАЗИНОМ И КЕЙСАМИ (Все твои функции рулетки без изменений)
   function switchShopCat(cat) {
     document.getElementById('shop-cat-cases').classList.add('hidden');
     document.getElementById('shop-cat-glows').classList.add('hidden');
