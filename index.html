@@ -154,7 +154,7 @@
       <div class="panel">
         <div class="panel-title">📡 ИНФО-СПРАВКА</div>
         <p style="font-size:0.85rem; line-height:1.6; color:var(--grey-text);">
-          Зарегистрируй личный терминал, чтобы сохранять заработанные баллы. За каждую победу в бункере система начислит тебе <span style="color:var(--neon-green);">+100 Кибер-Коинов</span>.<br><br><b>Важно:</b> Если в браузере включен автоматический перевод страниц, обязательно отключи его для этого сайта, чтобы кнопки не блокировались.
+          Зарегистрируй личный терминал, чтобы сохранять заработанные баллы. За каждую победу в бункере система начислит тебе <span style="color:var(--neon-green);">+100 Кибер-Коинов</span>.
         </p>
       </div>
     </div>
@@ -273,19 +273,19 @@
   </div>
 
 <script>
-  // === КОНФИГУРАЦИЯ FIREBASE С ОРИГИНАЛЬНЫМ КЛЮЧОМ ===
+  // === КОРРЕКТНЫЙ КОНФИГУРАТОР ТВОЕЙ БАЗЫ FIREBASE ===
   const firebaseConfig = {
-    apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us1OUoc2ij6I",
+    apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us10Uocp2iuser6I",
     authDomain: "the-bunker-96d5c.firebaseapp.com",
+    databaseURL: "https://the-bunker-96d5c-default-rtdb.firebaseio.com",
     projectId: "the-bunker-96d5c",
     storageBucket: "the-bunker-96d5c.firebasestorage.app",
     messagingSenderId: "481257011457",
     appId: "1:481257011457:web:b60b5a1f62d17af1520300",
-    measurementId: "G-ZSR970PRMR",
-    databaseURL: "https://the-bunker-96d5c-default-rtdb.firebaseio.com"
+    measurementId: "G-ZSR970PRMR"
   };
   
-  // Инициализация
+  // Безопасный запуск сетевого ядра
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   const auth = firebase.auth();
@@ -328,7 +328,7 @@
 
   function openShop() { navigate('scr-menu', 'scr-shop'); }
 
-  // Отслеживание сессии авторизации
+  // Слушатель состояния аккаунта
   auth.onAuthStateChanged((user) => {
     if (user) {
       currentUser = user;
@@ -359,7 +359,7 @@
         let clean = cred.user.email.replace(/\./g, '_');
         db.ref('users/' + clean).set({ coins: 0, items: [] });
         alert('Успешная регистрация аккаунта!');
-      }).catch(err => alert('Ошибка регистрации: ' + err.message + '\n\nУбедитесь, что автоперевод страниц выключен!'));
+      }).catch(err => alert('Ошибка регистрации: ' + err.message));
     } else {
       auth.signInWithEmailAndPassword(email, pass).catch(err => alert('Ошибка входа: ' + err.message));
     }
@@ -380,7 +380,7 @@
         }
       }
       return userData;
-    }, (error, committed) => { if(committed) alert('Товар успешно добавлен на терминал!'); });
+    }, (error, committed) => { if(committed) alert('Модификатор успешно куплен!'); });
   }
 
   function createCharacterData() {
@@ -422,7 +422,6 @@
     `;
   }
 
-  // СЕТЬ P2P МЕЖДУ ИГРОКАМИ
   function initP2P(role) {
     myRole = role;
     if(currentUser) {
@@ -579,11 +578,11 @@
         if(p.emailClean && p.emailClean !== 'none') {
           db.ref('users/' + p.emailClean + '/coins').transaction((current) => {
             return (current || 0) + 100;
-          }).catch(e => console.log("Database update deferred"));
+          }).catch(e => console.log("Transaction skipped"));
         }
       });
 
-      let msg = `Шлюз закрыт! Выжившие: ` + remaining.map(p => p.name).join(', ') + `. Система начислила по +100 коинов!`;
+      let msg = `Шлюз закрыт! Выжившие: ` + remaining.map(p => p.name).join(', ') + `. Начислено по +100 коинов!`;
       connections.forEach(c => c.open && c.send({ type: 'game-end', msg: msg }));
       showGameOver(msg);
     }
