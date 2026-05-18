@@ -171,7 +171,6 @@
     pointer-events: auto;
   }
 
-  /* ДОБАВЛЕННЫЙ СТИЛЬ ДЛЯ БЛОКА РАЗРАБОТЧИКА */
   .dev-admin-block {
     margin-top: 10px;
     padding-top: 10px;
@@ -320,7 +319,7 @@
             
             <div class="form-group">
               <label>Цель (Ник или #ID Игрока)</label>
-              <input type="text" id="dev-target-user" placeholder="Например: lyohich или #4812" style="padding:6px; font-size:11px;">
+              <input type="text" id="dev-target-user" placeholder="Например: Сталкер или #4812" style="padding:6px; font-size:11px;">
             </div>
             
             <div class="form-group">
@@ -520,7 +519,7 @@
     "Падение астероида: Температура упала до -40°C. Поверхность скована льдом на десятилетие.",
     "Биологическая угроза: Вирус превращает ткани в пепел. Наземная биосфера мертва.",
     "Восстание машин: Дроны выжигают всё живое. Выживание возможно только глубоко под землей.",
-    "Солнечная вспышка: Сгорела вся атмосфера. Адская температура и смертоносное УФ-излучение.",
+    "Solnechnaya вспышка: Сгорела вся атмосфера. Адская температура и смертоносное УФ-излучение.",
     "Глобальный потоп: Вся суша ушла под воду. Бункер — это герметичная подводная капсула."
   ];
 
@@ -557,9 +556,9 @@
   // Глобальные переменные PeerJS и игры
   let peer = null;
   let myPeerId = "";
-  let myRole = ""; // 'host' или 'client'
-  let hostConn = null; // для клиента
-  let connections = []; // для хоста
+  let myRole = ""; 
+  let hostConn = null; 
+  let connections = []; 
   
   let currentUser = null;
   let userData = null;
@@ -572,7 +571,6 @@
   let myCharacterData = null;
   let votingActive = false;
 
-  // Инициализация災 списка катастроф
   const disasterSelect = document.getElementById('cfg-disaster');
   if(disasterSelect) {
     disasters.forEach((d, idx) => {
@@ -582,7 +580,6 @@
     });
   }
 
-  // --- СИСТЕМА УПРАВЛЕНИЯ ПРОФИЛЕМ ---
   function toggleProfileMenu() { document.getElementById('prof-dropdown').classList.toggle('active'); }
   
   function switchHubTab(tabId) {
@@ -616,7 +613,7 @@
     saveProfileSettings();
   }
 
-  // Аутентификация
+  // Авторизация Игроков
   function handleAuth(type) {
     const email = document.getElementById('inp-email').value.trim();
     const pass = document.getElementById('inp-pass').value.trim();
@@ -627,23 +624,16 @@
     } else {
       auth.createUserWithEmailAndPassword(email, pass).then(cred => {
         let clean = email.replace(/[.#$\[\]]/g, "_");
-        let short;
-        let role = "player";
         
-        // ЖЕСТКАЯ КОЗЫРНАЯ ПРИВЯЗКА АЙДИ ДЛЯ ТЕБЯ
-        if (email.toLowerCase() === "lyoha@bunker.com") {
-          short = "0001";
-          role = "developer";
-        } else {
-          short = Math.floor(1000 + Math.random() * 9000);
-        }
+        // ПОЛНАЯ АВТОМАТИКА: Для всех по дефолту ставим обычные параметры
+        let short = Math.floor(1000 + Math.random() * 9000);
 
         db.ref('users/' + clean).set({
           email: email,
-          nickname: email.toLowerCase() === "lyoha@bunker.com" ? "Lyoha_Rosenfeld" : "Выживший_" + short,
-          shortId: short,
-          coins: email.toLowerCase() === "lyoha@bunker.com" ? 999999 : 100,
-          role: role,
+          nickname: "Выживший_" + short,
+          shortId: String(short),
+          coins: 100,
+          role: "player",
           avatar: "👤",
           currentGlow: "none"
         });
@@ -667,7 +657,6 @@
       db.ref('users/' + emailClean).on('value', snap => {
         userData = snap.val();
         if(userData) {
-          // ПРОРЫВНАЯ СИНХРОННАЯ ПРОВЕРКА БАНА В РЕАЛЬНОМ ВРЕМЕНИ
           if(userData.banTime) {
             let now = Date.now();
             if(userData.banTime === "perm" || userData.banTime > now) {
@@ -692,25 +681,22 @@
           const idDisplay = document.getElementById('drop-my-short-id');
           idDisplay.innerText = "#" + myShortId;
           
-          // Особый стиль ID разработчика
-          if(myShortId === "0001" || userData.role === "developer") {
+          // Проверка роли НАПРЯМУЮ ИЗ БАЗЫ ДАННЫХ
+          if(myShortId === "0001" || userData.role === "developer" || userData.role === "admin") {
             idDisplay.style.color = "var(--gold)";
             idDisplay.style.textShadow = "0 0 15px rgba(255, 215, 0, 0.8)";
             idDisplay.style.fontWeight = "900";
+            document.getElementById('tab-dev-toggle').style.display = 'block'; // открываем терминал админа
           } else {
             idDisplay.style.color = "var(--neon-blue)";
             idDisplay.style.textShadow = "none";
+            document.getElementById('tab-dev-toggle').style.display = 'none';
           }
 
           if(userData.currentGlow) {
             document.getElementById('hub-select-glow').value = userData.currentGlow;
           }
 
-          if(userData.role === 'developer' || userData.role === 'admin') {
-            document.getElementById('tab-dev-toggle').style.display = 'block';
-          }
-
-          // Вывод инвентаря стиля
           let invBox = document.getElementById('hub-inventory-list');
           if(userData.inventory) {
             invBox.innerHTML = "";
@@ -739,7 +725,7 @@
     });
   }
 
-  // --- КИБЕР-ТЕРМИНАЛ РАЗРАБОТЧИКА (ФУНКЦИОНАЛ) ---
+  // --- КИБЕР-ТЕРМИНАЛ РАЗРАБОТЧИКА ---
   function findUserBySelector(selector, callback) {
     db.ref('users').once('value', snap => {
       let foundKey = null; let foundData = null;
@@ -795,7 +781,6 @@
       db.ref('users/' + userKey).update(updateData).then(() => {
         alert(`Успешно выдан ${type.toUpperCase()} игроку ${uData.nickname} ${timeText}.`);
         if(type === 'ban') {
-          // Если забанили в текущей сессии — отправляем сигнал кика через чат лобби
           sendSystemBroadcastMessage(`Игрок ${uData.nickname} был тотально забанен в системе бункера.`);
         }
       });
@@ -844,7 +829,7 @@
     }
   }
 
-  // --- ОСТАЛЬНОЙ ПЕРЕДОВОЙ ИГРОВОЙ ДВИЖОК THE BUNKER V3 ---
+  // --- ОСТАЛЬНОЙ ИГРОВОЙ ДВИЖОК ---
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
@@ -864,7 +849,6 @@
     });
   }
 
-  // Запуск Хоста
   function startHost() {
     myRole = 'host';
     let survs = parseInt(document.getElementById('cfg-survivors').value);
@@ -878,7 +862,7 @@
       
       let localName = userData ? userData.nickname : "Создатель";
       let glowClass = userData ? userData.currentGlow : "none";
-      if(userData && userData.role === 'developer') glowClass = "nick-dev-style";
+      if(userData && (userData.role === 'developer' || userData.role === 'admin')) glowClass = "nick-dev-style";
 
       activePlayers.push({
         id: myPeerId,
@@ -901,7 +885,6 @@
     });
   }
 
-  // Подключение Клиента
   function connectToHost() {
     myRole = 'client';
     let targetId = document.getElementById('inp-host-id').value.trim();
@@ -913,7 +896,7 @@
         showScreen('scr-game');
         let localName = userData ? userData.nickname : "Выживший";
         let glowClass = userData ? userData.currentGlow : "none";
-        if(userData && userData.role === 'developer') glowClass = "nick-dev-style";
+        if(userData && (userData.role === 'developer' || userData.role === 'admin')) glowClass = "nick-dev-style";
 
         hostConn.send({
           type: 'join',
@@ -942,7 +925,6 @@
           return;
         }
         
-        // Добавление игрока на Хосте
         activePlayers.push({
           id: conn.peer,
           name: data.name,
@@ -957,7 +939,6 @@
         });
         connections.push(conn);
         
-        // Синхронизация лобби для всех
         syncAll();
         
         let welcomeMsg = { name: "🚨 СИСТЕМА", text: `Оператор [${data.name}] успешно прошёл шлюзовую декомпрессию.`, avatar: "🤖", glowClass: "glow-orange" };
@@ -986,7 +967,6 @@
         }
       }
     } else {
-      // Логика Клиента
       if(data.type === 'reject') { alert(data.reason); peer.destroy(); showScreen('scr-menu'); }
       if(data.type === 'sync') { activePlayers = data.players; votingActive = data.votingActive; renderPlayersTerminal(); }
       if(data.type === 'chat') { appendChatMessage(data.msg); }
@@ -1018,8 +998,6 @@
     
     const remaining = activePlayers.filter(p => !p.kicked);
     if(gameConfig && remaining.length === gameConfig.targetSurvivors && myRole === 'host') {
-      
-      // Начисление монет выжившим (Минимум 2 игрока в лобби)
       if(activePlayers.length < 2) {
         let msg = "Сессия завершена. Для начисления коинов в бункере должно быть минимум 2 игрока!";
         connections.forEach(c => c.open && c.send({ type: 'game-end', msg: msg }));
@@ -1041,7 +1019,6 @@
     }
   }
 
-  // Проверка мута перед чатом
   function checkMuteBeforeAction() {
     if(userData && userData.muteTime) {
       let now = Date.now();
@@ -1057,7 +1034,6 @@
     return true;
   }
 
-  // --- ОТПРАВКА СООБЩЕНИЙ ---
   function sendChatMessage() {
     if(!checkMuteBeforeAction()) return;
 
@@ -1067,7 +1043,7 @@
 
     let localName = userData ? userData.nickname : (myRole === 'host' ? "Создатель" : "Выживший");
     let glowClass = userData ? userData.currentGlow : "none";
-    if(userData && userData.role === 'developer') glowClass = "nick-dev-style";
+    if(userData && (userData.role === 'developer' || userData.role === 'admin')) glowClass = "nick-dev-style";
 
     let msgObj = { name: localName, text: text, avatar: activeAvatar, glowClass: glowClass };
     
@@ -1088,16 +1064,15 @@
     box.scrollTop = box.scrollHeight;
   }
 
-  // --- ДИСТРИБУЦИЯ И ГЕНЕРАЦИЯ КАРТОЧЕК ---
   function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
   function generateCharacter() {
     return {
       prof: { title: "Профессия", val: getRandomItem(professions), opened: false },
       health: { title: "Здоровье", val: getRandomItem(healths), opened: false },
-      bio: { title: "Биология", val: getRandomItem(biologies), opened: true }, // биология открыта сразу по умолчанию
+      bio: { title: "Биология", val: getRandomItem(biologies), opened: true }, 
       hobby: { title: "Хобби", val: getRandomItem(hobbies), opened: false },
       baggage: { title: "Багаж", val: getRandomItem(baggages), opened: false },
-      secret: { title: "Факт", val: getRandomItem(secrets), opened: false }
+      secret: { title: "Fact", val: getRandomItem(secrets), opened: false }
     };
   }
 
@@ -1125,7 +1100,6 @@
     document.getElementById('btn-start-game').style.display = 'none';
   }
 
-  // --- РЕНДЕР КАРТОЧЕК И СПИСКА ИГРОКОВ ---
   function renderMyCardsGrid() {
     let box = document.getElementById('cards-grid-box');
     if(!myCharacterData) return;
@@ -1207,13 +1181,11 @@
     });
   }
 
-  // --- ГОЛОСОВАНИЕ И ИЗГНАНИЕ ---
   function toggleVotingState() {
     if(myRole !== 'host') return;
     votingActive = !votingActive;
     
     if(!votingActive) {
-      // Сброс голосов при закрытии
       activePlayers.forEach(p => { p.votedTarget = ""; p.votesReceived = 0; });
     }
     
@@ -1238,11 +1210,9 @@
   function checkVotingCompletion() {
     if(myRole !== 'host') return;
     
-    // Считаем голоса живых игроков
     let alivePlayers = activePlayers.filter(p => !p.kicked);
     let totalVotesCast = alivePlayers.filter(p => p.votedTarget && p.votedTarget !== "").length;
 
-    // Обновляем счетчики на хосте
     activePlayers.forEach(p => p.votesReceived = 0);
     alivePlayers.forEach(p => {
       if(p.votedTarget) {
@@ -1252,7 +1222,6 @@
     });
 
     if(totalVotesCast >= alivePlayers.length && alivePlayers.length > 0) {
-      // Все проголосовали -> Итог изгнания
       let maxVotes = -1; let scapegoat = null; let tie = false;
       
       alivePlayers.forEach(p => {
@@ -1267,7 +1236,6 @@
         sendSystemBroadcastMessage(`Ничья на голосовании! Системы не зафиксировали перевеса. Никто не покинул бункер.`);
       }
 
-      // Сброс фазы голосования
       votingActive = false;
       activePlayers.forEach(p => { p.votedTarget = ""; p.votesReceived = 0; });
       document.getElementById('btn-toggle-vote').innerText = "Открыть Голосование";
@@ -1287,7 +1255,6 @@
     document.getElementById('flask-o2-box').className = pct <= 50 ? "flask-container danger" : "flask-container";
   }
 
-  // --- МАГАЗИН МОДИФИКАЦИЙ ---
   function renderCyberShop() {
     let container = document.getElementById('shop-items-container');
     container.innerHTML = "";
@@ -1301,7 +1268,7 @@
       block.style.fontSize = "0.75rem";
       
       let isBought = userData && userData.inventory && userData.inventory[item.id];
-      let btnText = isBought ? "💾 КУПЛЕНО" : `КУПИТЬЗА ${item.price} 🪙`;
+      let btnText = isBought ? "💾 КУПЛЕНО" : `КУПИТЬ ЗА ${item.price} 🪙`;
       let btnStyles = isBought ? "border-color:var(--grey-text); color:var(--grey-text); background:transparent;" : "border-color:var(--neon-green); color:var(--neon-green); background:transparent;";
 
       block.innerHTML = `
@@ -1319,7 +1286,7 @@
 
     db.ref('users/' + emailClean).transaction(current => {
       if(current) {
-        if((current.coins || 0) < price) return; // Проверка баланса
+        if((current.coins || 0) < price) return; 
         current.coins -= price;
         if(!current.inventory) current.inventory = {};
         current.inventory[id] = { purchased: true, title: title };
@@ -1327,7 +1294,7 @@
       return current;
     }, (err, commit) => {
       if(commit) {
-        alert(`ресурс "${title}" успешно загружен на ваш склад!`);
+        alert(`Ресурс "${title}" успешно загружен на ваш склад!`);
         renderCyberShop();
       }
     });
