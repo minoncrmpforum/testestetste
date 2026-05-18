@@ -27,7 +27,6 @@
     --neon-red: #ff2233;
     --neon-red-glow: rgba(255, 34, 51, 0.4);
     --neon-blue: #00bfff;
-    --neon-purple: #bf00ff;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -42,168 +41,26 @@
     justify-content: center;
     align-items: center;
     padding: 20px;
-    padding-top: 80px;
   }
 
-  /* --- АНИМАЦИИ ДЛЯ МАГАЗИНА НИКОВ --- */
-  @keyframes rgb-flow {
-    0% { color: #ff0055; text-shadow: 0 0 8px rgba(255,0,85,0.6); }
-    33% { color: #00ff66; text-shadow: 0 0 8px rgba(0,255,102,0.6); }
-    66% { color: #00bfff; text-shadow: 0 0 8px rgba(0,191,255,0.6); }
-    100% { color: #ff0055; text-shadow: 0 0 8px rgba(255,0,85,0.6); }
-  }
-  @keyframes neon-pulse {
-    0% { color: #ff3300; text-shadow: 0 0 4px #ff3300, 0 0 15px #ff0055; }
-    50% { color: #ff9900; text-shadow: 0 0 8px #ff9900, 0 0 25px #ff5500; }
-    100% { color: #ff3300; text-shadow: 0 0 4px #ff3300, 0 0 15px #ff0055; }
-  }
-  @keyframes toxic-glow {
-    0%, 100% { color: #00ff66; text-shadow: 0 0 3px #00ff66, 0 0 12px rgba(0,255,102,0.8); }
-    50% { color: #adff2f; text-shadow: 0 0 8px #adff2f, 0 0 20px rgba(173,255,47,0.8); }
-  }
-  @keyframes ice-shiver {
-    0%, 100% { color: #00bfff; text-shadow: 0 0 4px #00bfff, 0 0 15px #00ffff; }
-    50% { color: #e0ffff; text-shadow: 0 0 6px #e0ffff, 0 0 20px #00bfff; }
-  }
-  @keyframes quantum-glitch {
-    0%, 100% { color: #bf00ff; text-shadow: -1px -1px 0 #ff007f, 1px 1px 0 #00bfff; }
-    50% { color: #ff007f; text-shadow: 2px -1px 0 #00bfff, -2px 1px 0 #bf00ff; }
-  }
-
-  .fx-rgb { animation: rgb-flow 4s infinite linear !important; font-weight: 900 !important; }
-  .fx-pulse { animation: neon-pulse 1.5s infinite ease-in-out !important; font-weight: 900 !important; }
-  .fx-toxic { animation: toxic-glow 2s infinite ease-in-out !important; font-weight: 900 !important; }
-  .fx-ice { animation: ice-shiver 2.5s infinite linear !important; font-weight: 900 !important; }
-  .fx-quantum { animation: quantum-glitch 0.3s infinite linear !important; font-weight: 900 !important; }
-
-  /* --- КНОПКА ПРОФИЛЯ СПРАВА СВЕРХУ --- */
-  .profile-corner-btn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background: var(--bg-panel);
-    border: 1px solid var(--grey-border);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 999;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    transition: all 0.2s ease;
-    font-size: 1.5rem;
-  }
-  .profile-corner-btn:hover { border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
-
-  /* --- ПЛАВНОЕ ВЫЕЗЖАЮЩЕЕ МЕНЮ СНИЗУ --- */
-  .profile-dropdown-menu {
-    position: fixed;
-    bottom: -300px;
-    left: 0;
-    width: 100%;
-    background: var(--bg-panel);
-    border-top: 2px solid var(--orange);
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.7);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    z-index: 1000;
-    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-    padding: 20px;
-  }
-  .profile-dropdown-menu.active { bottom: 0; }
-  
-  .dropdown-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(3px);
-    z-index: 998;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s ease;
-  }
-  .dropdown-overlay.active { opacity: 1; pointer-events: auto; }
-
-  .dropdown-item-btn {
-    width: 100%;
-    background: var(--bg-card);
-    border: 1px solid var(--grey-border);
-    color: var(--white);
-    padding: 14px;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    font-family: inherit;
-    font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-  }
-  .dropdown-item-btn:hover {
-    border-color: var(--orange);
-    background: #1b120c;
-    color: var(--orange);
-  }
-
-  /* --- ОКНА ВНУТРИ ПРОФИЛЯ --- */
-  .profile-section-box { display: none; margin-top: 15px; background: var(--bg-dark); padding: 15px; border-radius: 10px; border: 1px solid var(--grey-border); }
-  .profile-section-box.active { display: block; }
-
-  .emoji-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-  }
-  .emoji-option {
-    background: var(--bg-card);
-    border: 1px solid var(--grey-border);
-    border-radius: 8px;
-    font-size: 1.5rem;
-    padding: 8px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.1s ease;
-  }
-  .emoji-option:hover, .emoji-option.active { border-color: var(--orange); background: #1b120c; }
-
-  .cosm-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; max-height: 150px; overflow-y: auto; }
-  .cosm-item-row {
-    display: flex; justify-content: space-between; align-items: center;
-    background: var(--bg-card); padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer; border: 1px solid transparent;
-  }
-  .cosm-item-row.active { border-color: var(--orange); }
-
-  /* --- ТВОЙ КАРКАС СТИЛЕЙ БЕЗ ИЗМЕНЕНИЙ --- */
-  .screen { width: 100%; max-width: 1100px; }
+  .screen { width: 100%; max-width: 1100px; transition: all 0.3s ease; }
   .hidden { display: none !important; }
   .fade-in { animation: screenReveal 0.4s forwards ease-out; }
   @keyframes screenReveal { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 
   .menu-logo {
-    font-family: 'Orbitron', sans-serif; font-size: 3.5rem; font-weight: 900; color: var(--orange);
-    text-shadow: 0 0 20px var(--orange-glow); letter-spacing: 6px; text-align: center; margin-bottom: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: var(--orange);
+    text-shadow: 0 0 20px var(--orange-glow);
+    letter-spacing: 6px;
+    text-align: center;
+    margin-bottom: 10px;
   }
   .menu-version { font-size: 0.85rem; color: var(--grey-text); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 40px; text-align: center; }
 
-  .network-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 20px; }
-  @media(min-width: 768px) { .network-grid { grid-template-columns: 1fr 1fr; } }
-
-  .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 24px; position: relative; }
-  .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
-
-  .form-group { margin-bottom: 20px; }
-  label { display: block; font-size: 0.75rem; color: var(--grey-text); margin-bottom: 8px; text-transform: uppercase; }
-  input[type="text"], input[type="password"], select {
-    width: 100%; background: #07070b; border: 1px solid var(--grey-border); color: var(--white); padding: 14px;
-    border-radius: 6px; font-family: inherit; font-size: 16px; transition: border-color 0.2s;
-  }
-  input:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
+  .nav-bar { display: flex; gap: 15px; justify-content: center; margin-bottom: 30px; }
 
   .btn {
     background: linear-gradient(135deg, #151522, #1c1c30); color: var(--white); border: 1px solid var(--grey-border);
@@ -215,121 +72,92 @@
   .btn-accent { border-color: var(--orange); color: var(--orange); }
   .btn-sm { padding: 8px 16px; font-size: 0.75rem; letter-spacing: 1px; }
 
-  .shop-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--grey-border); padding-bottom: 10px; }
-  .shop-tab-btn { background: none; border: none; color: var(--grey-text); font-family: inherit; font-weight: bold; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; padding: 5px 10px; }
-  .shop-tab-btn.active { color: var(--orange); border-bottom: 2px solid var(--orange); }
+  .network-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .panel { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 12px; padding: 24px; position: relative; }
+  .panel-title { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+  .form-group { margin-bottom: 20px; }
+  label { display: block; font-size: 0.75rem; color: var(--grey-text); margin-bottom: 8px; text-transform: uppercase; }
+  input[type="text"], input[type="password"], select {
+    width: 100%; background: #07070b; border: 1px solid var(--grey-border); color: var(--white); padding: 14px;
+    border-radius: 6px; font-family: inherit; font-size: 16px;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 10px var(--orange-glow); }
 
-  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 10px; }
-  .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
-  .shop-item.purchased { border-color: var(--neon-blue); background: linear-gradient(180deg, #141420 0%, #0c1724 100%); }
+  .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 20px; }
+  .shop-item { background: var(--bg-card); border: 1px solid var(--grey-border); padding: 20px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; transition: border 0.3s; }
+  .shop-item.purchased { border-color: var(--neon-green); background: linear-gradient(180deg, #141420 0%, #0a1c12 100%); }
   .shop-item-title { font-family: 'Orbitron', sans-serif; font-size: 0.95rem; color: var(--white); margin-bottom: 8px; }
   .shop-item-desc { font-size: 0.75rem; color: var(--grey-text); margin-bottom: 15px; flex-grow: 1; line-height: 1.4; }
   .shop-item-price { font-family: 'Orbitron', sans-serif; color: var(--neon-green); font-weight: bold; margin-bottom: 15px; font-size: 0.9rem; }
 
-  .game-layout { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 20px; }
-  @media(min-width: 992px) { .game-layout { grid-template-columns: 2.5fr 1.5fr; } }
-
+  .game-layout { display: grid; grid-template-columns: 1fr 320px; gap: 25px; }
   .character-sheet { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  @media(min-width: 576px) { .character-sheet { grid-template-columns: repeat(3, 1fr); } }
-  .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px 16px; position: relative; cursor: pointer; transition: border-color 0.2s; }
-  .trait-card:hover { border-color: rgba(255,85,0,0.5); }
-  .trait-card.opened { border-color: var(--orange); }
-  .trait-card label { display: block; font-size: 0.65rem; color: var(--grey-text); margin-bottom: 4px; text-transform: uppercase; }
-  .trait-value { font-size: 0.9rem; font-weight: bold; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .trait-blur { filter: blur(5px); opacity: 0.6; user-select: none; }
+  .trait-card { background: var(--bg-card); border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px 16px; }
+  .trait-card label { margin-bottom: 2px; color: var(--orange); font-weight: bold; }
+  .trait-value { font-size: 0.95rem; color: var(--white); }
 
-  .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 220px; overflow-y: auto; font-family: 'Space Mono', monospace; font-size: 0.8rem; }
-  .terminal-line { margin-bottom: 6px; line-height: 1.4; color: #a0a0b5; }
+  .gui-sidebar { display: flex; flex-direction: column; gap: 20px; }
+  .flask-container { background: var(--bg-panel); border: 1px solid var(--grey-border); border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 15px; }
+  .flask-info { flex-grow: 1; }
+  .flask-title { font-size: 0.75rem; color: var(--grey-text); text-transform: uppercase; }
+  .flask-val { font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: 700; margin-top: 2px; }
+  .flask-glass { width: 32px; height: 90px; background: rgba(255,255,255,0.03); border: 2px solid #333345; border-radius: 4px 4px 16px 16px; position: relative; overflow: hidden; }
+  .flask-liquid { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--neon-green); transition: height 0.6s ease; }
+  .flask-container.danger .flask-liquid { background: var(--neon-red); }
+  .flask-container.cold .flask-liquid { background: var(--neon-blue); }
 
-  .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; border-left: 3px solid transparent; }
-  .player-row.me { border-left-color: var(--orange); }
-  .player-row.kicked { opacity: 0.4; text-decoration: line-through; background: #1a0808; }
+  .global-status { background: #100b0b; border: 1px solid #301515; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+  .action-cards-box { margin-top: 15px; }
+  .action-deck { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .action-mini-card { background: #1a110b; border: 1px solid #4a2510; border-radius: 4px; padding: 8px 12px; font-size: 0.75rem; color: #ffaa66; }
+  .action-mini-card.active-item { background: #0c1524; border-color: #1a3a66; color: #66b3ff; font-weight: bold; }
+  .action-mini-card.cancel { background: #0b1a13; border-color: #104a2b; color: #66ffaa; }
 
-  .p-avatar-emoji { font-size: 1.2rem; margin-right: 8px; vertical-align: middle; }
-  .p-title { font-size: 0.65rem; background: #222235; color: var(--white); padding: 2px 5px; border-radius: 3px; margin-right: 6px; font-weight: bold; font-family: 'Orbitron', sans-serif; }
+  .terminal-box { background: #08080f; border: 1px solid var(--grey-border); border-radius: 6px; padding: 12px; height: 220px; overflow-y: auto; font-size: 0.8rem; }
+  .player-row { display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); margin-bottom: 6px; border-radius: 4px; }
+  .player-row.exiled { opacity: 0.3; text-decoration: line-through; border-left: 3px solid var(--neon-red); }
 
-  .vote-box { background: #1a1010; border: 1px solid var(--neon-red); border-radius: 8px; padding: 16px; margin-top: 20px; box-shadow: 0 0 15px var(--neon-red-glow); }
-  .v-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 12px; }
-  
-  .oxygen-bar-container { background: #101018; border: 1px solid var(--grey-border); border-radius: 6px; height: 20px; overflow: hidden; position: relative; margin-top: 15px; }
-  .oxygen-bar { background: linear-gradient(90deg, var(--neon-red), var(--neon-blue)); width: 100%; height: 100%; transition: width 0.5s ease; }
-  .oxygen-text { position: absolute; width: 100%; text-align: center; font-size: 0.7rem; font-weight: bold; top: 2px; color: #fff; text-shadow: 0 1px 2px #000; }
+  @media (max-width: 850px) {
+    .network-grid { grid-template-columns: 1fr; gap: 15px; }
+    .game-layout { grid-template-columns: 1fr; }
+    .gui-sidebar { order: -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  }
 </style>
 </head>
 <body>
 
-  <div class="profile-corner-btn" id="corner-profile-btn" onclick="toggleDropdownMenu(true)">
-    <span id="corner-avatar-placeholder">☣️</span>
-  </div>
-
-  <div class="dropdown-overlay" id="dropdown-overlay" onclick="toggleDropdownMenu(false)"></div>
-
-  <div class="profile-dropdown-menu" id="profile-dropdown-menu">
-    <div style="width: 40px; height: 5px; background: var(--grey-border); border-radius: 3px; margin: 0 auto 15px;"></div>
+  <div id="scr-menu" class="screen">
+    <div class="menu-logo">THE BUNKER V.3</div>
+    <div class="menu-version">УБЕЖИЩЕ • СИСТЕМА СИНХРОННОГО ГОЛОСОВАНИЯ</div>
     
-    <button class="dropdown-item-btn" onclick="openProfileSection('personal')">📂 Пункт 1: Настройка Досье</button>
-    <button class="dropdown-item-btn" onclick="openProfileSection('settings')">⚙️ Пункт 2: Системные Настройки</button>
-    <button class="dropdown-item-btn" onclick="logout()" style="color:var(--neon-red); border-color:rgba(255,34,51,0.3)">🚨 Пункт 3: Экстренный Выход</button>
+    <div class="nav-bar">
+      <button class="btn btn-accent" onclick="navigate('scr-menu', 'scr-network')">В бункер</button>
+      <button class="btn" onclick="openShop()">Магазин</button>
+    </div>
 
-    <div class="profile-section-box" id="p-section-personal">
-      <div class="form-group" style="margin-bottom:12px;">
-        <label>Изменить Позывной (Ник)</label>
-        <div style="display:flex; gap:8px;">
-          <input type="text" id="inp-profile-username" placeholder="Новый ник..." style="padding:10px;">
-          <button class="btn btn-sm btn-accent" onclick="saveNewUsername()">ОК</button>
+    <div class="network-grid" style="max-width: 900px; margin: auto;">
+      <div class="panel">
+        <div class="panel-title">🔒 Терминал Идентификации</div>
+        <div id="auth-form">
+          <div class="form-group"><label>Шлюзовой Email</label><input type="text" id="inp-email" placeholder="naprimer@gmail.com"></div>
+          <div class="form-group"><label>Код Доступа (Пароль)</label><input type="password" id="inp-pass" placeholder="••••"></div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-sm" onclick="handleAuth('login')">Войти</button>
+            <button class="btn btn-sm btn-accent" onclick="handleAuth('register')">Регистрация</button>
+          </div>
+        </div>
+        <div id="auth-user-status" style="display:none;">
+          <p style="font-size:0.95rem;">Вы вошли как: <span id="user-display-email" style="color:var(--orange);">---</span></p>
+          <p style="font-size:1.3rem; margin:15px 0; font-family:'Orbitron',sans-serif;">Баланс: <span id="user-display-coins" style="color:var(--neon-green);">0</span> 🪙</p>
+          <button class="btn btn-sm" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="logout()">Выйти из системы</button>
         </div>
       </div>
-      <label>Выбрать тактический эмодзи</label>
-      <div class="emoji-grid" id="profile-emoji-grid"></div>
-    </div>
 
-    <div class="profile-section-box" id="p-section-settings">
-      <p style="font-size:0.75rem; color:var(--grey-text); text-align:center;">Версия протокола: V.3.2 Глобал<br>PeerJS Облако: Подключено</p>
-    </div>
-  </div>
-
-  <div id="scr-auth" class="screen">
-    <div class="menu-logo">THE BUNKER V.3</div>
-    <div class="menu-version">КИБЕР-УБЕЖИЩЕ И ЦИФРОВОЙ РЫНОК</div>
-    <div class="network-grid" style="max-width:550px; margin: auto;">
       <div class="panel">
-        <div class="panel-title">🔒 Доступ к Сети</div>
-        <div class="form-group"><label>Шлюзовой Email</label><input type="text" id="inp-email" placeholder="cyber@bunker.com"></div>
-        <div class="form-group"><label>Код Доступа (Пароль)</label><input type="password" id="inp-pass" placeholder="••••"></div>
-        <div style="display:flex; gap:10px;">
-          <button class="btn btn-accent btn-sm" onclick="handleAuth('login')">Вход</button>
-          <button class="btn btn-sm" onclick="handleAuth('register')">Регистрация</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="scr-lobby" class="screen hidden">
-    <div class="menu-logo">THE BUNKER V.3</div>
-    <div style="text-align:center; margin-bottom:20px; font-size:1.1rem;">
-      Вы авторизованы как: <span id="user-display-email" style="color:var(--orange); font-weight:bold;">...</span>
-    </div>
-    <div style="display:flex; justify-content:center; gap:15px; margin-bottom:30px;">
-      <button class="btn btn-sm" onclick="openShop()">Посетить Магазин</button>
-    </div>
-    <div class="network-grid">
-      <div class="panel">
-        <div class="panel-title">⚙ Инициализировать шлюз (Хост)</div>
-        <div class="form-group"><label>Количество Выживших (Квота бункера)</label><select id="sel-survivors"><option value="1">1 Выживший</option><option value="2" selected>2 Выживших</option><option value="3">3 Выживших</option><option value="4">4 Выживших</option></select></div>
-        <button class="btn btn-accent" style="width:100%;" onclick="initP2PRole('host')">Создать Бункер</button>
-        <div id="host-room-info" class="hidden" style="margin-top:20px; text-align:center;">
-          <p style="font-size:0.8rem; color:var(--grey-text);">Передайте этот ID терминала игрокам:</p>
-          <p id="txt-room-id" style="font-size:1.1rem; color:var(--neon-green); font-weight:bold; margin-top:5px; letter-spacing:1px;"></p>
-          <button class="btn btn-sm" style="margin-top:15px; width:100%;" onclick="hostStartGame()">Запустить Систему Жизнеобеспечения</button>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-title">📡 Синхронизация Шлюза (Клиент)</div>
-        <div class="form-group"><label>ID Целевого Терминала Бункера</label><input type="text" id="inp-target-peer" placeholder="Вставьте ID хоста..."></div>
-        <button class="btn" style="width:100%;" onclick="initP2PRole('client')">Открыть Шлюз</button>
-        <div id="client-wait-info" class="hidden" style="margin-top:20px; text-align:center; color:var(--neon-blue);">
-          <p>⏳ Синхронизация завершена. Ожидайте активации ядра Смотрителем...</p>
-        </div>
+        <div class="panel-title">📡 ИНФО-СПРАВКА И ЛОГИКА</div>
+        <p style="font-size:0.85rem; line-height:1.6; color:var(--grey-text);">
+          Внимание! Возраст выжившего имеет критическое значение в зависимости от срока жизнеобеспечения бункера. Защищайте эффективных членов команды на общем голосовании. Помните: коины (<span style="color:var(--neon-green);">+100 🪙</span>) начисляются исключительно тем, кто дошёл до конца и попал в финальный список спасенных!
+        </p>
       </div>
     </div>
   </div>
@@ -337,104 +165,151 @@
   <div id="scr-shop" class="screen hidden">
     <div class="panel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ</div>
-        <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-lobby')">В терминал</button>
+        <div class="panel-title" style="margin:0;">🛒 КИБЕРНЕТИЧЕСКИЙ МАРКЕТ СНАРЯЖЕНИЯ</div>
+        <button class="btn btn-sm" onclick="navigate('scr-shop', 'scr-menu')">Назад в меню</button>
       </div>
-      <div style="font-size:1.2rem; margin-bottom: 25px;">Твой капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
+      <div style="font-size:1.1rem; margin-bottom: 20px;">Твой капитал: <span id="shop-balance-holder" style="color:var(--neon-green); font-weight:bold;">0</span> 🪙</div>
       
-      <div class="shop-tabs">
-        <button class="shop-tab-btn active" id="tab-btn-upgrades" onclick="switchShopTab('upgrades')">Модификаторы</button>
-        <button class="shop-tab-btn" id="tab-btn-cosmetics" onclick="switchShopTab('cosmetics')">Стили Никнеймов</button>
-      </div>
-
-      <div class="shop-grid" id="shop-grid-upgrades">
+      <div class="shop-grid">
+        <div class="shop-item" id="item-extra_card">
+          <div class="shop-item-title">Доп. Карта Действия</div>
+          <div class="shop-item-desc">Выдаёт вашему выжившему +1 дополнительную уникальную оперативную карту тактики на раунд.</div>
+          <div class="shop-item-price">150 🪙</div>
+          <button class="btn btn-sm" onclick="buyItem('extra_card', 150)">Купить</button>
+        </div>
         <div class="shop-item" id="item-health_serum">
           <div class="shop-item-title">Сыворотка Здоровья</div>
-          <div class="shop-item-desc">Гарантирует появление со статусом "Абсолютно здоров" в карточке биологии. Избавляет от скрытых патологий.</div>
+          <div class="shop-item-desc">Модифицирует ДНК. Гарантирует, что ваш персонаж появится со статусом "Абсолютно здоров".</div>
           <div class="shop-item-price">250 🪙</div>
-          <button class="btn btn-sm" id="btn-buy-health_serum" onclick="buyItem('health_serum', 250, false)">Купить модификатор</button>
+          <button class="btn btn-sm" onclick="buyItem('health_serum', 250)">Купить</button>
         </div>
-        <div class="shop-item" id="item-hacker_key">
-          <div class="shop-item-title">Взломщик Терминала</div>
-          <div class="shop-item-desc">Позволяет открывать одну чужую характеристику без траты очков действия раз в раунд.</div>
+        <div class="shop-item" id="item-cyber_heart">
+          <div class="shop-item-title">Кибер-Сердце (Био-Иммунитет)</div>
+          <div class="shop-item-desc">Даже если вы заболеете тяжелым недугом, датчики фильтрации не увидят угрозы для O2.</div>
           <div class="shop-item-price">400 🪙</div>
-          <button class="btn btn-sm" id="btn-buy-hacker_key" onclick="buyItem('hacker_key', 400, false)">Купить модификатор</button>
+          <button class="btn btn-sm" onclick="buyItem('cyber_heart', 400)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-fake_docs">
+          <div class="shop-item-title">Фальшивые Документы</div>
+          <div class="shop-item-desc">Добавляет активную карту, позволяющую один раз за игру полностью перебросить профессию.</div>
+          <div class="shop-item-price">300 🪙</div>
+          <button class="btn btn-sm" onclick="buyItem('fake_docs', 300)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-contraband">
+          <div class="shop-item-title">Контрабандный Кейс</div>
+          <div class="shop-item-desc">Гарантирует получение тяжелого военного инвентаря/оружия вместо гражданского хлама.</div>
+          <div class="shop-item-price">200 🪙</div>
+          <button class="btn btn-sm" onclick="buyItem('contraband', 200)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-terminal_hack">
+          <div class="shop-item-title">Взлом Терминала Хоста</div>
+          <div class="shop-item-desc">Добавляет карту, позволяющую тайно вскрыть и прочесть "Секретный факт" любого игрока.</div>
+          <div class="shop-item-price">350 🪙</div>
+          <button class="btn btn-sm" onclick="buyItem('terminal_hack', 350)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-shield_protocol">
+          <div class="shop-item-title">Защитный Протокол</div>
+          <div class="shop-item-desc">Защитная турель шлюза. Полный иммунитет к изгнанию в самом первом раунде игры.</div>
+          <div class="shop-item-price">500 🪙</div>
+          <button class="btn btn-sm" onclick="buyItem('shield_protocol', 500)">Купить</button>
+        </div>
+        <div class="shop-item" id="item-signal_jammer">
+          <div class="shop-item-title">Глушитель Радиочастот</div>
+          <div class="shop-item-desc">Тактический девайс. Позволяет один раз полностью аннулировать текущие итоги голосования.</div>
+          <div class="shop-item-price">600 🪙</div>
+          <button class="btn btn-sm" onclick="buyItem('signal_jammer', 600)">Купить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="scr-network" class="screen hidden">
+    <div class="nav-bar" style="margin-bottom:15px;"><button class="btn btn-sm" onclick="navigate('scr-network', 'scr-menu')">В меню</button></div>
+    <div class="network-grid">
+      <div class="panel">
+        <div class="panel-title">Инициализировать Убежище</div>
+        <div class="form-group">
+          <label>Количество участников</label>
+          <select id="sel-player-limit">
+            <option value="2">2 Игрока (1 выживший)</option>
+            <option value="4">4 Игрока (2 выживших)</option>
+            <option value="6">6 Игроков (3 выживших)</option>
+            <option value="8">8 Игроков (4 выживших)</option>
+            <option value="10">10 Игроков (5 выживших)</option>
+          </select>
+        </div>
+        <button class="btn" id="btn-host-init" onclick="initP2P('host')">Занять Бункер</button>
+        
+        <div id="host-share-zone" style="display:none; margin-top:15px; background:#000; padding:12px; border-radius:6px; text-align:center;">
+          <label>Передай этот код выжившим:</label>
+          <div id="bunker-code-txt" style="font-family:'Orbitron',sans-serif; font-size:1.3rem; color:var(--orange); font-weight:bold; margin:5px 0 10px;">-----</div>
+          <div id="lobby-players-list" style="font-size:0.85rem; background:#050508; padding:8px; margin-bottom:10px; max-height:100px; overflow-y:auto; text-align:left;"></div>
+          <button class="btn btn-sm btn-accent" style="width:100%; margin-bottom:10px;" onclick="hostStartGame()">Запустить Игру</button>
         </div>
       </div>
 
-      <div class="shop-grid hidden" id="shop-grid-cosmetics">
-        <div class="shop-item" id="item-cosm_c_rgb">
-          <div class="shop-item-title">✨ Кибер-Радуга (RGB)</div>
-          <div class="shop-item-desc">Ник плавно переливается всеми цветами радуги в терминале мониторинга.</div>
-          <div class="shop-item-price">500 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_rgb" onclick="buyItem('cosm_c_rgb', 500, true)">Приобрести стиль</button>
+      <div class="panel">
+        <div class="panel-title">Подключить терминал шлюза</div>
+        <div class="form-group">
+          <label>Секретный код Бункера</label>
+          <input type="text" id="inp-target-id" placeholder="Вставьте ID хоста...">
         </div>
-        <div class="shop-item" id="item-cosm_c_pulse">
-          <div class="shop-item-title">🚨 Радиационный Пульсар</div>
-          <div class="shop-item-desc">Огненно-красный неоновый ник, который зловеще пульсирует.</div>
-          <div class="shop-item-price">450 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_pulse" onclick="buyItem('cosm_c_pulse', 450, true)">Приобрести стиль</button>
-        </div>
-        <div class="shop-item" id="item-cosm_c_toxic">
-          <div class="shop-item-title">⚡ Токсичный Блик</div>
-          <div class="shop-item-desc">Ядовито-зелёный светящийся стиль для ветеранов пустошей.</div>
-          <div class="shop-item-price">350 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_toxic" onclick="buyItem('cosm_c_toxic', 350, true)">Приобрести стиль</button>
-        </div>
-        <div class="shop-item" id="item-cosm_c_ice">
-          <div class="shop-item-title">❄️ Абсолютный Ноль</div>
-          <div class="shop-item-desc">Ледяной неоново-синий ник с морозной аурой.</div>
-          <div class="shop-item-price">300 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_ice" onclick="buyItem('cosm_c_ice', 300, true)">Приобрести стиль</button>
-        </div>
-        <div class="shop-item" id="item-cosm_c_quantum">
-          <div class="shop-item-title">🔮 Квантовый Исказитель</div>
-          <div class="shop-item-desc">Фиолетовый глитч-эффект, искажающий структуру шрифта.</div>
-          <div class="shop-item-price">600 🪙</div>
-          <button class="btn btn-sm" id="btn-cosm-cosm_c_quantum" onclick="buyItem('cosm_c_quantum', 600, true)">Приобрести стиль</button>
-        </div>
+        <button class="btn" onclick="initP2P('client')">Открыть Шлюз</button>
+        <div id="client-wait-msg" style="display:none; margin-top:15px; color:var(--orange); font-weight:bold; text-align:center;">ОЖИДАНИЕ СТАРТА ИГРЫ ХОСТОМ...</div>
       </div>
     </div>
   </div>
 
   <div id="scr-game" class="screen hidden">
-    <div class="menu-logo" style="font-size:2.2rem; margin-bottom:30px;">BUNKER OPERATION</div>
-    
-    <div class="panel" style="margin-bottom:20px; padding:15px;">
-      <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:bold;">
-        <span>СИСТЕМА РАСПРЕДЕЛЕНИЯ КИСЛОРОДА</span>
-        <span id="txt-game-status" style="color:var(--neon-green);">СТАБИЛЬНО</span>
-      </div>
-      <div class="oxygen-bar-container">
-        <div class="oxygen-bar" id="el-oxygen-bar"></div>
-        <div class="oxygen-text" id="el-oxygen-text">РЕЗЕРВУАР: 100%</div>
-      </div>
+    <div class="global-status">
+      <div style="color:var(--orange); font-family:'Orbitron', sans-serif; font-size:0.9rem; text-transform:uppercase;">⚠ Экстренный протокол: Земля уничтожена</div>
+      <div id="world-disaster-text" style="font-size:0.95rem; font-weight:bold; margin-top:5px; color:#fff;">Сканирование атмосферы...</div>
+      <div id="bunker-condition-text" style="font-size:0.8rem; color:var(--grey-text); margin-top:4px;">Особые условия бункера: загрузка...</div>
+      <div id="bunker-time-text" style="font-size:0.9rem; color:var(--neon-blue); font-weight:bold; margin-top:4px; text-transform:uppercase;">СРОК ЖИЗНЕОБЕСПЕЧЕНИЯ: ЗАГРУЗКА...</div>
     </div>
 
     <div class="game-layout">
-      <div class="panel">
-        <div class="panel-title">📂 ТВОЙ БИОЛОГИЧЕСКИЙ ПАСПОРТ</div>
-        <div class="character-sheet" id="char-sheet-box"></div>
-        
-        <div class="vote-box hidden" id="ui-vote-panel">
-          <div class="panel-title" style="color:var(--neon-red); margin-bottom:5px;">🚨 ПРОТОКОЛ ИСКЛЮЧЕНИЯ ЭКИПАЖА</div>
-          <p style="font-size:0.75rem; color:var(--grey-text);">Выберите цель для герметизации шлюза:</p>
-          <div class="v-grid" id="ui-vote-grid"></div>
+      <div>
+        <div class="panel" style="margin-bottom:20px;">
+          <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center;">
+            <span>Ваше Досье Выжившего</span>
+            <span id="my-name-badge" style="font-size:0.8rem; color:var(--grey-text);">---</span>
+          </div>
+          <div class="character-sheet" id="char-sheet-box"></div>
+          <div class="action-cards-box">
+            <label>Ваши оперативные карты действий и модификаторы:</label>
+            <div class="action-deck" id="action-deck-box"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <span>Мониторинг Экипажа Убежища (<span id="total-surv-count">0</span>)</span>
+            <div id="host-voting-controls"></div>
+          </div>
+          <div id="current-vote-alert" style="background:#1b120c; border:1px solid #ff7700; color:#ffaa55; font-size:0.8rem; padding:6px 12px; margin-bottom:10px; border-radius:4px; display:none; text-align:center; font-weight:bold; text-transform:uppercase;">🚨 ОТКРЫТО ОБЩЕЕ СИНХРОННОЕ ГОЛОСОВАНИЕ! СДЕЛАЙТЕ СВОЙ ВЫБОР В СПИСКЕ НИЖЕ</div>
+          <div class="terminal-box" id="players-terminal-list"></div>
         </div>
       </div>
 
-      <div class="panel" style="display:flex; flex-direction:column; justify-content:space-between;">
-        <div>
-          <div class="panel-title">📡 МОНИТОРИНГ ЖИЗНЕДЕЯТЕЛЬНОСТИ</div>
-          <div class="terminal-box" id="players-terminal-list"></div>
+      <div class="gui-sidebar">
+        <div class="flask-container" id="flask-o2-box">
+          <div class="flask-glass"><div class="flask-liquid" id="f-liq-o2" style="height:100%;"></div></div>
+          <div class="flask-info"><div class="flask-title">Фильтрация O₂</div><div class="flask-val" id="f-txt-o2">НОРМА</div></div>
         </div>
-        <div style="margin-top:20px;" id="host-management-nodes"></div>
+        <div class="flask-container" id="flask-power-box">
+          <div class="flask-glass"><div class="flask-liquid" id="f-liq-power" style="height:100%;"></div></div>
+          <div class="flask-info"><div class="flask-title">Ядро питания</div><div class="flask-val" id="f-txt-power">100%</div></div>
+        </div>
+        <div class="flask-container" id="flask-temp-box">
+          <div class="flask-glass"><div class="flask-liquid" id="f-liq-temp" style="height:50%;"></div></div>
+          <div class="flask-info"><div class="flask-title">Термостат</div><div class="flask-val" id="f-txt-temp">+22°C</div></div>
+        </div>
       </div>
     </div>
   </div>
 
 <script>
-  // Твоя конфигурация базы Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyD7tXeqTP_HWmfnZV2us10Uocp2iuser6I",
     authDomain: "the-bunker-96d5c.firebaseapp.com",
@@ -442,37 +317,62 @@
     projectId: "the-bunker-96d5c",
     storageBucket: "the-bunker-96d5c.firebasestorage.app",
     messagingSenderId: "481257011457",
-    appId: "1:481257011457:web:b60b5a1f62d17af1520300"
+    appId: "1:481257011457:web:b60b5a1f62d17af1520300",
+    measurementId: "G-ZSR970PRMR"
   };
   
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
   const auth = firebase.auth();
 
-  let currentUser = null;
-  let userCoins = 0;
-  let userEmailClean = "";
-  let userActiveItems = [];
-  let userOwnedCosmetics = [];
-  let userEquippedCosmetics = { avatar: '☣️', color: '' };
-  let myCustomUsername = "";
-
-  const availableEmojis = ['☣️', '💀', '🪓', '🤖', '🥽', ' Backpack', '🎒', '📻', '🩹', '🧪', '🧟', '⚔️', '👽', '👑', '🔥', '💎', '🎯', '🎰'];
-
-  // Сетевые переменные PeerJS
-  let peer = null;
-  let myRole = ''; 
-  let targetPeerId = '';
-  let connections = [];
-  let activePlayers = []; 
-  let gameConfig = null;
+  let currentUser = null, userCoins = 0, userEmailClean = "", userActiveItems = [];
+  let peer = null, conn = null, connections = [];
+  let myRole = '', myName = 'Выживший', gameConfig = null, myPeerId = '';
+  let activePlayers = [];
   let votingActive = false;
+  let hasVoted = false;
 
-  // Датасет генерации
-  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Программист ИИ", "Психолог МЧС", "Электрик шлюза", "Пилот разведывательного дрона"];
-  const healthStatuses = ["Абсолютно здоров", "Хроническая астма", "Легкое радиационное облучение", "Порок сердца", "Иммунодефицит", "Отличная выносливость"];
-  const baggageItems = ["Набор хирургических инструментов", "Секретные чертежи фильтра", "Запас консервов на 6 месяцев", "Детектор лжи", "Дробовик (3 патрона)", "Антирадиационный комплект"];
-  const phobias = ["Агорафобия (боязнь пространств)", "Клаустрофобия (боязнь замкнутых пространств)", "Никтофобия (боязнь темноты)", "Арахнофобия", "Абсолютно хладнокровен"];
+  const genders = ["Мужчина", "Женщина"];
+  const professions = ["Врач-хирург", "Инженер ядерных систем", "Агроном био-плантаций", "Слесарь вентиляции", "Физик-радиобиолог", "Военный связист", "Программист ИИ", "Охранник-кинолог", "Шеф-повар", "Психолог МЧС", "Спецназовец", "Электрик шлюза", "Гидрогеолог", "Шахтёр-взрывотехник", "Пилот разведывательного дрона"];
+  const healthBad = ["Туберкулёз (Тяжёлая стадия)", "Открытая лёгочная инфекция (Заразно)", "Тяжелая форма астмы (Испорчен воздух)", "Хроническая пневмония (Повреждены лёгкие)"];
+  const healthNormal = ["Абсолютно здоров", "Сломана левая рука", "Слепота на левый глаз", "Хронический гастрит", "Легкое заикание", "Аллергия на пыль", "Шрам через все лицо"];
+  const hobbies = ["Охота и стрельба", "Гидропоника дома", "Экстремальная медицина", "Радиолюбитель", "Картография", "Коллекционирование ножей", "Боевые искусства", "Игра на гитаре", "Взлом замков", "Создание самодельных фильтров"];
+  const phobias = ["Клаустрофобия (Страх замкнутых пространств)", "Ахлуофобия (Страх темноты)", "Гермофобия (Страх микробов)", "Никтофобия", "Страх остаться одному"];
+  const traits = ["Эгоизм (ставит себя выше выживания группы)", "Вспыльчивость (провоцирует конфликты)", "Эмпатия (всегда помогает слабым)", "Гиперответственность", "Жадность", "Хладнокровие", "Лидерские качества", "Трусость"];
+  const baggages = ["Армейская аптечка", "Набор презизионных инструментов", "Фляга чистого спирта (5л)", "Запас семян пшеницы", "Дробовик с 3 патронами", "Защищенный ноутбук", "Газовый резак", "Счетчик Гейгера", "Портативная рация", "Надувная лодка"];
+  const contrabandBaggages = ["Тяжелый пулемет «Корд» с патронами", "Армейский сухпаек НАТО на 5 лет", "Противорадиационный экзоскелет", "Хирургический лазерный комплекс", "Шифровальная станция спутниковой связи"];
+  const secrets = ["Шпион враждебной группировки", "Бесплоден", "Скрывает запасы еды", "Гениальный изобретатель", "Знает пароль от оружейной комнаты бункера", "Бывший заключенный за саботаж"];
+  
+  const disasters = [
+    { title: "Ядерная зима", temp: "-45°C", style: "cold", desc: "Планета скована многовековым льдом." },
+    { title: "Солнечная супер-вспышка", temp: "+65°C", style: "danger", desc: "Атмосфера выжжена радиацией." },
+    { title: "Падение Ледяного Кометного Осколка", temp: "-20°C", style: "cold", desc: "Постоянные метели." },
+    { title: "Прорыв магматических разломов", temp: "+40°C", style: "danger", desc: "Воздух отравлен серой." }
+  ];
+  const bunkerConditions = [
+    "Гидропонный отсек затоплен. Ограничен запас пищи.",
+    "Система очистки воды работает на резервных батареях.",
+    "В бункере всего половина спальных мест.",
+    "Герметизация идеальная, но оружейный сейф заблокирован."
+  ];
+
+  // ГИГАНТСКИЙ ПУЛ ДЛЯ НЕПОВТОРЯЮЩИХСЯ КАРТ ДЕЙСТВИЙ
+  let dynamicActionCardsPool = [
+    "Украсть багаж соседа справа", "Узнать секретный факт игрока", "Сменить профессию на случайную", "Уничтожить багаж любого игрока",
+    "Принудительно вскрыть здоровье соседа", "Поменять местами хобби двух выживших", "Заставить игрока зачитать его страх", 
+    "Скрытый датчик: узнать точный возраст любого игрока", "Заразить багаж соседа плесенью", "Забаррикадировать дверь: лишить игрока слова на раунд",
+    "Имплант лжи: изменить свое человеческое качество", "Выкрасть карту действия у соперника", "Провести обыск личных вещей игрока",
+    "Перебросить черту характера", "Заблокировать чужую карту отмены", "Выдать ложную тревогу: заставить переголосовать",
+    "Вскрыть свой секрет и получить +50 коинов в конце", "Заменить свое хобби на киберспорт", "Устроить саботаж вентиляции",
+    "Проверить ДНК игрока на скрытые мутации", "Вколоть сыворотку правды", "Анонимно подбросить улику против лидера"
+  ];
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
 
   function navigate(fromId, toId) {
     document.getElementById(fromId).classList.add('hidden');
@@ -481,387 +381,422 @@
     toEl.classList.add('fade-in');
   }
 
-  function openShop() { navigate('scr-lobby', 'scr-shop'); switchShopTab('upgrades'); }
-  
-  function switchShopTab(tab) {
-    document.getElementById('tab-btn-upgrades').classList.toggle('active', tab === 'upgrades');
-    document.getElementById('tab-btn-cosmetics').classList.toggle('active', tab === 'cosmetics');
-    document.getElementById('shop-grid-upgrades').classList.toggle('hidden', tab !== 'upgrades');
-    document.getElementById('shop-grid-cosmetics').classList.toggle('hidden', tab !== 'cosmetics');
-  }
+  function openShop() { navigate('scr-menu', 'scr-shop'); }
 
-  // --- ВЫЕЗЖАЮЩЕЕ МЕНЮ СНИЗУ ---
-  function toggleDropdownMenu(show) {
-    document.getElementById('profile-dropdown-menu').classList.toggle('active', show);
-    document.getElementById('dropdown-overlay').classList.toggle('active', show);
-    if(!show) {
-      document.querySelectorAll('.profile-section-box').forEach(el => el.classList.remove('active'));
-    }
-  }
-
-  function openProfileSection(sect) {
-    document.querySelectorAll('.profile-section-box').forEach(el => el.classList.remove('active'));
-    document.getElementById('p-section-' + sect).classList.add('active');
-    if(sect === 'personal') renderEmojiGrid();
-  }
-
-  function renderEmojiGrid() {
-    const grid = document.getElementById('profile-emoji-grid');
-    grid.innerHTML = availableEmojis.map(em => `
-      <div class="emoji-option ${userEquippedCosmetics.avatar === em ? 'active' : ''}" onclick="equipEmoji('${em}')">${em}</div>
-    `).join('');
-  }
-
-  function equipEmoji(em) {
-    if(!currentUser) return;
-    db.ref('users/' + userEmailClean + '/equippedCosmetics/avatar').set(em);
-  }
-
-  function saveNewUsername() {
-    const name = document.getElementById('inp-profile-username').value.trim();
-    if(!name) return alert('Никнейм не может быть пустым!');
-    db.ref('users/' + userEmailClean + '/username').set(name).then(() => {
-      alert('Позывной изменен в базе данных!');
-    });
-  }
-
-  // СЛУШАТЕЛЬ FIREBASE AUTH
   auth.onAuthStateChanged((user) => {
     if (user) {
       currentUser = user;
       userEmailClean = user.email.replace(/\./g, '_');
+      document.getElementById('auth-form').style.display = 'none';
+      document.getElementById('auth-user-status').style.display = 'block';
+      document.getElementById('user-display-email').innerText = user.email;
       
       db.ref('users/' + userEmailClean).on('value', (snap) => {
         const data = snap.val() || {};
         userCoins = data.coins || 0;
-        myCustomUsername = data.username || user.email.split('@')[0];
         userActiveItems = data.items || [];
-        userOwnedCosmetics = data.ownedCosmetics || [];
-        userEquippedCosmetics = data.equippedCosmetics || { avatar: '☣️', color: '' };
-        
-        document.getElementById('user-display-email').innerText = myCustomUsername + ` (${user.email})`;
+        document.getElementById('user-display-coins').innerText = userCoins;
         document.getElementById('shop-balance-holder').innerText = userCoins;
-        document.getElementById('inp-profile-username').value = myCustomUsername;
-        document.getElementById('corner-avatar-placeholder').innerText = userEquippedCosmetics.avatar || '☣️';
-        
         updateShopCardsUI();
       });
-      navigate('scr-auth', 'scr-lobby');
     } else {
-      navigate('scr-lobby', 'scr-auth');
-      navigate('scr-game', 'scr-auth');
+      currentUser = null;
+      document.getElementById('auth-form').style.display = 'block';
+      document.getElementById('auth-user-status').style.display = 'none';
     }
   });
 
   function handleAuth(type) {
     const email = document.getElementById('inp-email').value.trim();
     const pass = document.getElementById('inp-pass').value.trim();
-    if(!email || !pass) return alert('Заполните данные!');
-    
+    if(!email || !pass) return alert('Заполните поля!');
+
     if(type === 'register') {
       auth.createUserWithEmailAndPassword(email, pass).then((cred) => {
         let clean = cred.user.email.replace(/\./g, '_');
-        db.ref('users/' + clean).set({ 
-          username: email.split('@')[0], coins: 300, items: [], ownedCosmetics: [], equippedCosmetics: { avatar: '☣️', color: '' } 
-        });
-      }).catch(err => alert(err.message));
+        db.ref('users/' + clean).set({ coins: 0, items: [] });
+        alert('Успешная регистрация аккаунта!');
+      }).catch(err => alert('Ошибка регистрации: ' + err.message));
     } else {
-      auth.signInWithEmailAndPassword(email, pass).catch(err => alert(err.message));
+      auth.signInWithEmailAndPassword(email, pass).catch(err => alert('Ошибка входа: ' + err.message));
     }
   }
 
-  function logout() { auth.signOut(); toggleDropdownMenu(false); window.location.reload(); }
+  function logout() { auth.signOut(); }
 
   function updateShopCardsUI() {
-    userActiveItems.forEach(k => { const card = document.getElementById('item-' + k); if(card) card.classList.add('purchased'); });
-    document.querySelectorAll('#shop-grid-cosmetics .shop-item').forEach(card => {
-      const id = card.id.replace('item-', '');
-      const btn = document.getElementById('btn-cosm-' + id);
-      if(userOwnedCosmetics.includes(id)) {
-        card.classList.add('purchased');
-        btn.innerText = (userEquippedCosmetics.color === id) ? "Активно" : "Выбрать";
-        btn.onclick = () => equipCosmeticColor(id);
-      }
+    document.querySelectorAll('.shop-item').forEach(card => card.classList.remove('purchased'));
+    userActiveItems.forEach(itemKey => {
+      const card = document.getElementById('item-' + itemKey);
+      if(card) card.classList.add('purchased');
     });
   }
 
-  function buyItem(itemKey, price, isCosmetic = false) {
-    if(!currentUser) return alert('Требуется авторизация!');
-    if(userCoins < price && !userOwnedCosmetics.includes(itemKey) && !userActiveItems.includes(itemKey)) return alert('Недостаточно коинов!');
-    
+  function buyItem(itemKey, price) {
+    if(!currentUser) return alert('Сначала войдите в систему аккаунтов!');
+    if(userActiveItems.includes(itemKey)) return alert('Этот модификатор уже куплен!');
+    if(userCoins < price) return alert('Недостаточно Кибер-Коинов!');
+
     db.ref('users/' + userEmailClean).transaction((userData) => {
       if (userData) {
-        if(isCosmetic) {
-          if(!userData.ownedCosmetics) userData.ownedCosmetics = [];
-          if(!userData.ownedCosmetics.includes(itemKey)) {
-            userData.coins -= price;
-            userData.ownedCosmetics.push(itemKey);
-          }
-        } else {
+        if (userData.coins >= price) {
+          userData.coins -= price;
           if(!userData.items) userData.items = [];
-          if(!userData.items.includes(itemKey)) {
-            userData.coins -= price;
-            userData.items.push(itemKey);
-          }
+          userData.items.push(itemKey);
         }
       }
       return userData;
-    });
+    }, (error, committed) => { if(committed) alert('Улучшение активировано!'); });
   }
 
-  function equipCosmeticColor(id) {
-    let target = userEquippedCosmetics.color === id ? '' : id;
-    db.ref('users/' + userEmailClean + '/equippedCosmetics/color').set(target);
-  }
-
-  // СЕТЕВАЯ АРХИТЕКТУРА ИГРЫ
-  function initP2PRole(role) {
-    myRole = role;
-    if(role === 'host') {
-      peer = new Peer();
-      peer.on('open', (id) => {
-        document.getElementById('host-room-info').classList.remove('hidden');
-        document.getElementById('txt-room-id').innerText = id;
-      });
-      peer.on('connection', (conn) => {
-        connections.push(conn);
-        conn.on('data', (data) => handleIncomingData(data, conn));
-      });
-    } else {
-      targetPeerId = document.getElementById('inp-target-peer').value.trim();
-      if(!targetPeerId) return alert('Введите ID Хоста!');
-      peer = new Peer();
-      peer.on('open', () => {
-        let conn = peer.connect(targetPeerId);
-        connections.push(conn);
-        conn.on('open', () => {
-          conn.send({ 
-            type: 'join', 
-            name: myCustomUsername, 
-            emailClean: userEmailClean,
-            cosmetics: userEquippedCosmetics,
-            items: userActiveItems 
-          });
-          document.getElementById('client-wait-info').classList.remove('hidden');
-        });
-        conn.on('data', (data) => handleIncomingData(data, conn));
-      });
+  function consumeUserItemsInDB() {
+    if(currentUser && userEmailClean) {
+      db.ref('users/' + userEmailClean + '/items').set([]);
     }
   }
 
-  function handleIncomingData(data, conn) {
-    if(data.type === 'join' && myRole === 'host') {
-      activePlayers.push({
-        id: conn.peer,
-        name: data.name,
-        emailClean: data.emailClean || 'none',
-        cosmetics: data.cosmetics || { avatar: '☣️', color: '' },
-        items: data.items || [],
-        cards: generateCharacterCards(data.items || []),
-        kicked: false,
-        votesReceived: 0
-      });
-      sendLobbySync();
-    }
-    if(data.type === 'sync') {
-      activePlayers = data.players;
-      votingActive = data.votingActive;
-      renderPlayersTerminal();
-      updateVotingUI();
-    }
-    if(data.type === 'game-start') {
-      activePlayers = data.players;
-      gameConfig = data.config;
-      navigate('scr-lobby', 'scr-game');
-      renderMyCards();
-      renderPlayersTerminal();
-    }
-    if(data.type === 'vote-cast' && myRole === 'host') {
-      let target = activePlayers.find(p => p.id === data.targetId);
-      if(target) target.votesReceived++;
-      processVotesCheck();
-    }
-    if(data.type === 'game-end') {
-      showGameOver(data.msg);
-    }
-  }
+  // УМНАЯ СИСТЕМНАЯ ГЕНЕРАЦИЯ ПЕРСОНАЖА С УЧЕТОМ НЕПОВТОРЯЮЩИХСЯ КАРТ
+  function createCharacterData(modifiers = []) {
+    let isSick = Math.random() < 0.35;
+    if(modifiers.includes('health_serum')) isSick = false;
 
-  function sendLobbySync() {
-    renderPlayersTerminal();
-  }
+    const health = isSick ? healthBad[Math.floor(Math.random() * healthBad.length)] : healthNormal[Math.floor(Math.random() * healthNormal.length)];
+    
+    let baggage = baggages[Math.floor(Math.random() * baggages.length)];
+    if(modifiers.includes('contraband')) baggage = contrabandBaggages[Math.floor(Math.random() * contrabandBaggages.length)];
 
-  function generateCharacterCards(clientItems) {
-    let hasHealthSerum = clientItems.includes('health_serum');
+    // Раздельный чистый рандом возраста от 18 до 70 лет
+    const age = Math.floor(Math.random() * (70 - 18 + 1)) + 18;
+    const genderBase = genders[Math.floor(Math.random() * genders.length)];
+
+    // Достаем из перемешанного динамического пула уникальные неповторяющиеся карты
+    let card1 = dynamicActionCardsPool.pop() || "⚡ Срочный ремонт вентиляции";
+    let card2 = dynamicActionCardsPool.pop() || "⚡ Защитный протокол шлюза";
+    let bonusCard = modifiers.includes('extra_card') ? (dynamicActionCardsPool.pop() || "⚡ Внесистемный паёк") : null;
+
     return {
-      profession: { label: "Профессия", value: professions[Math.floor(Math.random()*professions.length)], opened: false },
-      health: { label: "Биология и Здоровье", value: hasHealthSerum ? "Абсолютно здоров (Сыворотка)" : healthStatuses[Math.floor(Math.random()*healthStatuses.length)], opened: false },
-      baggage: { label: "Багаж эвакуации", value: baggageItems[Math.floor(Math.random()*baggageItems.length)], opened: false },
-      phobia: { label: "Фобия и Психика", value: phobias[Math.floor(Math.random()*phobias.length)], opened: false }
+      gender: `${genderBase}, ${age} лет`,
+      ageRaw: age,
+      prof: professions[Math.floor(Math.random() * professions.length)],
+      health: health,
+      hobby: hobbies[Math.floor(Math.random() * hobbies.length)],
+      phobia: phobias[Math.floor(Math.random() * phobias.length)],
+      trait: traits[Math.floor(Math.random() * traits.length)],
+      baggage: baggage,
+      secret: secrets[Math.floor(Math.random() * secrets.length)],
+      isAirPolluter: modifiers.includes('cyber_heart') ? false : isSick,
+      kicked: false,
+      modifiers: modifiers,
+      cards: { card1, card2, bonusCard }
     };
   }
 
-  function hostStartGame() {
-    let survCount = parseInt(document.getElementById('sel-survivors').value);
-    gameConfig = { targetSurvivors: survCount };
+  function renderCharacter(char) {
+    const box = document.getElementById('char-sheet-box');
+    if(!box || !char) return;
+    const fields = [
+      { l: "Пол и Возраст", v: char.gender },
+      { l: "Профессия", v: char.prof },
+      { l: "Состояние здоровья", v: char.health },
+      { l: "Хобби / Увлечение", v: char.hobby },
+      { l: "Страх / Фобия", v: char.phobia },
+      { l: "Человеческое качество", v: char.trait },
+      { l: "Багаж (Инвентарь)", v: char.baggage },
+      { l: "Секретный факт", v: char.secret }
+    ];
+    box.innerHTML = fields.map(f => `<div class="trait-card"><label>${f.l}</label><div class="trait-value">${f.v}</div></div>`).join('');
     
-    // Себя добавляем
-    activePlayers.unshift({
-      id: peer.id,
-      name: myCustomUsername,
-      emailClean: userEmailClean,
-      cosmetics: userEquippedCosmetics,
-      items: userActiveItems,
-      cards: generateCharacterCards(userActiveItems),
-      kicked: false,
-      votesReceived: 0
-    });
+    let deckHTML = `
+      <div class="action-mini-card">⚡ Карта 1: ${char.cards.card1}</div>
+      <div class="action-mini-card">⚡ Карта 2: ${char.cards.card2}</div>
+      <div class="action-mini-card cancel">🛡 Карта Отмены: БЛОК ДЕЙСТВИЯ</div>
+    `;
 
-    connections.forEach(c => {
-      if(c.open) c.send({ type: 'game-start', players: activePlayers, config: gameConfig });
-    });
+    if(char.cards.bonusCard) {
+      deckHTML += `<div class="action-mini-card">🔥 Бонус Маркета: ${char.cards.bonusCard}</div>`;
+    }
+    if(char.modifiers.includes('fake_docs')) {
+      deckHTML += `<div class="action-mini-card active-item">📂 Куплено: Фальшивые Документы (Смена Профессии)</div>`;
+    }
+    if(char.modifiers.includes('terminal_hack')) {
+      deckHTML += `<div class="action-mini-card active-item">💾 Куплено: Взлом Терминала (Вскрыть Чужой Секрет)</div>`;
+    }
+    if(char.modifiers.includes('shield_protocol')) {
+      deckHTML += `<div class="action-mini-card active-item" style="border-color:var(--neon-blue); color:var(--neon-blue);">🛡 Иммунитет 1 раунда</div>`;
+    }
+    if(char.modifiers.includes('signal_jammer')) {
+      deckHTML += `<div class="action-mini-card active-item" style="border-color:var(--orange); color:var(--orange);">🛰 Глушитель Голосования</div>`;
+    }
 
-    navigate('scr-lobby', 'scr-game');
-    renderMyCards();
-    renderPlayersTerminal();
-    renderHostControls();
+    document.getElementById('action-deck-box').innerHTML = deckHTML;
   }
 
-  function renderMyCards() {
-    const box = document.getElementById('char-sheet-box');
-    box.innerHTML = '';
-    let me = activePlayers.find(p => p.id === peer.id);
-    if(!me) return;
+  function initP2P(role) {
+    myRole = role;
+    shuffleArray(dynamicActionCardsPool); // Перемешиваем карты перед раздачей
 
-    for(let key in me.cards) {
-      let card = me.cards[key];
-      let div = document.createElement('div');
-      div.className = `trait-card ${card.opened?'opened':''}`;
-      div.innerHTML = `<label>${card.label}</label><div class="trait-value ${card.opened?'':'trait-blur'}">${card.value}</div>`;
-      div.onclick = () => {
-        if(!card.opened) {
-          card.opened = true;
-          div.classList.add('opened');
-          div.querySelector('.trait-value').classList.remove('trait-blur');
-          syncAll();
-        }
-      };
-      box.appendChild(div);
+    if(currentUser) {
+      myName = currentUser.email.split('@')[0];
+    } else {
+      myName = role === 'host' ? 'Смотритель' : 'Выживший_' + Math.floor(Math.random()*900);
     }
+
+    if(role === 'host') {
+      const maxP = parseInt(document.getElementById('sel-player-limit').value);
+      const disaster = disasters[Math.floor(Math.random() * disasters.length)];
+      const isolationYears = [3, 5, 10, 15, 25][Math.floor(Math.random() * 5)];
+
+      gameConfig = {
+        disaster: disaster,
+        condition: bunkerConditions[Math.floor(Math.random() * bunkerConditions.length)],
+        energy: [60, 80, 100][Math.floor(Math.random() * 3)],
+        maxPlayers: maxP,
+        targetSurvivors: Math.max(1, Math.floor(maxP / 2)),
+        isolationYears: isolationYears
+      };
+
+      peer = new Peer();
+      peer.on('open', (id) => {
+        myPeerId = 'Host';
+        document.getElementById('bunker-code-txt').innerText = id;
+        document.getElementById('host-share-zone').style.display = 'block';
+        document.getElementById('btn-host-init').style.display = 'none';
+        
+        let myChar = createCharacterData(userActiveItems);
+        consumeUserItemsInDB();
+
+        activePlayers = [];
+        activePlayers.push({ id: 'Host', name: myName, emailClean: userEmailClean || 'none', role: 'host', char: myChar, kicked: false, votesReceived: 0 });
+        
+        renderCharacter(myChar);
+        applyWorldConfig(gameConfig);
+        updateHostLobbyUI();
+      });
+
+      peer.on('connection', (c) => {
+        if(connections.length >= gameConfig.maxPlayers - 1) return;
+        connections.push(c);
+        c.on('data', (pack) => {
+          if(pack.type === 'join') {
+            let clientChar = createCharacterData(pack.items || []);
+            activePlayers.push({ id: c.peer, name: pack.name, emailClean: pack.emailClean, role: 'client', char: clientChar, kicked: false, votesReceived: 0 });
+            updateHostLobbyUI();
+          }
+          if(pack.type === 'submit-vote') {
+            let target = activePlayers.find(p => p.id === pack.targetId);
+            if(target) target.votesReceived++;
+            hostSyncVoteState();
+          }
+        });
+      });
+    } else {
+      const tId = document.getElementById('inp-target-id').value.trim();
+      if(!tId) return alert('Введите секретный код бункера!');
+
+      peer = new Peer();
+      peer.on('open', (id) => {
+        myPeerId = id;
+        conn = peer.connect(tId);
+        conn.on('open', () => {
+          conn.send({ type: 'join', name: myName, emailClean: userEmailClean || 'none', items: userActiveItems });
+          consumeUserItemsInDB();
+          document.getElementById('client-wait-msg').style.display = 'block';
+        });
+        
+        conn.on('data', (pack) => {
+          if(pack.type === 'init-game') {
+            renderCharacter(pack.char);
+            applyWorldConfig(pack.config);
+            gameConfig = pack.config;
+            document.getElementById('my-name-badge').innerText = myName;
+            navigate('scr-network', 'scr-game');
+          }
+          if(pack.type === 'sync') {
+            activePlayers = pack.players;
+            votingActive = pack.votingActive;
+            renderPlayersTerminal();
+            checkOxygenStatus();
+          }
+          if(pack.type === 'game-end') showGameOver(pack.msg);
+        });
+      });
+    }
+  }
+
+  function updateHostLobbyUI() {
+    document.getElementById('lobby-players-list').innerHTML = activePlayers.map((p, i) => `${i+1}. ${p.name}`).join('<br>');
+  }
+
+  function hostStartGame() {
+    connections.forEach(c => {
+      if(c.open) {
+        let pData = activePlayers.find(p => p.id === c.peer);
+        if(pData) c.send({ type: 'init-game', char: pData.char, config: gameConfig });
+      }
+    });
+    
+    // Отрисовка админ панели голосования для Хоста
+    document.getElementById('host-voting-controls').innerHTML = `
+      <button class="btn btn-sm btn-accent" id="btn-toggle-vote" onclick="hostToggleVoting()">🚨 Запустить голосование</button>
+    `;
+    
+    navigate('scr-network', 'scr-game');
+    syncAll();
+  }
+
+  function applyWorldConfig(cfg) {
+    if(!cfg) return;
+    document.getElementById('world-disaster-text').innerText = `КАТАСТРОФА: ${cfg.disaster.title} (${cfg.disaster.desc})`;
+    document.getElementById('bunker-condition-text').innerText = `Условия систем: ${cfg.condition}`;
+    document.getElementById('bunker-time-text').innerText = `⏳ СРОК ИЗОЛЯЦИИ ЭКИПАЖА В БУНКЕРЕ: ${cfg.isolationYears} ЛЕТ`;
+    
+    document.getElementById('f-txt-temp').innerText = cfg.disaster.temp;
+    document.getElementById('flask-temp-box').className = "flask-container " + cfg.disaster.style;
+    document.getElementById('f-txt-power').innerText = cfg.energy + "%";
+    document.getElementById('f-liq-power').style.height = cfg.energy + "%";
+  }
+
+  // СЛОЖНЫЙ ДИНАМИЧЕСКИЙ РАСЧЕТ КИСЛОРОДА И ФИЛЬТРАЦИИ ИЗ-ЗА СРОКА И ВОЗРАСТА
+  function checkOxygenStatus() {
+    if(!gameConfig) return;
+    const alivePlayers = activePlayers.filter(p => !p.kicked);
+    
+    let baseLoad = 0;
+    let tooOldCount = 0;
+
+    alivePlayers.forEach(p => {
+      if(p.char) {
+        if(p.char.isAirPolluter) baseLoad += 30; // Болезнь душит воздух
+        
+        // Математика возраста: сможет ли прожить срок изоляции до старости в 75+ лет
+        let prospectiveAge = p.char.ageRaw + gameConfig.isolationYears;
+        if(prospectiveAge > 73) {
+          baseLoad += 20; // Старики требуют больше мед.фильтрации и кислорода
+          tooOldCount++;
+        }
+      }
+    });
+
+    const o2Box = document.getElementById('flask-o2-box');
+    const o2Liq = document.getElementById('f-liq-o2');
+    const o2Txt = document.getElementById('f-txt-o2');
+
+    let currentO2Height = Math.max(10, 100 - baseLoad);
+
+    if(currentO2Height < 55) {
+      if(o2Box) o2Box.className = "flask-container danger";
+      if(o2Liq) o2Liq.style.height = currentO2Height + "%";
+      if(o2Txt) o2Txt.innerText = `КРИТ (НАГРУЗКА)`;
+    } else {
+      if(o2Box) o2Box.className = "flask-container";
+      if(o2Liq) o2Liq.style.height = currentO2Height + "%";
+      if(o2Txt) o2Txt.innerText = "НОРМА";
+    }
+  }
+
+  // УПРАВЛЕНИЕ ГОЛОСОВАНИЕМ ХОСТОМ
+  function hostToggleVoting() {
+    if(myRole !== 'host') return;
+    if(!votingActive) {
+      votingActive = true;
+      hasVoted = false;
+      activePlayers.forEach(p => p.votesReceived = 0); // Обнуляем прошлые результаты
+      document.getElementById('btn-toggle-vote').innerText = "🛑 Завершить голосование и Выгнать";
+      document.getElementById('btn-toggle-vote').style.borderColor = "var(--neon-red)";
+    } else {
+      votingActive = false;
+      document.getElementById('btn-toggle-vote').innerText = "🚨 Запустить голосование";
+      document.getElementById('btn-toggle-vote').style.borderColor = "var(--orange)";
+      hostExecuteExile();
+    }
+    syncAll();
+  }
+
+  function hostExecuteExile() {
+    let alive = activePlayers.filter(p => !p.kicked);
+    if(alive.length === 0) return;
+    
+    // Ищем у кого больше всего голосов
+    let maxVotes = -1;
+    let targetToKick = null;
+    
+    alive.forEach(p => {
+      if(p.votesReceived > maxVotes) {
+        maxVotes = p.votesReceived;
+        targetToKick = p;
+      }
+    });
+
+    if(targetToKick && maxVotes > 0) {
+      targetToKick.kicked = true;
+      alert(`По результатам открытого голосования из бункера изгнан: ${targetToKick.name} (Голосов: ${maxVotes})`);
+    } else {
+      alert("Голоса равны или никто не проголосовал. Никто не покинул шлюз.");
+    }
+  }
+
+  function castVote(targetId) {
+    if(hasVoted) return alert("Вы уже отдали свой голос в этом раунде!");
+    hasVoted = true;
+    
+    if(myRole === 'host') {
+      let target = activePlayers.find(p => p.id === targetId);
+      if(target) target.votesReceived++;
+      syncAll();
+    } else {
+      if(conn && conn.open) {
+        conn.send({ type: 'submit-vote', targetId: targetId });
+      }
+    }
+    renderPlayersTerminal();
+  }
+
+  function hostSyncVoteState() {
+    if(myRole === 'host') syncAll();
   }
 
   function renderPlayersTerminal() {
     const box = document.getElementById('players-terminal-list');
-    box.innerHTML = '';
-
-    activePlayers.forEach(p => {
-      let row = document.createElement('div');
-      row.className = `player-row ${p.id===peer.id?'me':''} ${p.kicked?'kicked':''}`;
-      
-      let av = p.cosmetics?.avatar || '☣️';
-      let fxClass = '';
-      if(p.cosmetics?.color === 'cosm_c_rgb') fxClass = 'fx-rgb';
-      if(p.cosmetics?.color === 'cosm_c_pulse') fxClass = 'fx-pulse';
-      if(p.cosmetics?.color === 'cosm_c_toxic') fxClass = 'fx-toxic';
-      if(p.cosmetics?.color === 'cosm_c_ice') fxClass = 'fx-ice';
-      if(p.cosmetics?.color === 'cosm_c_quantum') fxClass = 'fx-quantum';
-
-      let textStr = `<span class="p-avatar-emoji">${av}</span><span class="${fxClass}">${p.name}</span>`;
-      
-      let openedTraits = [];
-      for(let k in p.cards) { if(p.cards[k].opened) openedTraits.push(p.cards[k].value); }
-      let traitsStr = openedTraits.length > 0 ? openedTraits.join(' | ') : 'Досье закрыто';
-
-      row.innerHTML = `<div>${textStr}</div><div style="font-size:0.75rem; color:var(--grey-text); max-width:50%; text-align:right;">${traitsStr}</div>`;
-      box.appendChild(row);
-    });
-  }
-
-  function renderHostControls() {
-    if(myRole !== 'host') return;
-    const node = document.getElementById('host-management-nodes');
-    node.innerHTML = `
-      <div style="display:flex; gap:10px;">
-        <button class="btn btn-sm btn-accent" style="flex:1;" onclick="hostToggleVoting()">Запустить Голосование</button>
-      </div>
-    `;
-  }
-
-  function hostToggleVoting() {
-    votingActive = true;
-    activePlayers.forEach(p => p.votesReceived = 0);
-    syncAll();
-  }
-
-  function updateVotingUI() {
-    const pnl = document.getElementById('ui-vote-panel');
-    const grid = document.getElementById('ui-vote-grid');
-    if(!votingActive) { pnl.classList.add('hidden'); return; }
+    if(!box) return;
     
-    pnl.classList.remove('hidden');
-    grid.innerHTML = '';
+    const alertBox = document.getElementById('current-vote-alert');
+    if(alertBox) alertBox.style.display = votingActive ? 'block' : 'none';
 
-    activePlayers.forEach(p => {
-      if(p.kicked) return;
-      let b = document.createElement('button');
-      b.className = "btn btn-sm";
-      b.style.fontSize = '11px';
-      b.innerText = p.name;
-      b.onclick = () => {
-        if(myRole === 'host') {
-          let t = activePlayers.find(pl => pl.id === p.id);
-          if(t) t.votesReceived++;
-          processVotesCheck();
-        } else {
-          connections[0].send({ type: 'vote-cast', targetId: p.id });
-        }
-        pnl.classList.add('hidden');
-      };
-      grid.appendChild(b);
-    });
-  }
+    const aliveCount = activePlayers.filter(p => !p.kicked).length;
+    document.getElementById('total-surv-count').innerText = `${aliveCount}/${gameConfig ? gameConfig.maxPlayers : activePlayers.length}`;
 
-  function processVotesCheck() {
-    let alive = activePlayers.filter(p => !p.kicked);
-    let totalVotes = activePlayers.reduce((acc, p) => acc + (p.votesReceived || 0), 0);
-    
-    if(totalVotes >= alive.length) {
-      let maxVotes = -1; let target = null;
-      activePlayers.forEach(p => {
-        if(p.votesReceived > maxVotes && !p.kicked) { maxVotes = p.votesReceived; target = p; }
-      });
-      if(target) {
-        target.kicked = true;
+    box.innerHTML = activePlayers.map(p => {
+      let voteBtnHTML = '';
+      if(votingActive && !p.kicked && !hasVoted) {
+        voteBtnHTML = `<button class="btn btn-sm" style="border-color:var(--orange); color:var(--orange);" onclick="castVote('${p.id}')">Голосовать</button>`;
       }
-      votingActive = false;
-      syncAll();
-    }
-  }
+      
+      let voteCounters = votingActive ? `<span style="color:var(--grey-text); font-size:0.75rem; margin-right:10px;">[Голосов: ${p.votesReceived}]</span>` : '';
 
-  function checkOxygenStatus() {
-    let alive = activePlayers.filter(p => !p.kicked).length;
-    let bar = document.getElementById('el-oxygen-bar');
-    let txt = document.getElementById('el-oxygen-text');
-    
-    if(alive > (gameConfig?.targetSurvivors || 2)) {
-      bar.style.width = '40%';
-      txt.innerText = "РЕСУРС ИСТОЩАЕТСЯ (ПЕРЕНАСЕЛЕНИЕ)";
-      document.getElementById('txt-game-status').innerText = "КРИТИЧЕСКИЙ РАСХОД";
-      document.getElementById('txt-game-status').style.color = "var(--neon-red)";
-    } else {
-      bar.style.width = '100%';
-      txt.innerText = "РЕЗЕРВУАР СТАБИЛЕН";
-      document.getElementById('txt-game-status').innerText = "ОПТИМАЛЬНО";
-      document.getElementById('txt-game-status').style.color = "var(--neon-green)";
-    }
+      return `
+        <div class="player-row ${p.kicked ? 'exiled' : ''}">
+          <span>${p.name} <small style="color:var(--orange); font-size:0.65rem;">[${p.role.toUpperCase()}]</small></span>
+          <div>
+            ${voteCounters}
+            ${voteBtnHTML}
+            ${p.kicked ? `<span style="color:var(--neon-red); font-size:0.75rem; font-weight:bold;">☠ ИЗГНАН С СЕРВЕРА</span>` : `<span style="color:var(--neon-green); font-size:0.75rem;">В БУНКЕРЕ</span>`}
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 
   function syncAll() {
     renderPlayersTerminal();
     checkOxygenStatus();
-    connections.forEach(c => { if(c.open) c.send({ type: 'sync', players: activePlayers, votingActive: votingActive }); });
+    connections.forEach(c => { 
+      if(c.open) c.send({ type: 'sync', players: activePlayers, votingActive: votingActive }); 
+    });
 
     const remaining = activePlayers.filter(p => !p.kicked);
     if(gameConfig && remaining.length === gameConfig.targetSurvivors && myRole === 'host') {
+      
+      // ИСПРАВЛЕНИЕ: Коины начисляются ИСКЛЮЧИТЕЛЬНО выжившим! (Условие !p.kicked)
       remaining.forEach(p => {
         if(p.emailClean && p.emailClean !== 'none' && !p.kicked) {
           db.ref('users/' + p.emailClean + '/coins').transaction((current) => {
@@ -880,11 +815,12 @@
     document.body.innerHTML = `
       <div class="screen fade-in" style="text-align:center; max-width:650px; margin:auto;">
         <div class="menu-logo" style="color:var(--neon-green);">СЕССИЯ ЗАВЕРШЕНА</div>
-        <div class="panel" style="margin-top:30px;">
-          <p style="font-size:1rem; line-height:1.6; color:var(--white);">${msg}</p>
-          <button class="btn btn-accent" style="margin-top:25px; width:100%;" onclick="window.location.reload()">Вернуться в Хаб</button>
+        <div class="panel" style="margin-top:20px; border-color:var(--neon-green);">
+          <p style="font-size:0.95rem; line-height:1.6;">${msg}</p>
         </div>
-      </div>`;
+        <button class="btn btn-accent" style="margin-top:25px;" onclick="window.location.reload()">В меню</button>
+      </div>
+    `;
   }
 </script>
 </body>
