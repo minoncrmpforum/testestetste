@@ -12,9 +12,7 @@
     --border-color: rgba(255, 230, 0, 0.15);
     --border-glow: rgba(255, 230, 0, 0.4);
     
-    /* ЦВЕТА ИЗ МАКЕТА GLOWBYTE / НЕОН */
     --accent: #ffe600;
-    --accent-dim: rgba(255, 230, 0, 0.1);
     --cyan: #00f5ff;
     --pink: #ff006e;
     --green: #39ff14;
@@ -108,11 +106,9 @@
     padding-left: 8px;
   }
 
-  /* ТЕКУЩИЕ ЭКРАНЫ */
   .screen { display: none; flex-direction: column; gap: 20px; flex-grow: 1; justify-content: center; }
   .screen.active { display: flex; }
 
-  /* ЖИДКОЕ СТЕКЛО (LIQUID GLASS БЛОКИ) */
   .card-panel {
     background: var(--bg-card);
     backdrop-filter: var(--blur-effect);
@@ -129,7 +125,6 @@
     box-shadow: 0 25px 50px rgba(0,0,0,0.9), inset 0 1px 3px rgba(255,230,0,0.25);
   }
 
-  /* СОВРЕМЕННЫЕ КНОПКИ ГЛОВБАЙТ СТИЛЬ */
   .action-btn {
     background: rgba(255, 230, 0, 0.06);
     color: var(--text-main);
@@ -161,7 +156,6 @@
   .btn-cyan:hover:not(:disabled) { background: var(--cyan); color: #000; box-shadow: 0 0 25px rgba(0,245,255,0.45); }
   .btn-green:hover:not(:disabled) { background: var(--green); color: #000; box-shadow: 0 0 25px rgba(57,255,20,0.45); }
 
-  /* 1. ГЛАВНАЯ СТРАНИЦА ВХОДА */
   .welcome-container {
     max-width: 500px;
     width: 100%;
@@ -195,7 +189,6 @@
     font-size: 16px;
   }
 
-  /* ФОРМЫ */
   .input-block {
     display: flex;
     flex-direction: column;
@@ -243,7 +236,6 @@
     margin-bottom: 20px;
   }
 
-  /* МАКЕТ ИГРЫ И АДМИНКИ */
   .game-split-layout {
     display: grid;
     grid-template-columns: 1fr 340px;
@@ -303,7 +295,6 @@
     border-radius: 0 0 24px 24px;
   }
 
-  /* ТРИБУНЫ ИГРОКОВ */
   .stands-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -354,9 +345,7 @@
     padding: 4px 14px; border-radius: 10px;
   }
 
-  /* ПУЛЬТ ВЕДУЩЕГО */
   .sidebar-controls { display: flex; flex-direction: column; gap: 16px; }
-  
   .host-action-stack { display: flex; flex-direction: column; gap: 10px; }
 
   .scoring-sub-box {
@@ -366,7 +355,6 @@
   }
 
   .scoring-sub-box h5 { font-size: 11px; text-transform: uppercase; color: var(--text-muted); text-align: center; letter-spacing: 1px; }
-
   .scoring-btns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
   .feed-log-terminal {
@@ -381,7 +369,6 @@
   .feed-row.ok { border-color: var(--green); color: #b3ffb6; }
   .feed-row.err { border-color: var(--pink); color: #ffb3c1; }
 
-  /* ЛОББИ ОЖИДАНИЯ ДЛЯ ИГРОКА */
   .lobby-grid-view {
     display: flex; flex-direction: column; gap: 20px; max-width: 600px; width: 100%; margin: 0 auto; text-align: center;
   }
@@ -390,7 +377,16 @@
     display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0;
   }
 
-  /* МОДАЛКА ЛИДЕРБОРДА */
+  .player-lobby-badge {
+    background: rgba(255,230,0,0.05);
+    border: 1px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: 14px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
   .modal-overlay-fullscreen {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: rgba(6,7,13,0.95); backdrop-filter: blur(15px);
@@ -398,9 +394,7 @@
   }
 
   .modal-overlay-fullscreen.active { display: flex; }
-  
   .lb-modal-window { width: 500px; max-width: 95%; text-align: center; }
-
   .lb-list-rows { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
 
   .lb-single-row {
@@ -409,7 +403,6 @@
     border: 1px solid var(--border-color); border-radius: 14px;
   }
 
-  /* АДАПТИВНОСТЬ ПОД ТЕЛЕФОНЫ */
   @media (max-width: 900px) {
     .game-split-layout { grid-template-columns: 1fr; }
     .main-title-brand { font-size: 42px; letter-spacing: 4px; }
@@ -419,7 +412,6 @@
     header { padding: 12px 16px; margin-bottom: 15px; }
   }
 
-  /* Скроллбары */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
 </style>
@@ -467,9 +459,9 @@
 
   <div id="screen-lobby-wait" class="screen">
     <div class="lobby-grid-view card-panel">
-      <div class="q-badge">КОМНАТА ЗАРЕГИСТРИРОВАНА</div>
+      <div class="q-badge">ВЫ ПОДКЛЮЧЕНЫ К СЕССИИ</div>
       <h2 style="font-family: 'Orbitron';" id="lobby-display-code">CODE: 000000</h2>
-      <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Вы успешно заняли слот трибуны. Ожидайте, пока создатель запустит первый раунд.</p>
+      <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Ваша трибуна зарегистрирована. Матч начнется по команде ведущего.</p>
       
       <div class="connected-list-wrap" id="lobby-players-list"></div>
       
@@ -482,11 +474,11 @@
       
       <div class="card-panel">
         <h3 style="font-family: 'Orbitron'; margin-bottom: 15px;">НАСТРОЙКИ СЕЙФА</h3>
-        <label style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Код для отправки остальным участникам:</label>
+        <label style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Код для раздачи остальным игрокам:</label>
         <div class="digit-code-box" id="host-generated-code-box">000000</div>
         
         <div class="input-block">
-          <label>Игроки на линиях связи (<span id="host-setup-count">0</span>)</label>
+          <label>Подключенные трибуны (<span id="host-setup-count">0</span>)</label>
           <div id="host-preview-badges" class="connected-list-wrap" style="justify-content: flex-start; margin: 5px 0;"></div>
         </div>
 
@@ -533,7 +525,7 @@
           <h5>Оценка ответа участника: <span id="current-target-name" style="color: var(--accent);">---</span></h5>
           <div class="scoring-btns-grid">
             <button class="action-btn btn-green judge-btn" id="j-ok-btn" onclick="submitVerdict(true)">ВЕРНО</button>
-            <button class="action-btn btn-pink " id="j-err-btn" onclick="submitVerdict(false)">НЕВЕРНО</button>
+            <button class="action-btn btn-pink judge-btn" id="j-err-btn" onclick="submitVerdict(false)">НЕВЕРНО</button>
           </div>
         </div>
 
@@ -572,12 +564,12 @@
 </div>
 
 <script>
-// ГЛОБАЛЬНЫЙ МЕНЕДЖЕР ИГРЫ
+// СУГУБО ЛОКАЛЬНЫЙ СТЕЙТ БЕЗ АВТОМАТИЧЕСКИХ СЛОМАННЫХ ТАЙМЕРОВ ОЖИДАНИЯ
 const state = {
   currentRoom: "",
-  role: "", // HOST или PLAYER
+  role: "", 
   myNickname: "",
-  players: [],
+  players: [], // Изначально пусто, наполняется по коду
   questions: [
     { type: "ЛОКАЦИЯ", text: "Из какой игры эта легендарная таверна, где играет уютная музыка?", media: "https://i.imgur.com/eP6PZ1M.jpeg", answer: "Skyrim" },
     { type: "КИБЕРПАНК", text: "Какая ретровейв игра встречает нас этим футуристичным дизайном главного меню?", media: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=cover", answer: "Cyberpunk 2077" }
@@ -590,21 +582,24 @@ const state = {
   timerId: null
 };
 
-// Запуск при коннекте страницы
+const avatarsPool = ["👾", "🤖", "🕹️", "🛸", "⚔️", "🎮", "💥", "👑"];
+
 window.addEventListener('DOMContentLoaded', () => {
   generateStarsBackground();
 });
 
-// Навигация между экранами
 function switchRoute(screenId, statusText) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(screenId).classList.add('active');
   document.getElementById('status-indicator-tag').textContent = statusText;
 }
 
-// Переход создателя
+// 1. Инициализация комнаты Создателя
 function initHostCreationMode() {
   state.role = "HOST";
+  state.players = []; // Очищаем старых игроков
+  
+  // Генерируем ЧЕСТНЫЙ 6-значный цифровой код
   const num = Math.floor(100000 + Math.random() * 900000);
   state.currentRoom = String(num);
   document.getElementById('host-generated-code-box').textContent = state.currentRoom;
@@ -614,66 +609,62 @@ function initHostCreationMode() {
   switchRoute('screen-host-setup', 'ROOM MANAGEMENT');
 }
 
-// Логика добавления игроков (Имитация подключения по коду)
+// 2. Обработка ввода кода игроком
 function processPlayerJoin() {
   const name = document.getElementById('join-name-field').value.trim().toUpperCase();
   const code = document.getElementById('join-code-field').value.trim();
 
-  if(!name) { alert('Введите ваш игровой ник!'); return; }
-  if(code.length !== 6) { alert('Код комнаты должен состоять из 6 цифр!'); return; }
+  if(!name) { alert('Введите ваш игровой никнейм!'); return; }
+  if(code.length !== 6) { alert('Код должен состоять ровно из 6 цифр!'); return; }
+  
+  // Проверяем, совпадает ли код с текущей сессией
+  if(state.currentRoom !== "" && code !== state.currentRoom) {
+    alert('Комната с таким кодом не найдена! Сначала создайте её во вкладке "Создать".');
+    return;
+  }
+
+  // Если зашли сразу как игрок без генерации админки, присвоим этот код сессии
+  if(state.currentRoom === "") {
+    state.currentRoom = code;
+  }
 
   state.role = "PLAYER";
   state.myNickname = name;
-  state.currentRoom = code;
 
-  // Генерируем состав лобби (себя + случайных оппонентов для имитации сетевой комнаты)
-  state.players = [
-    { name: state.myNickname, score: 0, avatar: "👾" },
-    { name: "NET_RUNNER", score: 0, avatar: "🤖" },
-    { name: "GLOW_PRO", score: 0, avatar: "🕹️" }
-  ];
+  // Добавляем текущего игрока и генерируем пару оппонентов в этот же массив для теста механики
+  const myAvatar = avatarsPool[state.players.length % avatarsPool.length];
+  state.players.push({ name: state.myNickname, score: 0, avatar: myAvatar });
+  
+  // Добавим двух ботов-оппонентов, чтобы трибуны не были пустыми
+  if(state.players.length === 1) {
+    state.players.push({ name: "NET_RUNNER", score: 0, avatar: "🤖" });
+    state.players.push({ name: "GLOW_STRIKE", score: 0, avatar: "🛸" });
+  }
 
+  // Обновляем визуал лобби игрока
   document.getElementById('lobby-display-code').textContent = `CODE: ${state.currentRoom}`;
   const container = document.getElementById('lobby-players-list');
   container.innerHTML = '';
+  
   state.players.forEach(p => {
-    const b = document.createElement('div');
-    b.className = 'stand-avatar';
-    b.style.width = '60px'; b.style.height = '60px'; b.style.fontSize = '20px';
-    b.title = p.name;
-    b.innerHTML = p.avatar;
-    container.appendChild(b);
+    const item = document.createElement('div');
+    item.className = 'player-lobby-badge';
+    item.innerHTML = `${p.avatar} ${p.name}`;
+    container.appendChild(item);
   });
 
-  switchRoute('screen-lobby-wait', `WAITING FOR START IN ${state.currentRoom}`);
-  
-  // Имитируем автостарт для игрока через 4 секунды ожидания в лобби
-  setTimeout(() => {
-    if(state.role === "PLAYER" && document.getElementById('screen-lobby-wait').classList.contains('active')) {
-      launchLiveMatch();
-    }
-  }, 4000);
+  switchRoute('screen-lobby-wait', `LOBBY: ROOM ${state.currentRoom}`);
 }
 
-// Синхронизация списков в админке
 function syncHostPlayersList() {
-  // Если создатель один, закинем ботов для теста кликов кнопками
-  if(state.players.length === 0) {
-    state.players = [
-      { name: "PLAYER_ONE", score: 0, avatar: "🕹️" },
-      { name: "ALPHA_TEST", score: 0, avatar: "🛸" },
-      { name: "X_GAMER", score: 0, avatar: "⚔️" }
-    ];
-  }
   document.getElementById('host-setup-count').textContent = state.players.length;
   const wrap = document.getElementById('host-preview-badges');
   wrap.innerHTML = '';
+  
   state.players.forEach(p => {
     const badge = document.createElement('div');
-    badge.className = 'stand-avatar';
-    badge.style.width = '45px'; badge.style.height = '45px'; badge.style.fontSize = '16px';
-    badge.innerHTML = p.avatar;
-    badge.title = p.name;
+    badge.className = 'player-lobby-badge';
+    badge.innerHTML = `${p.avatar} ${p.name}`;
     wrap.appendChild(badge);
   });
 }
@@ -686,7 +677,7 @@ function syncHostQuestionsView() {
     item.style.cssText = "background:rgba(0,0,0,0.2); border:1px solid var(--border-color); padding:10px 14px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; font-size:13px;";
     item.innerHTML = `
       <div><span style="color:var(--accent)">[${q.type}]</span> ${q.text.substring(0,30)}...</div>
-      <button class="action-btn btn-pink" style="padding:4px 8px; font-size:10px; radius:6px;" onclick="deleteQuestionItem(${i})">&times;</button>
+      <button class="action-btn btn-pink" style="padding:4px 8px; font-size:10px; border-radius:6px;" onclick="deleteQuestionItem(${i})">&times;</button>
     `;
     pool.appendChild(item);
   });
@@ -705,7 +696,7 @@ function saveCreatedQuestion() {
   const media = document.getElementById('mq-url').value.trim();
   const answer = document.getElementById('mq-ans').value.trim() || "Да";
 
-  if(!text) return;
+  if(!text) { alert('Введите текст вопроса!'); return; }
   state.questions.push({ type, text, media, answer });
   syncHostQuestionsView();
   triggerModalQ(false);
@@ -715,11 +706,20 @@ function saveCreatedQuestion() {
   document.getElementById('mq-ans').value = '';
 }
 
-// Запуск игрового раунда
+// 3. Запуск матча ТОЛЬКО по нажатию на кнопку
 function launchLiveMatch() {
+  // Если создатель запускает пустую комнату, наполняем её для игры
+  if(state.players.length === 0) {
+    state.players = [
+      { name: "PLAYER_ONE", score: 0, avatar: "🕹️" },
+      { name: "ALPHA_TEST", score: 0, avatar: "👾" },
+      { name: "X_GAMER", score: 0, avatar: "⚔️" }
+    ];
+  }
+  
   switchRoute('screen-match-arena', `LIVE MATCH // ROOM ${state.currentRoom}`);
   buildMatchStands();
-  writeLog("Матч запущен. Ожидание вывода карточки вопроса.", "sys");
+  writeLog("Матч успешно запущен ведущим. Ожидание вывода вопроса.", "sys");
 }
 
 function buildMatchStands() {
@@ -742,9 +742,8 @@ function buildMatchStands() {
   });
 }
 
-// ЛОГИКА ВЕДУЩЕГО И ТРИБУН
 function triggerNextQuestion() {
-  if(state.questions.length === 0) return;
+  if(state.questions.length === 0) { alert('Добавьте вопросы в базу!'); return; }
   clearBuzzState();
   clearInterval(state.timerId);
   state.isTimerRunning = false;
@@ -770,7 +769,7 @@ function triggerNextQuestion() {
   bar.style.transition = 'none';
   bar.style.width = '100%';
 
-  writeLog(`Опубликован раунд №${state.activeQIdx + 1} (${q.type})`, "sys");
+  writeLog(`Опубликован раунд №${state.activeQIdx + 1} [${q.type}]`, "sys");
 }
 
 function triggerCountdownTimer() {
@@ -788,7 +787,7 @@ function triggerCountdownTimer() {
     if(state.secondsLeft <= 0) {
       clearInterval(state.timerId);
       state.isTimerRunning = false;
-      writeLog("Время раунда истекло! Никто не успел ответить.", "err");
+      writeLog("Время раунда истекло! Ответ не предоставлен.", "err");
     }
   }, 1000);
 }
@@ -813,12 +812,9 @@ function registerUserBuzz(idx) {
     });
 
     document.getElementById('current-target-name').textContent = state.players[idx].name;
-    document.getElementById('j-ok-btn').classList.add('active');
-    document.getElementById('j-err-btn').classList.add('active');
-
-    writeLog(`Трибуна ${state.players[idx].name} заблокировала линию первый!`, "bz");
+    writeLog(`Трибуна ${state.players[idx].name} заблокировала линию ответа!`, "bz");
   } else {
-    writeLog(`Игрок ${state.players[idx].name} в резервной очереди (${queuePos}-й)`, "sys");
+    writeLog(`Игрок ${state.players[idx].name} в очереди за ответом (${queuePos}-й)`, "sys");
   }
 }
 
@@ -829,11 +825,11 @@ function submitVerdict(isCorrect) {
 
   if(isCorrect) {
     p.score += 200;
-    writeLog(`Ответ принят! ${p.name} заработал +200 XP`, "ok");
+    writeLog(`Ответ принят верным! ${p.name} получает +200 XP`, "ok");
     clearBuzzState();
   } else {
     p.score = Math.max(0, p.score - 100);
-    writeLog(`Неверный ответ! Штраф ${p.name} -100 XP`, "err");
+    writeLog(`Ответ неверный! Штраф ${p.name} -100 XP`, "err");
     shiftQueueAndNext();
   }
 
@@ -851,7 +847,7 @@ function shiftQueueAndNext() {
   if(state.buzzList.length > 0) {
     const nextIdx = state.buzzList[0];
     state.buzzList.forEach((pos, index) => {
-      document.getElementById(`stand-order-label-${pos}`).textContent = index + 1;
+      document.getElementById('stand-order-label-' + pos).textContent = index + 1;
     });
 
     const nextNode = document.getElementById(`stand-node-${nextIdx}`);
@@ -859,15 +855,12 @@ function shiftQueueAndNext() {
     nextNode.classList.add('is-active-buzz');
 
     document.getElementById('current-target-name').textContent = state.players[nextIdx].name;
-    writeLog(`Очередь перешла к игроку ${state.players[nextIdx].name}`, "bz");
+    writeLog(`Право ответа переходит к трибуне игрока ${state.players[nextIdx].name}`, "bz");
   } else {
     state.players.forEach((_, idx) => {
       if(idx !== badIdx) document.getElementById(`stand-node-${idx}`).classList.remove('is-disabled-lock');
     });
     document.getElementById('current-target-name').textContent = "---";
-    document.getElementById('j-ok-btn').classList.remove('active');
-    document.getElementById('j-err-btn').classList.remove('active');
-    
     state.isTimerRunning = false;
     triggerCountdownTimer();
   }
@@ -876,8 +869,6 @@ function shiftQueueAndNext() {
 function clearBuzzState() {
   state.buzzList = [];
   document.getElementById('current-target-name').textContent = "---";
-  document.getElementById('j-ok-btn').classList.remove('active');
-  document.getElementById('j-err-btn').classList.remove('active');
   state.players.forEach((_, idx) => {
     const node = document.getElementById(`stand-node-${idx}`);
     node.classList.remove('is-active-buzz', 'is-disabled-lock');
@@ -893,11 +884,9 @@ function writeLog(msg, type) {
   term.scrollTop = term.scrollHeight;
 }
 
-// 5. ПОЛНОЕ ЗАВЕРШЕНИЕ С ВОЗВРАТОМ В ГЛАВНОЕ МЕНЮ
+// 4. Завершение матча и показ лидерборда
 function terminateMatchSession() {
   clearInterval(state.timerId);
-  
-  // Собираем результаты для вывода финального окна
   const container = document.getElementById('lb-modal-rows');
   container.innerHTML = '';
   const sorted = [...state.players].sort((a,b) => b.score - a.score);
@@ -910,19 +899,16 @@ function terminateMatchSession() {
   });
 
   if(sorted.length > 0) {
-    document.getElementById('lb-winner-banner').textContent = `🏆 ПОБЕДИТЕЛЬ: ${sorted[0].name}`;
+    document.getElementById('lb-winner-banner').textContent = `🏆 ЧЕМПИОН СЕССИИ: ${sorted[0].name}`;
   }
 
-  // Открываем финальную таблицу результатов перед вылетом в меню
   document.getElementById('modal-leaderboard-view').classList.add('active');
 }
 
-// СБРОС И ВЫХОД В МЕНЮ
+// 5. ПОЛНЫЙ СБРОС С ВОЗВРАТОМ В ГЛАВНОЕ МЕНЮ
 function exitToMainMenu() {
-  // Останавливаем все процессы
   clearInterval(state.timerId);
   
-  // Чистим стейт до дефолта
   state.currentRoom = "";
   state.role = "";
   state.myNickname = "";
@@ -932,23 +918,20 @@ function exitToMainMenu() {
   state.isQuestionLive = false;
   state.isTimerRunning = false;
 
-  // Очищаем поля форм
   document.getElementById('join-name-field').value = '';
   document.getElementById('join-code-field').value = '';
   
-  // Сбрасываем дисплеи арены
   document.getElementById('arena-q-category').textContent = "СИСТЕМА ГОТОВА";
   document.getElementById('arena-q-text').textContent = "Ожидайте публикации раунда ведущим";
   document.getElementById('arena-media-frame').style.display = 'none';
   document.getElementById('arena-timer-bar').style.width = '0%';
   document.getElementById('arena-terminal-logs').innerHTML = '';
 
-  // Прячем модалки и улетаем на экран приветствия
   document.getElementById('modal-leaderboard-view').classList.remove('active');
   switchRoute('screen-welcome', 'MAIN MENU');
 }
 
-// ГОРЯЧИЕ КЛАВИШИ ВЕДУЩЕГО
+// Горячие клавиши
 document.addEventListener('keydown', (e) => {
   if(!document.getElementById('screen-match-arena').classList.contains('active')) return;
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -960,7 +943,6 @@ document.addEventListener('keydown', (e) => {
   if (num >= 1 && num <= state.players.length) { registerUserBuzz(num - 1); }
 });
 
-// ФОНОВЫЕ ЭФФЕКТЫ ЧАСТИЦ
 function generateStarsBackground() {
   const container = document.getElementById('particles');
   setInterval(() => {
@@ -977,7 +959,7 @@ function generateStarsBackground() {
       container.appendChild(p);
       setTimeout(() => p.remove(), 9000);
     }
-  }, 400);
+  }, 450);
 }
 </script>
 </body>
