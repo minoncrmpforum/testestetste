@@ -10,12 +10,13 @@
     --bg: #05060a;
     --bg2: #0b0c10;
     
-    /* УЛЬТРА СТРУКТУРНОЕ ЖЁЛТОЕ СТЕКЛО (iOS СТИЛЬ) */
-    --panel: rgba(255, 230, 0, 0.03);
-    --panel2: rgba(255, 230, 0, 0.05);
-    --border: rgba(255, 230, 0, 0.2);
-    --glass-blur: blur(20px) saturate(180%);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 230, 0, 0.2);
+    /* СТИЛЬ LIQUID GLASS (ЖИДКОЕ ЖЁЛТОЕ СТЕКЛО) */
+    --panel: linear-gradient(135deg, rgba(255, 230, 0, 0.02) 0%, rgba(255, 230, 0, 0.05) 100%);
+    --panel-active: linear-gradient(135deg, rgba(255, 230, 0, 0.06) 0%, rgba(255, 230, 0, 0.12) 100%);
+    --border: rgba(255, 230, 0, 0.25);
+    --border-glow: rgba(255, 230, 0, 0.4);
+    --glass-blur: blur(25px) saturate(200%);
+    --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.60), inset 0 1px 3px rgba(255, 230, 0, 0.3);
 
     --neon-cyan: #00f5ff;
     --neon-pink: #ff006e;
@@ -38,8 +39,8 @@
     overflow-x: hidden;
     position: relative;
     background-image: 
-      radial-gradient(circle at 20% 30%, rgba(255, 230, 0, 0.05) 0%, transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(255, 230, 0, 0.02) 0%, transparent 40%);
+      radial-gradient(circle at 15% 25%, rgba(255, 230, 0, 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(255, 230, 0, 0.03) 0%, transparent 45%);
   }
 
   #particles {
@@ -52,14 +53,14 @@
   .particle {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.5;
-    animation: float 6s linear infinite;
+    opacity: 0.4;
+    animation: float 7s linear infinite;
   }
 
   @keyframes float {
     0% { transform: translateY(100vh) scale(0); opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
     100% { transform: translateY(-10vh) scale(1); opacity: 0; }
   }
 
@@ -78,63 +79,69 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 25px;
-    background: rgba(5, 6, 10, 0.6);
+    padding: 18px 30px;
+    background: rgba(5, 6, 10, 0.5);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    margin-bottom: 20px;
+    border-radius: 20px;
+    margin-bottom: 25px;
     box-shadow: var(--glass-shadow);
   }
 
   .logo {
     font-family: 'Orbitron', sans-serif;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
     background: linear-gradient(90deg, #fff, var(--neon-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
   }
 
   .screen { display: none; flex-direction: column; gap: 20px; flex-grow: 1; }
   .screen.active { display: flex; }
 
-  /* ЖЕЛТЫЙ ГЛАССМОРФИЗМ ДЛЯ ПАНЕЛЕЙ */
+  /* ОБНОВЛЕННЫЕ ПАНЕЛИ LIQUID GLASS */
   .panel {
     background: var(--panel);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 25px;
+    border-radius: 28px;
+    padding: 30px;
     box-shadow: var(--glass-shadow);
     position: relative;
     overflow: hidden;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
   
   .panel::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; height: 100%;
-    background: linear-gradient(135deg, rgba(255,230,0,0.05) 0%, transparent 50%);
+    background: linear-gradient(135deg, rgba(255,230,0,0.08) 0%, transparent 60%);
     pointer-events: none;
+  }
+
+  .panel:hover {
+    border-color: var(--border-glow);
+    box-shadow: 0 20px 45px 0 rgba(0, 0, 0, 0.7), inset 0 1px 4px rgba(255, 230, 0, 0.4);
   }
 
   h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; font-weight: 700; }
 
   .btn {
-    background: rgba(255, 230, 0, 0.07);
+    background: rgba(255, 230, 0, 0.08);
     color: var(--text);
     border: 1px solid var(--border);
-    padding: 12px 24px;
+    padding: 14px 28px;
     font-family: 'Orbitron', sans-serif;
     font-size: 14px;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
     letter-spacing: 1px;
     display: inline-flex;
@@ -147,31 +154,32 @@
   .btn:hover:not(:disabled) {
     background: var(--neon-yellow);
     color: #000;
-    box-shadow: 0 0 15px rgba(255, 230, 0, 0.4);
-    transform: translateY(-1px);
+    box-shadow: 0 0 20px rgba(255, 230, 0, 0.5);
+    transform: translateY(-2px);
   }
 
   .btn:active:not(:disabled) { transform: translateY(1px); }
-  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
-  .btn-pink:hover:not(:disabled) { background: var(--neon-pink); color: #fff; box-shadow: 0 0 15px rgba(255,0,110,0.4); }
-  .btn-cyan:hover:not(:disabled) { background: var(--neon-cyan); color: #000; box-shadow: 0 0 15px rgba(0,245,255,0.4); }
-  .btn-green:hover:not(:disabled) { background: var(--neon-green); color: #000; box-shadow: 0 0 15px rgba(57,255,20,0.4); }
+  .btn:disabled { opacity: 0.2; cursor: not-allowed; }
+  .btn-pink:hover:not(:disabled) { background: var(--neon-pink); color: #fff; box-shadow: 0 0 20px rgba(255,0,110,0.5); }
+  .btn-cyan:hover:not(:disabled) { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px rgba(0,245,255,0.5); }
+  .btn-green:hover:not(:disabled) { background: var(--neon-green); color: #000; box-shadow: 0 0 20px rgba(57,255,20,0.5); }
 
   .setup-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
   
   label {
     font-family: 'Share Tech Mono', sans-serif;
     color: var(--text-dim);
     font-size: 14px;
     text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   input, select, textarea {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.5);
     border: 1px solid var(--border);
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     color: var(--text);
     font-size: 16px;
     transition: all 0.2s;
@@ -180,34 +188,46 @@
   input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--neon-yellow);
-    box-shadow: 0 0 10px rgba(255, 230, 0, 0.2);
+    box-shadow: 0 0 15px rgba(255, 230, 0, 0.3);
   }
 
-  .player-input-row { display: flex; gap: 10px; margin-bottom: 10px; }
+  .room-code-panel {
+    background: rgba(255, 230, 0, 0.05);
+    border: 1px dashed var(--neon-yellow);
+    padding: 15px;
+    border-radius: 14px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .player-input-row { display: flex; flex-direction: column; gap: 12px; }
   .player-list-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
   
   .player-badge {
-    background: rgba(255,230,0,0.1);
-    border: 1px solid var(--border);
-    padding: 6px 12px;
-    border-radius: 20px;
+    background: var(--panel-active);
+    border: 1px solid var(--neon-yellow);
+    padding: 8px 16px;
+    border-radius: 24px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
 
   .player-badge button {
     background: none; border: none; color: var(--neon-pink);
-    cursor: pointer; font-weight: bold; font-size: 14px;
+    cursor: pointer; font-weight: bold; font-size: 16px;
   }
 
-  .questions-manager { display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto; padding-right: 5px; }
+  .questions-manager { display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 5px; }
   .q-item {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.3);
     border: 1px solid var(--border);
-    padding: 12px;
-    border-radius: 10px;
+    padding: 14px;
+    border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -216,7 +236,7 @@
 
   .game-grid {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 340px;
     gap: 20px;
     flex-grow: 1;
   }
@@ -224,7 +244,7 @@
   .main-stage { display: flex; flex-direction: column; gap: 20px; }
   
   .screen-display {
-    height: 380px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -239,112 +259,119 @@
   .screen-display-overlay {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(5,6,10,0.4), rgba(5,6,10,0.85));
+    background: linear-gradient(to bottom, rgba(5,6,10,0.3), rgba(5,6,10,0.9));
     z-index: 1;
   }
 
   .screen-content { position: relative; z-index: 2; width: 100%; padding: 40px; }
   
   .display-title {
-    font-size: 20px;
+    font-size: 22px;
     color: var(--neon-yellow);
     margin-bottom: 15px;
     font-family: 'Share Tech Mono', sans-serif;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
   }
 
-  .display-main { font-size: 32px; font-weight: 900; text-transform: uppercase; line-height: 1.2; }
+  .display-main { font-size: 34px; font-weight: 900; text-transform: uppercase; line-height: 1.2; letter-spacing: 1px; }
   
   .media-box {
     margin-top: 20px;
     max-width: 100%;
-    height: 180px;
-    border-radius: 12px;
+    height: 200px;
+    border-radius: 16px;
     border: 1px solid var(--border);
     display: none;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.6);
   }
 
   .timer-bar {
-    position: absolute; bottom: 0; left: 0; height: 4px;
+    position: absolute; bottom: 0; left: 0; height: 5px;
     background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow));
     width: 100%; transition: width 1s linear; z-index: 3;
   }
 
   .pods-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
   }
 
+  /* ЖИДКОЕ СТЕКЛО ТРИБУН */
   .pod {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 25px 20px;
     text-align: center;
     border-color: var(--border);
+    background: var(--panel);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
   .pod.buzzed {
     border-color: var(--neon-yellow);
-    box-shadow: 0 0 25px rgba(255, 230, 0, 0.3), inset 0 0 15px rgba(255, 230, 0, 0.15);
-    transform: translateY(-5px);
+    background: var(--panel-active);
+    box-shadow: 0 0 35px rgba(255, 230, 0, 0.4), inset 0 0 20px rgba(255, 230, 0, 0.25);
+    transform: translateY(-8px);
   }
 
-  .pod.locked { opacity: 0.3; transform: scale(0.96); }
-  .pod-rank { font-family: 'Share Tech Mono', sans-serif; font-size: 14px; color: var(--text-dim); margin-bottom: 5px; }
+  .pod.locked { opacity: 0.15; transform: scale(0.95); pointer-events: none; }
+  .pod-rank { font-family: 'Share Tech Mono', sans-serif; font-size: 14px; color: var(--text-dim); margin-bottom: 8px; }
   
   .pod-avatar {
-    width: 70px; height: 70px; border-radius: 50%;
-    background: rgba(0,0,0,0.4);
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(0,0,0,0.5);
     border: 2px solid var(--border);
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 12px; position: relative;
+    font-size: 32px; margin-bottom: 15px; position: relative;
   }
 
-  .pod.buzzed .pod-avatar { border-color: var(--neon-yellow); background: rgba(255,230,0,0.1); }
+  .pod.buzzed .pod-avatar { border-color: var(--neon-yellow); background: rgba(255,230,0,0.15); }
   
   .pod-buzz-order {
     position: absolute; top: -5px; right: -5px;
     background: var(--neon-yellow); color: #000;
-    width: 24px; height: 24px; border-radius: 50%;
-    font-size: 14px; font-weight: 900;
+    width: 26px; height: 26px; border-radius: 50%;
+    font-size: 15px; font-weight: 900;
     display: none; align-items: center; justify-content: center;
+    box-shadow: 0 0 10px var(--neon-yellow);
   }
 
   .pod.buzzed .pod-buzz-order { display: flex; }
-  .pod-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+  .pod-name { font-size: 22px; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
   
   .pod-score {
-    font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900;
-    color: var(--neon-cyan); background: rgba(0,0,0,0.3);
-    padding: 4px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);
+    font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900;
+    color: var(--neon-cyan); background: rgba(0,0,0,0.4);
+    padding: 6px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
   }
 
-  .pod.buzzed .pod-score { color: var(--neon-yellow); }
+  .pod.buzzed .pod-score { color: var(--neon-yellow); text-shadow: 0 0 10px rgba(255,230,0,0.3); }
 
   .control-panel { display: flex; flex-direction: column; gap: 15px; }
   .panel-title { font-size: 16px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 5px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
   .host-controls { display: flex; flex-direction: column; gap: 10px; }
   
   .scoring-zone {
-    background: rgba(0,0,0,0.3);
-    border-radius: 14px; padding: 15px;
-    border: 1px solid rgba(255,255,255,0.02);
-    display: flex; flex-direction: column; gap: 10px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 16px; padding: 18px;
+    border: 1px solid rgba(255,230,0,0.1);
+    display: flex; flex-direction: column; gap: 12px;
   }
 
   .scoring-target { font-size: 14px; text-transform: uppercase; color: var(--text-dim); text-align: center; }
   .scoring-target span { color: var(--neon-yellow); font-weight: bold; font-family: 'Orbitron', sans-serif; }
   .scoring-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   
+  .judge-btn { opacity: 0.2; pointer-events: none; }
+  .judge-btn.active { opacity: 1; pointer-events: auto; }
+
   .game-log {
-    flex-grow: 1; max-height: 250px; overflow-y: auto;
+    flex-grow: 1; max-height: 220px; overflow-y: auto;
     font-family: 'Share Tech Mono', sans-serif; font-size: 13px;
     color: var(--text-dim); display: flex; flex-direction: column; gap: 6px;
     padding-right: 5px;
@@ -358,7 +385,7 @@
 
   .leaderboard-overlay {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(5,6,10,0.9); backdrop-filter: blur(10px);
+    background: rgba(5,6,10,0.92); backdrop-filter: blur(15px);
     z-index: 100; display: none; justify-content: center; align-items: center;
   }
 
@@ -370,26 +397,26 @@
     to { transform: scale(1); opacity: 1; }
   }
 
-  .lb-title { font-size: 32px; color: var(--neon-yellow); margin-bottom: 25px; letter-spacing: 2px; }
+  .lb-title { font-size: 34px; color: var(--neon-yellow); margin-bottom: 25px; letter-spacing: 3px; text-transform: uppercase; }
   .lb-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
   
   .lb-row {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 20px; background: rgba(255,230,0,0.03);
-    border: 1px solid var(--border); border-radius: 14px;
+    padding: 16px 22px; background: rgba(255,230,0,0.03);
+    border: 1px solid var(--border); border-radius: 16px;
   }
 
-  .lb-row.rank-1 { border-color: var(--gold); background: rgba(255, 215, 0, 0.05); }
-  .lb-row.rank-1 .lb-num { color: var(--gold); font-size: 20px; }
+  .lb-row.rank-1 { border-color: var(--gold); background: rgba(255, 215, 0, 0.07); box-shadow: 0 0 15px rgba(255,215,0,0.1); }
+  .lb-row.rank-1 .lb-num { color: var(--gold); font-size: 22px; }
   .lb-row.rank-2 { border-color: var(--silver); background: rgba(192, 192, 192, 0.05); }
   .lb-row.rank-2 .lb-num { color: var(--silver); }
   .lb-row.rank-3 { border-color: var(--bronze); background: rgba(205, 127, 50, 0.05); }
   .lb-row.rank-3 .lb-num { color: var(--bronze); }
   
   .lb-left { display: flex; align-items: center; gap: 15px; }
-  .lb-num { font-family: 'Share Tech Mono', sans-serif; font-weight: bold; font-size: 16px; width: 24px; text-align: left; }
-  .lb-name { font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
-  .lb-score { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; color: var(--neon-cyan); }
+  .lb-num { font-family: 'Share Tech Mono', sans-serif; font-weight: bold; font-size: 18px; width: 24px; text-align: left; }
+  .lb-name { font-size: 19px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+  .lb-score { font-family: 'Orbitron', sans-serif; font-size: 19px; font-weight: 900; color: var(--neon-cyan); }
   .lb-row.rank-1 .lb-score { color: var(--neon-yellow); }
 
   ::-webkit-scrollbar { width: 6px; }
@@ -405,26 +432,35 @@
 <div class="app-container">
   <header>
     <div class="logo">GAME QUIZ SHOW</div>
-    <div id="header-status" style="font-family: 'Share Tech Mono', sans-serif; color: var(--text-dim); text-transform: uppercase; font-size: 14px;">SETUP PHASE</div>
+    <div id="header-status" style="font-family: 'Share Tech Mono', sans-serif; color: var(--text-dim); text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">SETUP PHASE</div>
   </header>
 
   <div id="setup-screen" class="screen active">
     <div class="setup-layout">
       
       <div class="panel">
-        <h3>КОМАНДЫ / ИГРОКИ</h3>
-        <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 20px;">Добавьте участников шоу за трибуны</p>
+        <h3>ПОДКЛЮЧЕНИЕ ТРИБУН ИГРОКОВ</h3>
+        <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 20px;">Введите ник и секретный код, чтобы занять трибуну</p>
         
-        <div class="form-group">
-          <label>Имя нового игрока</label>
-          <div class="player-input-row">
-            <input type="text" id="player-name-input" placeholder="Например: CYBER_PUNK" autocomplete="off">
-            <button class="btn btn-cyan" onclick="addPlayerFromInput()">ДОБАВИТЬ</button>
-          </div>
+        <div class="room-code-panel">
+          <span style="color: var(--text-dim); font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 4px;">Код вашей комнаты:</span>
+          <strong id="generated-room-code" style="color: var(--neon-yellow); font-size: 24px; letter-spacing: 2px;">ROOM-CODE</strong>
         </div>
 
-        <div class="form-group">
-          <label>Участники на трибунах (<span id="player-count">0</span>)</label>
+        <div class="player-input-row">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label>Ваш игровой ник</label>
+            <input type="text" id="player-name-input" placeholder="Например: NEO_KNIGHT" autocomplete="off">
+          </div>
+          <div class="form-group">
+            <label>Введите код комнаты</label>
+            <input type="text" id="player-code-input" placeholder="ROOM-XXX" autocomplete="off">
+          </div>
+          <button class="btn btn-cyan" onclick="connectPlayerWithCode()">ЗАЙТИ НА ТРИБУНУ</button>
+        </div>
+
+        <div class="form-group" style="margin-top: 25px;">
+          <label>Активные игроки на трибунах (<span id="player-count">0</span>)</label>
           <div id="player-list-preview" class="player-list-preview"></div>
         </div>
       </div>
@@ -465,7 +501,7 @@
         <div class="pods-container" id="pods-container"></div>
       </div>
 
-      <div class="panel control-panel">
+      <div class="panel control-panel" id="host-control-panel-block">
         <div class="panel-title">ИНТЕРФЕЙС ВЕДУЩЕГО</div>
         
         <div class="host-controls">
@@ -477,8 +513,8 @@
         <div class="scoring-zone">
           <div class="scoring-target">НАЧИСЛЕНИЕ ДЛЯ: <span id="target-player-name">---</span></div>
           <div class="scoring-row">
-            <button class="btn btn-green judge-btn" id="score-plus-btn" onclick="scoreTarget(true)" disabled>ВЕРНО</button>
-            <button class="btn btn-pink judge-btn" id="score-minus-btn" onclick="scoreTarget(false)" disabled>НЕВЕРНО</button>
+            <button class="btn btn-green judge-btn" id="score-plus-btn" onclick="scoreTarget(true)">ВЕРНО</button>
+            <button class="btn btn-pink judge-btn" id="score-minus-btn" onclick="scoreTarget(false)">НЕВЕРНО</button>
           </div>
         </div>
 
@@ -487,7 +523,7 @@
           <div class="log-msg system">Система инициализирована. Ожидание команд ведущего...</div>
         </div>
 
-        <button class="btn" style="margin-top: auto;" onclick="showFinalLeaderboard()">ЗАВЕРШИТЬ МАТЧ</button>
+        <button class="btn btn-pink" id="end-match-main-btn" style="margin-top: auto; font-weight: 900;" onclick="showFinalLeaderboard(true)">ЗАВЕРШИТЬ МАТЧ</button>
       </div>
 
     </div>
@@ -510,7 +546,7 @@
 
     <div class="form-group">
       <label>Прямая ссылка на картинку (URL)</label>
-      <input type="text" id="modal-q-media" placeholder="https://site.com/image.jpg (Оставьте пустым, если без картинки)">
+      <input type="text" id="modal-q-media" placeholder="https://site.com/image.jpg">
     </div>
 
     <div class="form-group">
@@ -527,20 +563,18 @@
 
 <div id="leaderboard-overlay" class="leaderboard-overlay">
   <div class="panel lb-panel">
-    <h2 class="lb-title">ИТОГИ СОРЕВНОВАНИЯ</h2>
+    <h2 class="lb-title" id="lb-main-header-title">ИТОГИ СОРЕВНОВАНИЯ</h2>
     <div class="lb-rows" id="lb-rows-container"></div>
-    <button class="btn btn-cyan" style="padding: 12px 30px;" onclick="closeLeaderboard()">ВЕРНУТЬСЯ В ИГРУ</button>
+    <div id="lb-winner-announcement" style="font-size: 20px; font-weight: 700; color: var(--neon-green); margin-bottom: 25px; text-transform: uppercase; font-family: 'Orbitron';"></div>
+    <button class="btn btn-cyan" id="lb-close-back-btn" style="padding: 12px 30px;" onclick="closeLeaderboard()">ВЕРНУТЬСЯ В ИГРУ</button>
   </div>
 </div>
 
 <script>
-// Глобальное состояние игры
+// Глобальное состояние игры (Боты удалены, игроки пустые)
 const state = {
-  players: [
-    { name: "NEO_KNIGHT", score: 0, avatar: "👾" },
-    { name: "RETRO_WAVE", score: 0, avatar: "🕹️" },
-    { name: "CYBER_DRAGON", score: 0, avatar: "🤖" }
-  ],
+  roomCode: "",
+  players: [],
   questions: [
     { 
       type: "ГДЕ БЫЛА ЭТА ЛОКАЦИЯ?", 
@@ -562,19 +596,50 @@ const state = {
   timerDuration: 30,
   timerSecondsLeft: 30,
   timerIntervalId: null,
-  isAnimationRunning: true
+  isAnimationRunning: true,
+  gameStatus: "SETUP" // SETUP, PLAYING, FINISHED
 };
 
 const avatars = ["👾", "🕹️", "🤖", "🎮", "🛸", "⚔️", "💎", "🏴‍☠️"];
 
-// Инициализация при старте страницы
 window.addEventListener('DOMContentLoaded', () => {
+  generateRoomCode();
   spawnParticles();
   renderSetupPlayers();
   renderSetupQuestions();
 });
 
-// Сборка списка игроков в меню настройки
+// Генерация кода комнаты для входа трибун
+function generateRoomCode() {
+  const num = Math.floor(100 + Math.random() * 900);
+  state.roomCode = `ROOM-${num}`;
+  document.getElementById('generated-room-code').textContent = state.roomCode;
+}
+
+// Вход по нику и коду
+function connectPlayerWithCode() {
+  const nameInput = document.getElementById('player-name-input');
+  const codeInput = document.getElementById('player-code-input');
+  
+  const name = nameInput.value.trim().toUpperCase();
+  const code = codeInput.value.trim().toUpperCase();
+
+  if (!name) { alert('Введите имя игрока!'); return; }
+  if (code !== state.roomCode) { alert('Неверный код комнаты! Проверьте табло.'); return; }
+
+  if (state.players.some(p => p.name === name)) {
+    alert('Этот ник уже занят на одной из трибун!');
+    return;
+  }
+
+  const avatar = avatars[state.players.length % avatars.length];
+  state.players.push({ name, score: 0, avatar });
+  
+  nameInput.value = '';
+  codeInput.value = '';
+  renderSetupPlayers();
+}
+
 function renderSetupPlayers() {
   document.getElementById('player-count').textContent = state.players.length;
   const container = document.getElementById('player-list-preview');
@@ -590,29 +655,11 @@ function renderSetupPlayers() {
   document.getElementById('start-game-btn').disabled = state.players.length === 0;
 }
 
-// Добавление игрока через инпут
-function addPlayerFromInput() {
-  const input = document.getElementById('player-name-input');
-  const name = input.value.trim().toUpperCase();
-  if (!name) return;
-  
-  if (state.players.some(p => p.name === name)) {
-    alert('Игрок с таким ником уже стоит за трибуной!');
-    return;
-  }
-
-  const avatar = avatars[state.players.length % avatars.length];
-  state.players.push({ name, score: 0, avatar });
-  input.value = '';
-  renderSetupPlayers();
-}
-
 function removePlayer(idx) {
   state.players.splice(idx, 1);
   renderSetupPlayers();
 }
 
-// Вывод списка вопросов в меню настроек
 function renderSetupQuestions() {
   const container = document.getElementById('questions-manager-list');
   container.innerHTML = '';
@@ -635,7 +682,6 @@ function removeQuestion(idx) {
   renderSetupQuestions();
 }
 
-// Модалка добавления вопросов
 function openQuestionModal() { document.getElementById('q-modal').style.display = 'flex'; }
 function closeQuestionModal() { document.getElementById('q-modal').style.display = 'none'; clearModalInputs(); }
 
@@ -659,9 +705,9 @@ function saveNewQuestion() {
   closeQuestionModal();
 }
 
-// Переключение экранов: Старт игры
 function startGame() {
   if (state.players.length === 0) return;
+  state.gameStatus = "PLAYING";
   document.getElementById('setup-screen').classList.remove('active');
   document.getElementById('game-screen').classList.add('active');
   document.getElementById('header-status').textContent = "LIVE SHOW IN PROGRESS";
@@ -670,7 +716,6 @@ function startGame() {
   logMessage("Шоу началось! Ведущий готов выводить карточки заданий.", "system");
 }
 
-// Динамическое создание стеклянных трибун для игроков на главной арене
 function buildPlayerPods() {
   const container = document.getElementById('pods-container');
   container.innerHTML = '';
@@ -693,10 +738,10 @@ function buildPlayerPods() {
   });
 }
 
-// ЛОГИКА ВЕДУЩЕГО: Вывод вопроса на экран
 function publishQuestion() {
+  if (state.gameStatus !== "PLAYING") return;
   if (state.questions.length === 0) {
-    alert('База вопросов пуста! Вернитесь и добавьте карточки.');
+    alert('База вопросов пуста!');
     return;
   }
 
@@ -705,12 +750,11 @@ function publishQuestion() {
   
   state.currentQuestionIdx++;
   if (state.currentQuestionIdx >= state.questions.length) {
-    state.currentQuestionIdx = 0; // Круговой цикл по вопросам
+    state.currentQuestionIdx = 0;
   }
 
   const q = state.questions[state.currentQuestionIdx];
   
-  // Обновление интерфейса табло
   document.getElementById('display-q-type').textContent = q.type;
   document.getElementById('display-q-text').textContent = q.text;
   
@@ -722,11 +766,9 @@ function publishQuestion() {
     mediaBox.style.display = 'none';
   }
 
-  // Обновление состояния раунда
   state.isQuestionPublished = true;
   document.getElementById('start-timer-btn').disabled = false;
   
-  // Сброс графики таймера
   const bar = document.getElementById('timer-bar');
   bar.style.transition = 'none';
   bar.style.width = '100%';
@@ -734,9 +776,8 @@ function publishQuestion() {
   logMessage(`Выведен вопрос №${state.currentQuestionIdx + 1} [${q.type}]`, "system");
 }
 
-// Запуск обратного отсчета времени
 function startTimer() {
-  if (!state.isQuestionPublished || state.isTimerRunning) return;
+  if (state.gameStatus !== "PLAYING" || !state.isQuestionPublished || state.isTimerRunning) return;
 
   state.isTimerRunning = true;
   document.getElementById('start-timer-btn').disabled = true;
@@ -756,9 +797,8 @@ function startTimer() {
   }, 1000);
 }
 
-// МЕХАНИКА ТРИБУН: Нажатие кнопки игроком (Кто первый?)
 function playerBuzz(playerIdx) {
-  if (!state.isQuestionPublished) return;
+  if (state.gameStatus !== "PLAYING" || !state.isQuestionPublished) return;
   if (state.buzzQueue.includes(playerIdx)) return;
 
   state.buzzQueue.push(playerIdx);
@@ -768,22 +808,19 @@ function playerBuzz(playerIdx) {
   pod.classList.add('buzzed');
   document.getElementById(`pod-order-${playerIdx}`).textContent = order;
 
-  // Если это первое нажатие (лидер раунда)
   if (order === 1) {
-    clearInterval(state.timerIntervalId); // Стопаем таймер
+    clearInterval(state.timerIntervalId);
     state.isTimerRunning = false;
     
-    // Блокируем отображение остальных трибун для фокуса на лидере
     state.players.forEach((_, idx) => {
       if (idx !== playerIdx) {
         document.getElementById(`pod-${idx}`).classList.add('locked');
       }
     });
 
-    // Передаем фокус управления ведущему
     document.getElementById('target-player-name').textContent = state.players[playerIdx].name;
-    document.getElementById('score-plus-btn').disabled = false;
-    document.getElementById('score-minus-btn').disabled = false;
+    document.getElementById('score-plus-btn').classList.add('active');
+    document.getElementById('score-minus-btn').classList.add('active');
 
     logMessage(`Игрок ${state.players[playerIdx].name} нажал первый!`, "buzz");
   } else {
@@ -791,44 +828,37 @@ function playerBuzz(playerIdx) {
   }
 }
 
-// ВЕРДИКТ ВЕДУЩЕГО: Начисление или штраф баллов
 function scoreTarget(isCorrect) {
-  if (state.buzzQueue.length === 0) return;
+  if (state.gameStatus !== "PLAYING" || state.buzzQueue.length === 0) return;
   
-  const activePlayerIdx = state.buzzQueue[0]; // Очки получает тот, кто был первым в очереди
+  const activePlayerIdx = state.buzzQueue[0];
   const p = state.players[activePlayerIdx];
 
   if (isCorrect) {
     p.score += 250;
     logMessage(`Ведущий подтвердил ответ! ${p.name} получает +250 XP`, "point");
-    resetBuzz(); // Сбрасываем кнопки, раунд завершен
+    resetBuzz();
   } else {
     p.score = Math.max(0, p.score - 100);
     logMessage(`Ответ неверный. ${p.name} получает штраф -100 XP`, "fail");
-    
-    // Удаляем ошибившегося игрока из топа очереди и передаем ход следующему в массиве buzzQueue
     removeFirstFromQueueAndPass();
   }
 
   document.getElementById(`pod-score-display-${activePlayerIdx}`).textContent = `${p.score} XP`;
 }
 
-// Сдвиг очереди, если первый ответил неверно
 function removeFirstFromQueueAndPass() {
   if (state.buzzQueue.length === 0) return;
 
   const failedIdx = state.buzzQueue.shift();
   
-  // Убираем подсветку лидера с ошибившегося игрока
   const failedPod = document.getElementById(`pod-${failedIdx}`);
   failedPod.classList.remove('buzzed');
   failedPod.classList.add('locked');
 
-  // Если в очереди еще есть нажавшие игроки
   if (state.buzzQueue.length > 0) {
     const nextPlayerIdx = state.buzzQueue[0];
     
-    // Перестраиваем отображение порядковых номеров для оставшихся игроков в очереди
     state.buzzQueue.forEach((pIdx, queuePosition) => {
       document.getElementById(`pod-order-${pIdx}`).textContent = queuePosition + 1;
     });
@@ -840,7 +870,6 @@ function removeFirstFromQueueAndPass() {
     document.getElementById('target-player-name').textContent = state.players[nextPlayerIdx].name;
     logMessage(`Право ответа переходит к игроку ${state.players[nextPlayerIdx].name}!`, "buzz");
   } else {
-    // Если очередь пуста, возвращаем трибуны в игру для тех, кто еще не нажимал
     state.players.forEach((_, idx) => {
       if (idx !== failedIdx) {
         document.getElementById(`pod-${idx}`).classList.remove('locked');
@@ -848,21 +877,19 @@ function removeFirstFromQueueAndPass() {
     });
     
     document.getElementById('target-player-name').textContent = "---";
-    document.getElementById('score-plus-btn').disabled = true;
-    document.getElementById('score-minus-btn').disabled = true;
+    document.getElementById('score-plus-btn').classList.remove('active');
+    document.getElementById('score-minus-btn').classList.remove('active');
     
-    // Перезапускаем таймер, если осталось время
     state.isTimerRunning = false;
     startTimer();
   }
 }
 
-// Полный сброс состояния кнопок раунда ведущим
 function resetBuzz() {
   state.buzzQueue = [];
   document.getElementById('target-player-name').textContent = "---";
-  document.getElementById('score-plus-btn').disabled = true;
-  document.getElementById('score-minus-btn').disabled = true;
+  document.getElementById('score-plus-btn').classList.remove('active');
+  document.getElementById('score-minus-btn').classList.remove('active');
 
   state.players.forEach((_, idx) => {
     const pod = document.getElementById(`pod-${idx}`);
@@ -870,7 +897,6 @@ function resetBuzz() {
   });
 }
 
-// Добавление записи в консоль журнала событий
 function logMessage(msg, type) {
   const log = document.getElementById('game-log');
   const d = document.createElement('div');
@@ -883,12 +909,44 @@ function logMessage(msg, type) {
   log.scrollTop = log.scrollHeight;
 }
 
-// Окна финального подсчета очков (Лидерборд)
-function showFinalLeaderboard() {
+// ИЗМЕНЕНО: Функция РЕАЛЬНОГО завершения матча
+function showFinalLeaderboard(isRealEnd = false) {
+  if (isRealEnd) {
+    state.gameStatus = "FINISHED";
+    clearInterval(state.timerIntervalId);
+    state.isTimerRunning = false;
+    
+    // Блокируем пульт управления полностью
+    document.getElementById('publish-q-btn').disabled = true;
+    document.getElementById('start-timer-btn').disabled = true;
+    document.getElementById('reset-buzz-btn').disabled = true;
+    document.getElementById('end-match-main-btn').disabled = true;
+    document.getElementById('score-plus-btn').classList.remove('active');
+    document.getElementById('score-minus-btn').classList.remove('active');
+    
+    // Глушим интерфейс главного экрана
+    document.getElementById('header-status').textContent = "MATCH FINISHED";
+    document.getElementById('display-q-type').textContent = "СОРЕВНОВАНИЕ ОКОНЧЕНО";
+    document.getElementById('display-q-text').textContent = "ВЕДУЩИЙ ЗАКРЫЛ МАТЧ. СМОТРИТЕ РЕЗУЛЬТАТЫ.";
+    document.getElementById('display-media').style.display = 'none';
+    document.getElementById('timer-bar').style.width = '0%';
+
+    // Все трибуны в тотальный лок
+    state.players.forEach((_, idx) => {
+      document.getElementById(`pod-${idx}`).classList.add('locked');
+    });
+
+    logMessage("Ведущий завершил матч! Подсчет финальных рейтингов...", "system");
+    
+    // Меняем кнопку в модалке, чтобы нельзя было просто продолжить игру
+    document.getElementById('lb-close-back-btn').textContent = "МАТЧ ОКОНЧЕН";
+    document.getElementById('lb-close-back-btn').setAttribute('onclick', 'location.reload()');
+    document.getElementById('lb-main-header-title').textContent = "ФИНАЛЬНЫЙ РЕЙТИНГ МАТЧА";
+  }
+
   const container = document.getElementById('lb-rows-container');
   container.innerHTML = '';
 
-  // Сортируем игроков по убыванию очков
   const sorted = [...state.players].sort((a, b) => b.score - a.score);
 
   sorted.forEach((p, idx) => {
@@ -904,13 +962,26 @@ function showFinalLeaderboard() {
     container.appendChild(r);
   });
 
+  // Вывод абсолютного победителя
+  const winnerZone = document.getElementById('lb-winner-announcement');
+  if (sorted.length > 0 && isRealEnd) {
+    winnerZone.textContent = `🏆 ЧЕМПИОН ШОУ: ${sorted[0].name} (${sorted[0].score} XP)`;
+  } else {
+    winnerZone.textContent = "";
+  }
+
   document.getElementById('leaderboard-overlay').classList.add('active');
 }
 
-function closeLeaderboard() { document.getElementById('leaderboard-overlay').classList.remove('active'); }
+function closeLeaderboard() {
+  if (state.gameStatus === "FINISHED") return;
+  document.getElementById('leaderboard-overlay').classList.remove('active');
+}
 
-// ГОРЯЧИЕ КЛАВИШИ ВЕДУЩЕГО
+// Горячие клавиши
 document.addEventListener('keydown', (e) => {
+  if (state.gameStatus !== "PLAYING") return;
+
   const gameActive = document.getElementById('game-screen').classList.contains('active');
   if (!gameActive) return;
 
@@ -929,13 +1000,13 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ГЕНЕРАТОР ЧАСТИЦ ФОНА
+// Генератор частиц
 function spawnParticles() {
   const container = document.getElementById('particles');
   const colors = ['#ffe600', '#ffffff', '#ffeb00', '#ccbc00'];
 
   setInterval(() => {
-    if (!state.isAnimationRunning) return;
+    if (state.gameStatus === "FINISHED") return;
     const p = document.createElement('div');
     p.className = 'particle';
     const size = Math.random() * 3 + 1;
@@ -944,7 +1015,7 @@ function spawnParticles() {
       height: ${size}px;
       left: ${Math.random() * 100}vw;
       background: ${colors[Math.floor(Math.random() * colors.length)]};
-      animation-duration: ${Math.random() * 4 + 4}s;
+      animation-duration: ${Math.random() * 5 + 4}s;
     `;
     container.appendChild(p);
     setTimeout(() => p.remove(), 8000);
