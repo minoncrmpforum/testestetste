@@ -2,45 +2,42 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GAME QUIZ SHOW</title>
-<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>THE QUIZ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #05060a;
-    --bg2: #0b0c10;
-    
-    /* СТИЛЬ LIQUID GLASS (ЖИДКОЕ ЖЁЛТОЕ СТЕКЛО) */
-    --panel: linear-gradient(135deg, rgba(255, 230, 0, 0.02) 0%, rgba(255, 230, 0, 0.05) 100%);
-    --panel-active: linear-gradient(135deg, rgba(255, 230, 0, 0.06) 0%, rgba(255, 230, 0, 0.12) 100%);
-    --border: rgba(255, 230, 0, 0.25);
+    --bg-dark: #06070d;
+    --bg-card: linear-gradient(180deg, rgba(20, 22, 37, 0.4) 0%, rgba(10, 11, 22, 0.6) 100%);
+    --border-color: rgba(255, 230, 0, 0.15);
     --border-glow: rgba(255, 230, 0, 0.4);
-    --glass-blur: blur(25px) saturate(200%);
-    --glass-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.60), inset 0 1px 3px rgba(255, 230, 0, 0.3);
-
-    --neon-cyan: #00f5ff;
-    --neon-pink: #ff006e;
-    --neon-yellow: #ffe600;
-    --neon-green: #39ff14;
-    --neon-purple: #bf5fff;
-    --text: #e8eeff;
-    --text-dim: #8b9bb4;
-    --gold: #ffd700;
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
+    
+    /* ЦВЕТА ИЗ МАКЕТА GLOWBYTE / НЕОН */
+    --accent: #ffe600;
+    --accent-dim: rgba(255, 230, 0, 0.1);
+    --cyan: #00f5ff;
+    --pink: #ff006e;
+    --green: #39ff14;
+    --text-main: #f3f5f9;
+    --text-muted: #7e8a9f;
+    
+    --blur-effect: blur(20px) saturate(160%);
+    --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 230, 0, 0.15);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Rajdhani', sans-serif; }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--bg-dark);
+    color: var(--text-main);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow-x: hidden;
     position: relative;
     background-image: 
-      radial-gradient(circle at 15% 25%, rgba(255, 230, 0, 0.06) 0%, transparent 45%),
-      radial-gradient(circle at 85% 75%, rgba(255, 230, 0, 0.03) 0%, transparent 45%);
+      radial-gradient(circle at 10% 15%, rgba(255, 230, 0, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(0, 245, 255, 0.02) 0%, transparent 40%);
   }
 
   #particles {
@@ -48,28 +45,29 @@
     top: 0; left: 0; width: 100vw; height: 100vh;
     pointer-events: none;
     z-index: 1;
+    opacity: 0.6;
   }
 
   .particle {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.4;
-    animation: float 7s linear infinite;
+    animation: floatUp 8s linear infinite;
   }
 
-  @keyframes float {
-    0% { transform: translateY(100vh) scale(0); opacity: 0; }
-    10% { opacity: 0.5; }
-    90% { opacity: 0.5; }
-    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+  @keyframes floatUp {
+    0% { transform: translateY(105vh) scale(0); opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
   }
 
-  .app-container {
+  .wrapper {
     position: relative;
     z-index: 2;
-    max-width: 1600px;
+    max-width: 1400px;
+    width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -79,947 +77,907 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 30px;
-    background: rgba(5, 6, 10, 0.5);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--border);
+    padding: 16px 24px;
+    background: rgba(6, 7, 13, 0.5);
+    backdrop-filter: var(--blur-effect);
+    -webkit-backdrop-filter: var(--blur-effect);
+    border: 1px solid var(--border-color);
     border-radius: 20px;
-    margin-bottom: 25px;
-    box-shadow: var(--glass-shadow);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-premium);
   }
 
-  .logo {
+  .mini-logo {
     font-family: 'Orbitron', sans-serif;
-    font-size: 26px;
     font-weight: 900;
-    background: linear-gradient(90deg, #fff, var(--neon-yellow));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 3px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255,230,0,0.3);
   }
 
-  .screen { display: none; flex-direction: column; gap: 20px; flex-grow: 1; }
+  .mini-logo span { color: var(--accent); }
+
+  .status-tag {
+    font-family: 'Share Tech Mono', sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    border-left: 2px solid var(--accent);
+    padding-left: 8px;
+  }
+
+  /* ТЕКУЩИЕ ЭКРАНЫ */
+  .screen { display: none; flex-direction: column; gap: 20px; flex-grow: 1; justify-content: center; }
   .screen.active { display: flex; }
 
-  /* ОБНОВЛЕННЫЕ ПАНЕЛИ LIQUID GLASS */
-  .panel {
-    background: var(--panel);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--border);
-    border-radius: 28px;
-    padding: 30px;
-    box-shadow: var(--glass-shadow);
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  .panel::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 100%;
-    background: linear-gradient(135deg, rgba(255,230,0,0.08) 0%, transparent 60%);
-    pointer-events: none;
+  /* ЖИДКОЕ СТЕКЛО (LIQUID GLASS БЛОКИ) */
+  .card-panel {
+    background: var(--bg-card);
+    backdrop-filter: var(--blur-effect);
+    -webkit-backdrop-filter: var(--blur-effect);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: var(--shadow-premium);
+    transition: border-color 0.4s, box-shadow 0.4s;
   }
 
-  .panel:hover {
+  .card-panel:hover {
     border-color: var(--border-glow);
-    box-shadow: 0 20px 45px 0 rgba(0, 0, 0, 0.7), inset 0 1px 4px rgba(255, 230, 0, 0.4);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.9), inset 0 1px 3px rgba(255,230,0,0.25);
   }
 
-  h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; font-weight: 700; }
-
-  .btn {
-    background: rgba(255, 230, 0, 0.08);
-    color: var(--text);
-    border: 1px solid var(--border);
+  /* СОВРЕМЕННЫЕ КНОПКИ ГЛОВБАЙТ СТИЛЬ */
+  .action-btn {
+    background: rgba(255, 230, 0, 0.06);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
     padding: 14px 28px;
     font-family: 'Orbitron', sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     border-radius: 14px;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    gap: 10px;
   }
 
-  .btn:hover:not(:disabled) {
-    background: var(--neon-yellow);
+  .action-btn:hover:not(:disabled) {
+    background: var(--accent);
     color: #000;
-    box-shadow: 0 0 20px rgba(255, 230, 0, 0.5);
+    box-shadow: 0 0 25px rgba(255, 230, 0, 0.45);
     transform: translateY(-2px);
   }
 
-  .btn:active:not(:disabled) { transform: translateY(1px); }
-  .btn:disabled { opacity: 0.2; cursor: not-allowed; }
-  .btn-pink:hover:not(:disabled) { background: var(--neon-pink); color: #fff; box-shadow: 0 0 20px rgba(255,0,110,0.5); }
-  .btn-cyan:hover:not(:disabled) { background: var(--neon-cyan); color: #000; box-shadow: 0 0 20px rgba(0,245,255,0.5); }
-  .btn-green:hover:not(:disabled) { background: var(--neon-green); color: #000; box-shadow: 0 0 20px rgba(57,255,20,0.5); }
+  .action-btn:disabled { opacity: 0.15; cursor: not-allowed; transform: none; }
+  .btn-pink:hover:not(:disabled) { background: var(--pink); color: #fff; box-shadow: 0 0 25px rgba(255,0,110,0.45); }
+  .btn-cyan:hover:not(:disabled) { background: var(--cyan); color: #000; box-shadow: 0 0 25px rgba(0,245,255,0.45); }
+  .btn-green:hover:not(:disabled) { background: var(--green); color: #000; box-shadow: 0 0 25px rgba(57,255,20,0.45); }
 
-  .setup-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-  
-  label {
-    font-family: 'Share Tech Mono', sans-serif;
-    color: var(--text-dim);
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  /* 1. ГЛАВНАЯ СТРАНИЦА ВХОДА */
+  .welcome-container {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
   }
 
-  input, select, textarea {
-    background: rgba(0,0,0,0.5);
-    border: 1px solid var(--border);
+  .main-title-brand {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 64px;
+    letter-spacing: 6px;
+    line-height: 1;
+    background: linear-gradient(180deg, #ffffff 30%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 20px rgba(255,230,0,0.2));
+  }
+
+  .welcome-buttons-row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .welcome-buttons-row .action-btn {
+    padding: 20px;
+    font-size: 16px;
+  }
+
+  /* ФОРМЫ */
+  .input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .input-block label {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  input, textarea {
+    background: rgba(6, 7, 13, 0.6);
+    border: 1px solid var(--border-color);
     padding: 14px;
     border-radius: 12px;
-    color: var(--text);
-    font-size: 16px;
-    transition: all 0.2s;
+    color: #fff;
+    font-size: 15px;
+    transition: all 0.25s;
+    width: 100%;
   }
 
-  input:focus, select:focus, textarea:focus {
+  input:focus, textarea:focus {
     outline: none;
-    border-color: var(--neon-yellow);
-    box-shadow: 0 0 15px rgba(255, 230, 0, 0.3);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(255, 230, 0, 0.25);
   }
 
-  .room-code-panel {
-    background: rgba(255, 230, 0, 0.05);
-    border: 1px dashed var(--neon-yellow);
-    padding: 15px;
+  .digit-code-box {
+    background: rgba(255, 230, 0, 0.04);
+    border: 1px dashed var(--accent);
     border-radius: 14px;
+    padding: 16px;
+    font-size: 28px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--accent);
     text-align: center;
     margin-bottom: 20px;
-    font-family: 'Orbitron', sans-serif;
   }
 
-  .player-input-row { display: flex; flex-direction: column; gap: 12px; }
-  .player-list-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-  
-  .player-badge {
-    background: var(--panel-active);
-    border: 1px solid var(--neon-yellow);
-    padding: 8px 16px;
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    font-weight: 600;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  }
-
-  .player-badge button {
-    background: none; border: none; color: var(--neon-pink);
-    cursor: pointer; font-weight: bold; font-size: 16px;
-  }
-
-  .questions-manager { display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 5px; }
-  .q-item {
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--border);
-    padding: 14px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-  }
-
-  .game-grid {
+  /* МАКЕТ ИГРЫ И АДМИНКИ */
+  .game-split-layout {
     display: grid;
     grid-template-columns: 1fr 340px;
     gap: 20px;
     flex-grow: 1;
   }
 
-  .main-stage { display: flex; flex-direction: column; gap: 20px; }
-  
-  .screen-display {
-    height: 400px;
+  .stage-area { display: flex; flex-direction: column; gap: 20px; }
+
+  .central-screen {
+    height: 380px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
-    border-color: var(--border);
-    background-size: cover;
-    background-position: center;
   }
 
-  .screen-display-overlay {
+  .screen-dimmer {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(to bottom, rgba(5,6,10,0.3), rgba(5,6,10,0.9));
+    background: linear-gradient(180deg, rgba(6,7,13,0.3) 0%, rgba(6,7,13,0.85) 100%);
     z-index: 1;
+    border-radius: 24px;
   }
 
-  .screen-content { position: relative; z-index: 2; width: 100%; padding: 40px; }
+  .screen-inner-content { position: relative; z-index: 2; padding: 30px; width: 100%; }
   
-  .display-title {
-    font-size: 22px;
-    color: var(--neon-yellow);
-    margin-bottom: 15px;
+  .q-badge {
     font-family: 'Share Tech Mono', sans-serif;
-    letter-spacing: 4px;
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
   }
 
-  .display-main { font-size: 34px; font-weight: 900; text-transform: uppercase; line-height: 1.2; letter-spacing: 1px; }
-  
-  .media-box {
+  .q-text-main { font-size: 30px; font-weight: 700; text-transform: uppercase; line-height: 1.2; }
+
+  .image-preview-container {
     margin-top: 20px;
-    max-width: 100%;
-    height: 200px;
+    height: 180px;
     border-radius: 16px;
-    border: 1px solid var(--border);
-    display: none;
+    border: 1px solid var(--border-color);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0,0,0,0.4);
+    display: none;
   }
 
-  .timer-bar {
-    position: absolute; bottom: 0; left: 0; height: 5px;
-    background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow));
-    width: 100%; transition: width 1s linear; z-index: 3;
+  .line-timer-visual {
+    position: absolute; bottom: 0; left: 0; height: 4px;
+    background: var(--accent); width: 100%;
+    transition: width 1s linear; z-index: 3;
+    border-radius: 0 0 24px 24px;
   }
 
-  .pods-container {
+  /* ТРИБУНЫ ИГРОКОВ */
+  .stands-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
   }
 
-  /* ЖИДКОЕ СТЕКЛО ТРИБУН */
-  .pod {
+  .stand-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 25px 20px;
+    padding: 20px;
     text-align: center;
-    border-color: var(--border);
-    background: var(--panel);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
   }
 
-  .pod.buzzed {
-    border-color: var(--neon-yellow);
-    background: var(--panel-active);
-    box-shadow: 0 0 35px rgba(255, 230, 0, 0.4), inset 0 0 20px rgba(255, 230, 0, 0.25);
-    transform: translateY(-8px);
+  .stand-card.is-active-buzz {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(255, 230, 0, 0.35), inset 0 0 15px rgba(255, 230, 0, 0.2);
+    transform: translateY(-4px);
   }
 
-  .pod.locked { opacity: 0.15; transform: scale(0.95); pointer-events: none; }
-  .pod-rank { font-family: 'Share Tech Mono', sans-serif; font-size: 14px; color: var(--text-dim); margin-bottom: 8px; }
-  
-  .pod-avatar {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: rgba(0,0,0,0.5);
-    border: 2px solid var(--border);
+  .stand-card.is-disabled-lock { opacity: 0.15; pointer-events: none; transform: scale(0.97); }
+
+  .stand-avatar {
+    width: 70px; height: 70px; border-radius: 50%;
+    background: rgba(6,7,13,0.6);
+    border: 1px solid var(--border-color);
     display: flex; align-items: center; justify-content: center;
-    font-size: 32px; margin-bottom: 15px; position: relative;
+    font-size: 26px; margin-bottom: 12px; position: relative;
   }
 
-  .pod.buzzed .pod-avatar { border-color: var(--neon-yellow); background: rgba(255,230,0,0.15); }
-  
-  .pod-buzz-order {
-    position: absolute; top: -5px; right: -5px;
-    background: var(--neon-yellow); color: #000;
-    width: 26px; height: 26px; border-radius: 50%;
-    font-size: 15px; font-weight: 900;
+  .stand-card.is-active-buzz .stand-avatar { border-color: var(--accent); background: rgba(255,230,0,0.1); }
+
+  .stand-click-num {
+    position: absolute; top: -4px; right: -4px;
+    background: var(--accent); color: #000;
+    width: 22px; height: 22px; border-radius: 50%;
+    font-size: 13px; font-weight: 900;
     display: none; align-items: center; justify-content: center;
-    box-shadow: 0 0 10px var(--neon-yellow);
   }
 
-  .pod.buzzed .pod-buzz-order { display: flex; }
-  .pod-name { font-size: 22px; font-weight: 700; margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .stand-card.is-active-buzz .stand-click-num { display: flex; }
+  .stand-user-name { font-size: 18px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; }
   
-  .pod-score {
-    font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900;
-    color: var(--neon-cyan); background: rgba(0,0,0,0.4);
-    padding: 6px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);
+  .stand-score-val {
+    font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 700;
+    color: var(--cyan); background: rgba(0,0,0,0.3);
+    padding: 4px 14px; border-radius: 10px;
   }
 
-  .pod.buzzed .pod-score { color: var(--neon-yellow); text-shadow: 0 0 10px rgba(255,230,0,0.3); }
-
-  .control-panel { display: flex; flex-direction: column; gap: 15px; }
-  .panel-title { font-size: 16px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 5px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-  .host-controls { display: flex; flex-direction: column; gap: 10px; }
+  /* ПУЛЬТ ВЕДУЩЕГО */
+  .sidebar-controls { display: flex; flex-direction: column; gap: 16px; }
   
-  .scoring-zone {
-    background: rgba(0,0,0,0.4);
-    border-radius: 16px; padding: 18px;
-    border: 1px solid rgba(255,230,0,0.1);
-    display: flex; flex-direction: column; gap: 12px;
+  .host-action-stack { display: flex; flex-direction: column; gap: 10px; }
+
+  .scoring-sub-box {
+    background: rgba(6,7,13,0.4); border-radius: 16px;
+    padding: 16px; border: 1px solid var(--border-color);
+    display: flex; flex-direction: column; gap: 10px;
   }
 
-  .scoring-target { font-size: 14px; text-transform: uppercase; color: var(--text-dim); text-align: center; }
-  .scoring-target span { color: var(--neon-yellow); font-weight: bold; font-family: 'Orbitron', sans-serif; }
-  .scoring-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  
-  .judge-btn { opacity: 0.2; pointer-events: none; }
-  .judge-btn.active { opacity: 1; pointer-events: auto; }
+  .scoring-sub-box h5 { font-size: 11px; text-transform: uppercase; color: var(--text-muted); text-align: center; letter-spacing: 1px; }
 
-  .game-log {
-    flex-grow: 1; max-height: 220px; overflow-y: auto;
-    font-family: 'Share Tech Mono', sans-serif; font-size: 13px;
-    color: var(--text-dim); display: flex; flex-direction: column; gap: 6px;
-    padding-right: 5px;
+  .scoring-btns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .feed-log-terminal {
+    flex-grow: 1; max-height: 200px; overflow-y: auto;
+    font-family: 'Share Tech Mono', sans-serif; font-size: 12px;
+    color: var(--text-muted); display: flex; flex-direction: column; gap: 6px;
   }
 
-  .log-msg { border-left: 2px solid var(--border); padding-left: 8px; }
-  .log-msg.system { border-color: var(--neon-purple); color: #cfa3ff; }
-  .log-msg.buzz { border-color: var(--neon-yellow); color: #fff59e; }
-  .log-msg.point { border-color: var(--neon-green); color: #a3ffa8; }
-  .log-msg.fail { border-color: var(--neon-pink); color: #ffa3b1; }
+  .feed-row { padding-left: 8px; border-left: 2px solid rgba(255,255,255,0.1); }
+  .feed-row.sys { border-color: var(--cyan); color: #b3f7ff; }
+  .feed-row.bz { border-color: var(--accent); color: #fff5b3; }
+  .feed-row.ok { border-color: var(--green); color: #b3ffb6; }
+  .feed-row.err { border-color: var(--pink); color: #ffb3c1; }
 
-  .leaderboard-overlay {
+  /* ЛОББИ ОЖИДАНИЯ ДЛЯ ИГРОКА */
+  .lobby-grid-view {
+    display: flex; flex-direction: column; gap: 20px; max-width: 600px; width: 100%; margin: 0 auto; text-align: center;
+  }
+
+  .connected-list-wrap {
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0;
+  }
+
+  /* МОДАЛКА ЛИДЕРБОРДА */
+  .modal-overlay-fullscreen {
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(5,6,10,0.92); backdrop-filter: blur(15px);
+    background: rgba(6,7,13,0.95); backdrop-filter: blur(15px);
     z-index: 100; display: none; justify-content: center; align-items: center;
   }
 
-  .leaderboard-overlay.active { display: flex; }
-  .lb-panel { width: 550px; max-width: 90%; text-align: center; animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .modal-overlay-fullscreen.active { display: flex; }
   
-  @keyframes zoomIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-  }
+  .lb-modal-window { width: 500px; max-width: 95%; text-align: center; }
 
-  .lb-title { font-size: 34px; color: var(--neon-yellow); margin-bottom: 25px; letter-spacing: 3px; text-transform: uppercase; }
-  .lb-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 25px; }
-  
-  .lb-row {
+  .lb-list-rows { display: flex; flex-direction: column; gap: 10px; margin: 20px 0; }
+
+  .lb-single-row {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 22px; background: rgba(255,230,0,0.03);
-    border: 1px solid var(--border); border-radius: 16px;
+    padding: 14px 20px; background: rgba(255,230,0,0.02);
+    border: 1px solid var(--border-color); border-radius: 14px;
   }
 
-  .lb-row.rank-1 { border-color: var(--gold); background: rgba(255, 215, 0, 0.07); box-shadow: 0 0 15px rgba(255,215,0,0.1); }
-  .lb-row.rank-1 .lb-num { color: var(--gold); font-size: 22px; }
-  .lb-row.rank-2 { border-color: var(--silver); background: rgba(192, 192, 192, 0.05); }
-  .lb-row.rank-2 .lb-num { color: var(--silver); }
-  .lb-row.rank-3 { border-color: var(--bronze); background: rgba(205, 127, 50, 0.05); }
-  .lb-row.rank-3 .lb-num { color: var(--bronze); }
-  
-  .lb-left { display: flex; align-items: center; gap: 15px; }
-  .lb-num { font-family: 'Share Tech Mono', sans-serif; font-weight: bold; font-size: 18px; width: 24px; text-align: left; }
-  .lb-name { font-size: 19px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-  .lb-score { font-family: 'Orbitron', sans-serif; font-size: 19px; font-weight: 900; color: var(--neon-cyan); }
-  .lb-row.rank-1 .lb-score { color: var(--neon-yellow); }
+  /* АДАПТИВНОСТЬ ПОД ТЕЛЕФОНЫ */
+  @media (max-width: 900px) {
+    .game-split-layout { grid-template-columns: 1fr; }
+    .main-title-brand { font-size: 42px; letter-spacing: 4px; }
+    .central-screen { height: 280px; }
+    .q-text-main { font-size: 22px; }
+    .image-preview-container { height: 140px; }
+    header { padding: 12px 16px; margin-bottom: 15px; }
+  }
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--neon-yellow); }
+  /* Скроллбары */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 2px; }
 </style>
 </head>
 <body>
 
 <div id="particles"></div>
 
-<div class="app-container">
+<div class="wrapper">
+  
   <header>
-    <div class="logo">GAME QUIZ SHOW</div>
-    <div id="header-status" style="font-family: 'Share Tech Mono', sans-serif; color: var(--text-dim); text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">SETUP PHASE</div>
+    <div class="mini-logo">THE <span>QUIZ</span></div>
+    <div id="status-indicator-tag" class="status-tag">MAIN MENU</div>
   </header>
 
-  <div id="setup-screen" class="screen active">
-    <div class="setup-layout">
-      
-      <div class="panel">
-        <h3>ПОДКЛЮЧЕНИЕ ТРИБУН ИГРОКОВ</h3>
-        <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 20px;">Введите ник и секретный код, чтобы занять трибуну</p>
-        
-        <div class="room-code-panel">
-          <span style="color: var(--text-dim); font-size: 12px; text-transform: uppercase; display: block; margin-bottom: 4px;">Код вашей комнаты:</span>
-          <strong id="generated-room-code" style="color: var(--neon-yellow); font-size: 24px; letter-spacing: 2px;">ROOM-CODE</strong>
-        </div>
-
-        <div class="player-input-row">
-          <div class="form-group" style="margin-bottom: 0;">
-            <label>Ваш игровой ник</label>
-            <input type="text" id="player-name-input" placeholder="Например: NEO_KNIGHT" autocomplete="off">
-          </div>
-          <div class="form-group">
-            <label>Введите код комнаты</label>
-            <input type="text" id="player-code-input" placeholder="ROOM-XXX" autocomplete="off">
-          </div>
-          <button class="btn btn-cyan" onclick="connectPlayerWithCode()">ЗАЙТИ НА ТРИБУНУ</button>
-        </div>
-
-        <div class="form-group" style="margin-top: 25px;">
-          <label>Активные игроки на трибунах (<span id="player-count">0</span>)</label>
-          <div id="player-list-preview" class="player-list-preview"></div>
-        </div>
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-container">
+      <h1 class="main-title-brand">THE QUIZ</h1>
+      <div class="welcome-buttons-row">
+        <button class="action-btn btn-cyan" onclick="switchRoute('screen-join-form', 'CONNECT TO ROOM')">ПОДКЛЮЧИТЬСЯ</button>
+        <button class="action-btn" onclick="initHostCreationMode()">СОЗДАТЬ ИГРУ</button>
       </div>
-
-      <div class="panel">
-        <h3>БАЗА ВОПРОСОВ И ЛОКАЦИЙ</h3>
-        <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 20px;">Управляйте карточками игровых заданий</p>
-        
-        <div class="questions-manager" id="questions-manager-list"></div>
-        
-        <div style="margin-top: 15px; display: flex; gap: 10px;">
-          <button class="btn" style="flex-grow: 1;" onclick="openQuestionModal()">+ ДОБАВИТЬ ВОПРОС</button>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="panel" style="text-align: center; padding: 30px;">
-      <button class="btn btn-green" id="start-game-btn" style="font-size: 18px; padding: 15px 40px;" onclick="startGame()">ЗАПУСТИТЬ ШОУ С ВЕДУЩИМ</button>
     </div>
   </div>
 
-  <div id="game-screen" class="screen">
-    <div class="game-grid">
+  <div id="screen-join-form" class="screen">
+    <div class="welcome-container card-panel">
+      <h3 style="font-family: 'Orbitron'; letter-spacing: 1px;">ВХОД НА ТРИБУНУ</h3>
+      <div style="margin-top: 15px;">
+        <div class="input-block">
+          <label>Ваш никнейм</label>
+          <input type="text" id="join-name-field" placeholder="Например: CYBER_HERO" autocomplete="off">
+        </div>
+        <div class="input-block">
+          <label>Код комнаты (6 цифр)</label>
+          <input type="text" id="join-code-field" placeholder="000000" maxlength="6" autocomplete="off">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+          <button class="action-btn btn-cyan" style="flex-grow: 1;" onclick="processPlayerJoin()">ВОЙТИ</button>
+          <button class="action-btn btn-pink" onclick="switchRoute('screen-welcome', 'MAIN MENU')">НАЗАД</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screen-lobby-wait" class="screen">
+    <div class="lobby-grid-view card-panel">
+      <div class="q-badge">КОМНАТА ЗАРЕГИСТРИРОВАНА</div>
+      <h2 style="font-family: 'Orbitron';" id="lobby-display-code">CODE: 000000</h2>
+      <p style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">Вы успешно заняли слот трибуны. Ожидайте, пока создатель запустит первый раунд.</p>
       
-      <div class="main-stage">
+      <div class="connected-list-wrap" id="lobby-players-list"></div>
+      
+      <button class="action-btn btn-pink" style="margin-top: 20px;" onclick="exitToMainMenu()">ПОКИНУТЬ ЛОББИ</button>
+    </div>
+  </div>
+
+  <div id="screen-host-setup" class="screen">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+      
+      <div class="card-panel">
+        <h3 style="font-family: 'Orbitron'; margin-bottom: 15px;">НАСТРОЙКИ СЕЙФА</h3>
+        <label style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 6px;">Код для отправки остальным участникам:</label>
+        <div class="digit-code-box" id="host-generated-code-box">000000</div>
         
-        <div class="panel screen-display" id="main-display">
-          <div class="screen-display-overlay"></div>
-          <div class="screen-content">
-            <div class="display-title" id="display-q-type">ИНФОРМАЦИОННОЕ ТАБЛО</div>
-            <div class="display-main" id="display-q-text">ГОТОВНОСТЬ К НАЧАЛУ</div>
-            <div class="media-box" id="display-media"></div>
-          </div>
-          <div class="timer-bar" id="timer-bar"></div>
+        <div class="input-block">
+          <label>Игроки на линиях связи (<span id="host-setup-count">0</span>)</label>
+          <div id="host-preview-badges" class="connected-list-wrap" style="justify-content: flex-start; margin: 5px 0;"></div>
         </div>
 
-        <div class="pods-container" id="pods-container"></div>
+        <button class="action-btn btn-green" id="btn-master-start" style="width: 100%; margin-top: 15px;" onclick="launchLiveMatch()">НАЧАТЬ МАТЧ</button>
+        <button class="action-btn btn-pink" style="width: 100%; margin-top: 10px; font-size: 11px;" onclick="exitToMainMenu()">ОТМЕНА</button>
       </div>
 
-      <div class="panel control-panel" id="host-control-panel-block">
-        <div class="panel-title">ИНТЕРФЕЙС ВЕДУЩЕГО</div>
-        
-        <div class="host-controls">
-          <button class="btn btn-cyan" id="publish-q-btn" onclick="publishQuestion()">ОБЪЯВИТЬ ВОПРОС (Space)</button>
-          <button class="btn btn-pink" id="start-timer-btn" onclick="startTimer()" disabled>ВКЛЮЧИТЬ ТАЙМЕР</button>
-          <button class="btn" id="reset-buzz-btn" onclick="resetBuzz()">СБРОС КНОПОК (R)</button>
-        </div>
-
-        <div class="scoring-zone">
-          <div class="scoring-target">НАЧИСЛЕНИЕ ДЛЯ: <span id="target-player-name">---</span></div>
-          <div class="scoring-row">
-            <button class="btn btn-green judge-btn" id="score-plus-btn" onclick="scoreTarget(true)">ВЕРНО</button>
-            <button class="btn btn-pink judge-btn" id="score-minus-btn" onclick="scoreTarget(false)">НЕВЕРНО</button>
-          </div>
-        </div>
-
-        <div class="panel-title" style="margin-top: 10px;">ЖУРНАЛ СОБЫТИЙ</div>
-        <div class="game-log" id="game-log">
-          <div class="log-msg system">Система инициализирована. Ожидание команд ведущего...</div>
-        </div>
-
-        <button class="btn btn-pink" id="end-match-main-btn" style="margin-top: auto; font-weight: 900;" onclick="showFinalLeaderboard(true)">ЗАВЕРШИТЬ МАТЧ</button>
+      <div class="card-panel">
+        <h3 style="font-family: 'Orbitron'; margin-bottom: 15px;">КАРТОЧКИ ВОПРОСОВ</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding-right: 4px;" id="host-questions-pool"></div>
+        <button class="action-btn" style="width: 100%; margin-top: 15px;" onclick="triggerModalQ(true)">+ СОЗДАТЬ КАРТОЧКУ</button>
       </div>
 
     </div>
   </div>
+
+  <div id="screen-match-arena" class="screen">
+    <div class="game-split-layout">
+      
+      <div class="stage-area">
+        <div class="card-panel central-screen" id="arena-main-screen">
+          <div class="screen-dimmer"></div>
+          <div class="screen-inner-content">
+            <div class="q-badge" id="arena-q-category">СИСТЕМА ГОТОВА</div>
+            <div class="q-text-main" id="arena-q-text">Ожидайте публикации раунда ведущим</div>
+            <div class="image-preview-container" id="arena-media-frame"></div>
+          </div>
+          <div class="line-timer-visual" id="arena-timer-bar"></div>
+        </div>
+
+        <div class="stands-grid" id="arena-stands-container"></div>
+      </div>
+
+      <div class="card-panel sidebar-controls">
+        <div class="status-tag" style="border-color: var(--accent); color: #fff;">ИНТЕРФЕЙС УПРАВЛЕНИЯ</div>
+        
+        <div class="host-action-stack">
+          <button class="action-btn btn-cyan" id="ctrl-pub-btn" onclick="triggerNextQuestion()">ВЫВЕСТИ ВОПРОС (Space)</button>
+          <button class="action-btn btn-pink" id="ctrl-time-btn" onclick="triggerCountdownTimer()" disabled>ВКЛЮЧИТЬ ТАЙМЕР</button>
+          <button class="action-btn" id="ctrl-clear-btn" onclick="clearBuzzState()">СБРОС КНОПОК (R)</button>
+        </div>
+
+        <div class="scoring-sub-box">
+          <h5>Оценка ответа участника: <span id="current-target-name" style="color: var(--accent);">---</span></h5>
+          <div class="scoring-btns-grid">
+            <button class="action-btn btn-green judge-btn" id="j-ok-btn" onclick="submitVerdict(true)">ВЕРНО</button>
+            <button class="action-btn btn-pink " id="j-err-btn" onclick="submitVerdict(false)">НЕВЕРНО</button>
+          </div>
+        </div>
+
+        <div class="status-tag">ЛОГ ТЕРМИНАЛА</div>
+        <div class="feed-log-terminal" id="arena-terminal-logs"></div>
+
+        <button class="action-btn btn-pink" style="font-weight: 900; font-size: 11px; margin-top: auto;" onclick="terminateMatchSession()">ЗАВЕРШИТЬ МАТЧ</button>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
-<div id="q-modal" class="leaderboard-overlay">
-  <div class="panel lb-panel" style="text-align: left;">
-    <h3 style="margin-bottom: 20px; color: var(--neon-yellow);">НОВАЯ КАРТОЧКА ВОПРОСА</h3>
-    
-    <div class="form-group">
-      <label>Тип вопроса / Категория</label>
-      <input type="text" id="modal-q-type" placeholder="Например: ОТКУДА ЭТОТ ТРЕК? или ГДЕ ЭТА ЛОКАЦИЯ?">
-    </div>
-
-    <div class="form-group">
-      <label>Текст вопроса для вывода на главный экран</label>
-      <textarea id="modal-q-text" rows="3" placeholder="Что нужно угадать игрокам на трибунах?"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Прямая ссылка на картинку (URL)</label>
-      <input type="text" id="modal-q-media" placeholder="https://site.com/image.jpg">
-    </div>
-
-    <div class="form-group">
-      <label>Правильный ответ (Видит только ведущий на пульте)</label>
-      <input type="text" id="modal-q-answer" placeholder="Правильный ответ для проверки">
-    </div>
-
+<div id="modal-question-creator" class="modal-overlay-fullscreen">
+  <div class="card-panel lb-modal-window" style="text-align: left;">
+    <h3 style="font-family: 'Orbitron'; margin-bottom: 20px; color: var(--accent);">НОВАЯ КАРТОЧКА</h3>
+    <div class="input-block"><label>Категория</label><input type="text" id="mq-cat" placeholder="Например: КИНО"></div>
+    <div class="input-block"><label>Текст вопроса</label><textarea id="mq-text" rows="2" placeholder="Что должны угадать?"></textarea></div>
+    <div class="input-block"><label>Ссылка на изображение (Необязательно)</label><input type="text" id="mq-url" placeholder="https://..."></div>
+    <div class="input-block"><label>Правильный ответ</label><input type="text" id="mq-ans" placeholder="Ответ"></div>
     <div style="display: flex; gap: 10px; margin-top: 20px;">
-      <button class="btn btn-green" style="flex-grow: 1;" onclick="saveNewQuestion()">СОХРАНИТЬ</button>
-      <button class="btn btn-pink" onclick="closeQuestionModal()">ОТМЕНА</button>
+      <button class="action-btn btn-green" style="flex-grow: 1;" onclick="saveCreatedQuestion()">ДОБАВИТЬ</button>
+      <button class="action-btn" onclick="triggerModalQ(false)">ОТМЕНА</button>
     </div>
   </div>
 </div>
 
-<div id="leaderboard-overlay" class="leaderboard-overlay">
-  <div class="panel lb-panel">
-    <h2 class="lb-title" id="lb-main-header-title">ИТОГИ СОРЕВНОВАНИЯ</h2>
-    <div class="lb-rows" id="lb-rows-container"></div>
-    <div id="lb-winner-announcement" style="font-size: 20px; font-weight: 700; color: var(--neon-green); margin-bottom: 25px; text-transform: uppercase; font-family: 'Orbitron';"></div>
-    <button class="btn btn-cyan" id="lb-close-back-btn" style="padding: 12px 30px;" onclick="closeLeaderboard()">ВЕРНУТЬСЯ В ИГРУ</button>
+<div id="modal-leaderboard-view" class="modal-overlay-fullscreen">
+  <div class="card-panel lb-modal-window">
+    <h2 class="main-title-brand" style="font-size: 32px; margin-bottom: 10px;">РЕЗУЛЬТАТЫ</h2>
+    <div class="lb-list-rows" id="lb-modal-rows"></div>
+    <div id="lb-winner-banner" style="font-family: 'Orbitron'; font-size: 18px; color: var(--green); margin-bottom: 20px; font-weight: 700;"></div>
+    <button class="action-btn btn-cyan" style="width: 100%;" onclick="exitToMainMenu()">ВЕРНУТЬСЯ В ГЛАВНОЕ МЕНЮ</button>
   </div>
 </div>
 
 <script>
-// Глобальное состояние игры (Боты удалены, игроки пустые)
+// ГЛОБАЛЬНЫЙ МЕНЕДЖЕР ИГРЫ
 const state = {
-  roomCode: "",
+  currentRoom: "",
+  role: "", // HOST или PLAYER
+  myNickname: "",
   players: [],
   questions: [
-    { 
-      type: "ГДЕ БЫЛА ЭТА ЛОКАЦИЯ?", 
-      text: "Из какой игры эта легендарная таверна, где играет уютная музыка?", 
-      media: "https://i.imgur.com/eP6PZ1M.jpeg", 
-      answer: "Skyrim" 
-    },
-    { 
-      type: "ОТКУДА ЭТОТ ТРЕК / ИГРА?", 
-      text: "Какая пиксельная игра встречает нас этим футуристичным дизайном главного меню?", 
-      media: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=cover", 
-      answer: "Cyberpunk 2077 / Ретровейв игра" 
-    }
+    { type: "ЛОКАЦИЯ", text: "Из какой игры эта легендарная таверна, где играет уютная музыка?", media: "https://i.imgur.com/eP6PZ1M.jpeg", answer: "Skyrim" },
+    { type: "КИБЕРПАНК", text: "Какая ретровейв игра встречает нас этим футуристичным дизайном главного меню?", media: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=cover", answer: "Cyberpunk 2077" }
   ],
-  currentQuestionIdx: -1,
-  buzzQueue: [],
-  isQuestionPublished: false,
+  activeQIdx: -1,
+  buzzList: [],
+  isQuestionLive: false,
   isTimerRunning: false,
-  timerDuration: 30,
-  timerSecondsLeft: 30,
-  timerIntervalId: null,
-  isAnimationRunning: true,
-  gameStatus: "SETUP" // SETUP, PLAYING, FINISHED
+  secondsLeft: 30,
+  timerId: null
 };
 
-const avatars = ["👾", "🕹️", "🤖", "🎮", "🛸", "⚔️", "💎", "🏴‍☠️"];
-
+// Запуск при коннекте страницы
 window.addEventListener('DOMContentLoaded', () => {
-  generateRoomCode();
-  spawnParticles();
-  renderSetupPlayers();
-  renderSetupQuestions();
+  generateStarsBackground();
 });
 
-// Генерация кода комнаты для входа трибун
-function generateRoomCode() {
-  const num = Math.floor(100 + Math.random() * 900);
-  state.roomCode = `ROOM-${num}`;
-  document.getElementById('generated-room-code').textContent = state.roomCode;
+// Навигация между экранами
+function switchRoute(screenId, statusText) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  document.getElementById('status-indicator-tag').textContent = statusText;
 }
 
-// Вход по нику и коду
-function connectPlayerWithCode() {
-  const nameInput = document.getElementById('player-name-input');
-  const codeInput = document.getElementById('player-code-input');
+// Переход создателя
+function initHostCreationMode() {
+  state.role = "HOST";
+  const num = Math.floor(100000 + Math.random() * 900000);
+  state.currentRoom = String(num);
+  document.getElementById('host-generated-code-box').textContent = state.currentRoom;
   
-  const name = nameInput.value.trim().toUpperCase();
-  const code = codeInput.value.trim().toUpperCase();
-
-  if (!name) { alert('Введите имя игрока!'); return; }
-  if (code !== state.roomCode) { alert('Неверный код комнаты! Проверьте табло.'); return; }
-
-  if (state.players.some(p => p.name === name)) {
-    alert('Этот ник уже занят на одной из трибун!');
-    return;
-  }
-
-  const avatar = avatars[state.players.length % avatars.length];
-  state.players.push({ name, score: 0, avatar });
-  
-  nameInput.value = '';
-  codeInput.value = '';
-  renderSetupPlayers();
+  syncHostPlayersList();
+  syncHostQuestionsView();
+  switchRoute('screen-host-setup', 'ROOM MANAGEMENT');
 }
 
-function renderSetupPlayers() {
-  document.getElementById('player-count').textContent = state.players.length;
-  const container = document.getElementById('player-list-preview');
+// Логика добавления игроков (Имитация подключения по коду)
+function processPlayerJoin() {
+  const name = document.getElementById('join-name-field').value.trim().toUpperCase();
+  const code = document.getElementById('join-code-field').value.trim();
+
+  if(!name) { alert('Введите ваш игровой ник!'); return; }
+  if(code.length !== 6) { alert('Код комнаты должен состоять из 6 цифр!'); return; }
+
+  state.role = "PLAYER";
+  state.myNickname = name;
+  state.currentRoom = code;
+
+  // Генерируем состав лобби (себя + случайных оппонентов для имитации сетевой комнаты)
+  state.players = [
+    { name: state.myNickname, score: 0, avatar: "👾" },
+    { name: "NET_RUNNER", score: 0, avatar: "🤖" },
+    { name: "GLOW_PRO", score: 0, avatar: "🕹️" }
+  ];
+
+  document.getElementById('lobby-display-code').textContent = `CODE: ${state.currentRoom}`;
+  const container = document.getElementById('lobby-players-list');
   container.innerHTML = '';
-  
-  state.players.forEach((p, idx) => {
+  state.players.forEach(p => {
     const b = document.createElement('div');
-    b.className = 'player-badge';
-    b.innerHTML = `<span>${p.avatar} ${p.name}</span><button onclick="removePlayer(${idx})">&times;</button>`;
+    b.className = 'stand-avatar';
+    b.style.width = '60px'; b.style.height = '60px'; b.style.fontSize = '20px';
+    b.title = p.name;
+    b.innerHTML = p.avatar;
     container.appendChild(b);
   });
 
-  document.getElementById('start-game-btn').disabled = state.players.length === 0;
+  switchRoute('screen-lobby-wait', `WAITING FOR START IN ${state.currentRoom}`);
+  
+  // Имитируем автостарт для игрока через 4 секунды ожидания в лобби
+  setTimeout(() => {
+    if(state.role === "PLAYER" && document.getElementById('screen-lobby-wait').classList.contains('active')) {
+      launchLiveMatch();
+    }
+  }, 4000);
 }
 
-function removePlayer(idx) {
-  state.players.splice(idx, 1);
-  renderSetupPlayers();
+// Синхронизация списков в админке
+function syncHostPlayersList() {
+  // Если создатель один, закинем ботов для теста кликов кнопками
+  if(state.players.length === 0) {
+    state.players = [
+      { name: "PLAYER_ONE", score: 0, avatar: "🕹️" },
+      { name: "ALPHA_TEST", score: 0, avatar: "🛸" },
+      { name: "X_GAMER", score: 0, avatar: "⚔️" }
+    ];
+  }
+  document.getElementById('host-setup-count').textContent = state.players.length;
+  const wrap = document.getElementById('host-preview-badges');
+  wrap.innerHTML = '';
+  state.players.forEach(p => {
+    const badge = document.createElement('div');
+    badge.className = 'stand-avatar';
+    badge.style.width = '45px'; badge.style.height = '45px'; badge.style.fontSize = '16px';
+    badge.innerHTML = p.avatar;
+    badge.title = p.name;
+    wrap.appendChild(badge);
+  });
 }
 
-function renderSetupQuestions() {
-  const container = document.getElementById('questions-manager-list');
-  container.innerHTML = '';
-
-  state.questions.forEach((q, idx) => {
+function syncHostQuestionsView() {
+  const pool = document.getElementById('host-questions-pool');
+  pool.innerHTML = '';
+  state.questions.forEach((q, i) => {
     const item = document.createElement('div');
-    item.className = 'q-item';
+    item.style.cssText = "background:rgba(0,0,0,0.2); border:1px solid var(--border-color); padding:10px 14px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; font-size:13px;";
     item.innerHTML = `
-      <div>
-        <strong style="color: var(--neon-yellow)">[${q.type}]</strong> ${q.text.substring(0, 45)}...
-      </div>
-      <button class="btn btn-pink" style="padding: 4px 10px; font-size: 11px;" onclick="removeQuestion(${idx})">Удалить</button>
+      <div><span style="color:var(--accent)">[${q.type}]</span> ${q.text.substring(0,30)}...</div>
+      <button class="action-btn btn-pink" style="padding:4px 8px; font-size:10px; radius:6px;" onclick="deleteQuestionItem(${i})">&times;</button>
     `;
-    container.appendChild(item);
+    pool.appendChild(item);
   });
 }
 
-function removeQuestion(idx) {
+function deleteQuestionItem(idx) {
   state.questions.splice(idx, 1);
-  renderSetupQuestions();
+  syncHostQuestionsView();
 }
 
-function openQuestionModal() { document.getElementById('q-modal').style.display = 'flex'; }
-function closeQuestionModal() { document.getElementById('q-modal').style.display = 'none'; clearModalInputs(); }
+function triggerModalQ(show) { document.getElementById('modal-question-creator').style.display = show ? 'flex' : 'none'; }
 
-function clearModalInputs() {
-  document.getElementById('modal-q-type').value = '';
-  document.getElementById('modal-q-text').value = '';
-  document.getElementById('modal-q-media').value = '';
-  document.getElementById('modal-q-answer').value = '';
-}
+function saveCreatedQuestion() {
+  const type = document.getElementById('mq-cat').value.trim() || "ВОПРОС";
+  const text = document.getElementById('mq-text').value.trim();
+  const media = document.getElementById('mq-url').value.trim();
+  const answer = document.getElementById('mq-ans').value.trim() || "Да";
 
-function saveNewQuestion() {
-  const type = document.getElementById('modal-q-type').value.trim() || "ВОПРОС";
-  const text = document.getElementById('modal-q-text').value.trim();
-  const media = document.getElementById('modal-q-media').value.trim();
-  const answer = document.getElementById('modal-q-answer').value.trim() || "Не указан";
-
-  if (!text) { alert('Напишите текст вопроса!'); return; }
-
+  if(!text) return;
   state.questions.push({ type, text, media, answer });
-  renderSetupQuestions();
-  closeQuestionModal();
+  syncHostQuestionsView();
+  triggerModalQ(false);
+  document.getElementById('mq-cat').value = '';
+  document.getElementById('mq-text').value = '';
+  document.getElementById('mq-url').value = '';
+  document.getElementById('mq-ans').value = '';
 }
 
-function startGame() {
-  if (state.players.length === 0) return;
-  state.gameStatus = "PLAYING";
-  document.getElementById('setup-screen').classList.remove('active');
-  document.getElementById('game-screen').classList.add('active');
-  document.getElementById('header-status').textContent = "LIVE SHOW IN PROGRESS";
-  
-  buildPlayerPods();
-  logMessage("Шоу началось! Ведущий готов выводить карточки заданий.", "system");
+// Запуск игрового раунда
+function launchLiveMatch() {
+  switchRoute('screen-match-arena', `LIVE MATCH // ROOM ${state.currentRoom}`);
+  buildMatchStands();
+  writeLog("Матч запущен. Ожидание вывода карточки вопроса.", "sys");
 }
 
-function buildPlayerPods() {
-  const container = document.getElementById('pods-container');
+function buildMatchStands() {
+  const container = document.getElementById('arena-stands-container');
   container.innerHTML = '';
-
   state.players.forEach((p, idx) => {
-    const pod = document.createElement('div');
-    pod.className = 'panel pod';
-    pod.id = `pod-${idx}`;
-    pod.setAttribute('onclick', `playerBuzz(${idx})`);
-    pod.innerHTML = `
-      <div class="pod-rank" id="pod-rank-${idx}">STAND ${idx + 1}</div>
-      <div class="pod-avatar">
+    const card = document.createElement('div');
+    card.className = 'card-panel stand-card';
+    card.id = `stand-node-${idx}`;
+    card.setAttribute('onclick', `registerUserBuzz(${idx})`);
+    card.innerHTML = `
+      <div class="stand-avatar">
         ${p.avatar}
-        <div class="pod-buzz-order" id="pod-order-${idx}">1</div>
+        <div class="stand-click-num" id="stand-order-label-${idx}">1</div>
       </div>
-      <div class="pod-name">${p.name}</div>
-      <div class="pod-score" id="pod-score-display-${idx}">${p.score} XP</div>
+      <div class="stand-user-name">${p.name}</div>
+      <div class="stand-score-val" id="stand-score-label-${idx}">${p.score} XP</div>
     `;
-    container.appendChild(pod);
+    container.appendChild(card);
   });
 }
 
-function publishQuestion() {
-  if (state.gameStatus !== "PLAYING") return;
-  if (state.questions.length === 0) {
-    alert('База вопросов пуста!');
-    return;
-  }
+// ЛОГИКА ВЕДУЩЕГО И ТРИБУН
+function triggerNextQuestion() {
+  if(state.questions.length === 0) return;
+  clearBuzzState();
+  clearInterval(state.timerId);
+  state.isTimerRunning = false;
 
-  resetBuzz();
-  clearInterval(state.timerIntervalId);
-  
-  state.currentQuestionIdx++;
-  if (state.currentQuestionIdx >= state.questions.length) {
-    state.currentQuestionIdx = 0;
-  }
+  state.activeQIdx = (state.activeQIdx + 1) % state.questions.length;
+  const q = state.questions[state.activeQIdx];
 
-  const q = state.questions[state.currentQuestionIdx];
-  
-  document.getElementById('display-q-type').textContent = q.type;
-  document.getElementById('display-q-text').textContent = q.text;
-  
-  const mediaBox = document.getElementById('display-media');
-  if (q.media) {
-    mediaBox.style.backgroundImage = `url('${q.media}')`;
-    mediaBox.style.display = 'block';
+  document.getElementById('arena-q-category').textContent = q.type;
+  document.getElementById('arena-q-text').textContent = q.text;
+
+  const frame = document.getElementById('arena-media-frame');
+  if(q.media) {
+    frame.style.backgroundImage = `url('${q.media}')`;
+    frame.style.display = 'block';
   } else {
-    mediaBox.style.display = 'none';
+    frame.style.display = 'none';
   }
 
-  state.isQuestionPublished = true;
-  document.getElementById('start-timer-btn').disabled = false;
-  
-  const bar = document.getElementById('timer-bar');
+  state.isQuestionLive = true;
+  document.getElementById('ctrl-time-btn').disabled = false;
+
+  const bar = document.getElementById('arena-timer-bar');
   bar.style.transition = 'none';
   bar.style.width = '100%';
 
-  logMessage(`Выведен вопрос №${state.currentQuestionIdx + 1} [${q.type}]`, "system");
+  writeLog(`Опубликован раунд №${state.activeQIdx + 1} (${q.type})`, "sys");
 }
 
-function startTimer() {
-  if (state.gameStatus !== "PLAYING" || !state.isQuestionPublished || state.isTimerRunning) return;
-
+function triggerCountdownTimer() {
+  if(!state.isQuestionLive || state.isTimerRunning) return;
   state.isTimerRunning = true;
-  document.getElementById('start-timer-btn').disabled = true;
-  state.timerSecondsLeft = state.timerDuration;
+  document.getElementById('ctrl-time-btn').disabled = true;
+  state.secondsLeft = 30;
 
-  const bar = document.getElementById('timer-bar');
-  bar.style.transition = `width ${state.timerDuration}s linear`;
+  const bar = document.getElementById('arena-timer-bar');
+  bar.style.transition = 'width 30s linear';
   bar.style.width = '0%';
 
-  state.timerIntervalId = setInterval(() => {
-    state.timerSecondsLeft--;
-    if (state.timerSecondsLeft <= 0) {
-      clearInterval(state.timerIntervalId);
+  state.timerId = setInterval(() => {
+    state.secondsLeft--;
+    if(state.secondsLeft <= 0) {
+      clearInterval(state.timerId);
       state.isTimerRunning = false;
-      logMessage("Время раунда вышло! Ответ никто не дал.", "fail");
+      writeLog("Время раунда истекло! Никто не успел ответить.", "err");
     }
   }, 1000);
 }
 
-function playerBuzz(playerIdx) {
-  if (state.gameStatus !== "PLAYING" || !state.isQuestionPublished) return;
-  if (state.buzzQueue.includes(playerIdx)) return;
+function registerUserBuzz(idx) {
+  if(!state.isQuestionLive) return;
+  if(state.buzzList.includes(idx)) return;
 
-  state.buzzQueue.push(playerIdx);
-  const order = state.buzzQueue.length;
+  state.buzzList.push(idx);
+  const queuePos = state.buzzList.length;
 
-  const pod = document.getElementById(`pod-${playerIdx}`);
-  pod.classList.add('buzzed');
-  document.getElementById(`pod-order-${playerIdx}`).textContent = order;
+  const node = document.getElementById(`stand-node-${idx}`);
+  node.classList.add('is-active-buzz');
+  document.getElementById(`stand-order-label-${idx}`).textContent = queuePos;
 
-  if (order === 1) {
-    clearInterval(state.timerIntervalId);
+  if(queuePos === 1) {
+    clearInterval(state.timerId);
     state.isTimerRunning = false;
-    
-    state.players.forEach((_, idx) => {
-      if (idx !== playerIdx) {
-        document.getElementById(`pod-${idx}`).classList.add('locked');
-      }
+
+    state.players.forEach((_, pIdx) => {
+      if(pIdx !== idx) document.getElementById(`stand-node-${pIdx}`).classList.add('is-disabled-lock');
     });
 
-    document.getElementById('target-player-name').textContent = state.players[playerIdx].name;
-    document.getElementById('score-plus-btn').classList.add('active');
-    document.getElementById('score-minus-btn').classList.add('active');
+    document.getElementById('current-target-name').textContent = state.players[idx].name;
+    document.getElementById('j-ok-btn').classList.add('active');
+    document.getElementById('j-err-btn').classList.add('active');
 
-    logMessage(`Игрок ${state.players[playerIdx].name} нажал первый!`, "buzz");
+    writeLog(`Трибуна ${state.players[idx].name} заблокировала линию первый!`, "bz");
   } else {
-    logMessage(`Игрок ${state.players[playerIdx].name} в очереди на ответ (${order}-й)`, "system");
+    writeLog(`Игрок ${state.players[idx].name} в резервной очереди (${queuePos}-й)`, "sys");
   }
 }
 
-function scoreTarget(isCorrect) {
-  if (state.gameStatus !== "PLAYING" || state.buzzQueue.length === 0) return;
-  
-  const activePlayerIdx = state.buzzQueue[0];
-  const p = state.players[activePlayerIdx];
+function submitVerdict(isCorrect) {
+  if(state.buzzList.length === 0) return;
+  const currentIdx = state.buzzList[0];
+  const p = state.players[currentIdx];
 
-  if (isCorrect) {
-    p.score += 250;
-    logMessage(`Ведущий подтвердил ответ! ${p.name} получает +250 XP`, "point");
-    resetBuzz();
+  if(isCorrect) {
+    p.score += 200;
+    writeLog(`Ответ принят! ${p.name} заработал +200 XP`, "ok");
+    clearBuzzState();
   } else {
     p.score = Math.max(0, p.score - 100);
-    logMessage(`Ответ неверный. ${p.name} получает штраф -100 XP`, "fail");
-    removeFirstFromQueueAndPass();
+    writeLog(`Неверный ответ! Штраф ${p.name} -100 XP`, "err");
+    shiftQueueAndNext();
   }
 
-  document.getElementById(`pod-score-display-${activePlayerIdx}`).textContent = `${p.score} XP`;
+  document.getElementById(`stand-score-label-${currentIdx}`).textContent = `${p.score} XP`;
 }
 
-function removeFirstFromQueueAndPass() {
-  if (state.buzzQueue.length === 0) return;
+function shiftQueueAndNext() {
+  if(state.buzzList.length === 0) return;
+  const badIdx = state.buzzList.shift();
 
-  const failedIdx = state.buzzQueue.shift();
-  
-  const failedPod = document.getElementById(`pod-${failedIdx}`);
-  failedPod.classList.remove('buzzed');
-  failedPod.classList.add('locked');
+  const badNode = document.getElementById(`stand-node-${badIdx}`);
+  badNode.classList.remove('is-active-buzz');
+  badNode.classList.add('is-disabled-lock');
 
-  if (state.buzzQueue.length > 0) {
-    const nextPlayerIdx = state.buzzQueue[0];
-    
-    state.buzzQueue.forEach((pIdx, queuePosition) => {
-      document.getElementById(`pod-order-${pIdx}`).textContent = queuePosition + 1;
+  if(state.buzzList.length > 0) {
+    const nextIdx = state.buzzList[0];
+    state.buzzList.forEach((pos, index) => {
+      document.getElementById(`stand-order-label-${pos}`).textContent = index + 1;
     });
 
-    const nextPod = document.getElementById(`pod-${nextPlayerIdx}`);
-    nextPod.classList.remove('locked');
-    nextPod.classList.add('buzzed');
+    const nextNode = document.getElementById(`stand-node-${nextIdx}`);
+    nextNode.classList.remove('is-disabled-lock');
+    nextNode.classList.add('is-active-buzz');
 
-    document.getElementById('target-player-name').textContent = state.players[nextPlayerIdx].name;
-    logMessage(`Право ответа переходит к игроку ${state.players[nextPlayerIdx].name}!`, "buzz");
+    document.getElementById('current-target-name').textContent = state.players[nextIdx].name;
+    writeLog(`Очередь перешла к игроку ${state.players[nextIdx].name}`, "bz");
   } else {
     state.players.forEach((_, idx) => {
-      if (idx !== failedIdx) {
-        document.getElementById(`pod-${idx}`).classList.remove('locked');
-      }
+      if(idx !== badIdx) document.getElementById(`stand-node-${idx}`).classList.remove('is-disabled-lock');
     });
-    
-    document.getElementById('target-player-name').textContent = "---";
-    document.getElementById('score-plus-btn').classList.remove('active');
-    document.getElementById('score-minus-btn').classList.remove('active');
+    document.getElementById('current-target-name').textContent = "---";
+    document.getElementById('j-ok-btn').classList.remove('active');
+    document.getElementById('j-err-btn').classList.remove('active');
     
     state.isTimerRunning = false;
-    startTimer();
+    triggerCountdownTimer();
   }
 }
 
-function resetBuzz() {
-  state.buzzQueue = [];
-  document.getElementById('target-player-name').textContent = "---";
-  document.getElementById('score-plus-btn').classList.remove('active');
-  document.getElementById('score-minus-btn').classList.remove('active');
-
+function clearBuzzState() {
+  state.buzzList = [];
+  document.getElementById('current-target-name').textContent = "---";
+  document.getElementById('j-ok-btn').classList.remove('active');
+  document.getElementById('j-err-btn').classList.remove('active');
   state.players.forEach((_, idx) => {
-    const pod = document.getElementById(`pod-${idx}`);
-    pod.classList.remove('buzzed', 'locked');
+    const node = document.getElementById(`stand-node-${idx}`);
+    node.classList.remove('is-active-buzz', 'is-disabled-lock');
   });
 }
 
-function logMessage(msg, type) {
-  const log = document.getElementById('game-log');
+function writeLog(msg, type) {
+  const term = document.getElementById('arena-terminal-logs');
   const d = document.createElement('div');
-  d.className = `log-msg ${type}`;
-  
-  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  d.textContent = `[${time}] ${msg}`;
-  
-  log.appendChild(d);
-  log.scrollTop = log.scrollHeight;
+  d.className = `feed-row ${type}`;
+  d.textContent = `> ${msg}`;
+  term.appendChild(d);
+  term.scrollTop = term.scrollHeight;
 }
 
-// ИЗМЕНЕНО: Функция РЕАЛЬНОГО завершения матча
-function showFinalLeaderboard(isRealEnd = false) {
-  if (isRealEnd) {
-    state.gameStatus = "FINISHED";
-    clearInterval(state.timerIntervalId);
-    state.isTimerRunning = false;
-    
-    // Блокируем пульт управления полностью
-    document.getElementById('publish-q-btn').disabled = true;
-    document.getElementById('start-timer-btn').disabled = true;
-    document.getElementById('reset-buzz-btn').disabled = true;
-    document.getElementById('end-match-main-btn').disabled = true;
-    document.getElementById('score-plus-btn').classList.remove('active');
-    document.getElementById('score-minus-btn').classList.remove('active');
-    
-    // Глушим интерфейс главного экрана
-    document.getElementById('header-status').textContent = "MATCH FINISHED";
-    document.getElementById('display-q-type').textContent = "СОРЕВНОВАНИЕ ОКОНЧЕНО";
-    document.getElementById('display-q-text').textContent = "ВЕДУЩИЙ ЗАКРЫЛ МАТЧ. СМОТРИТЕ РЕЗУЛЬТАТЫ.";
-    document.getElementById('display-media').style.display = 'none';
-    document.getElementById('timer-bar').style.width = '0%';
-
-    // Все трибуны в тотальный лок
-    state.players.forEach((_, idx) => {
-      document.getElementById(`pod-${idx}`).classList.add('locked');
-    });
-
-    logMessage("Ведущий завершил матч! Подсчет финальных рейтингов...", "system");
-    
-    // Меняем кнопку в модалке, чтобы нельзя было просто продолжить игру
-    document.getElementById('lb-close-back-btn').textContent = "МАТЧ ОКОНЧЕН";
-    document.getElementById('lb-close-back-btn').setAttribute('onclick', 'location.reload()');
-    document.getElementById('lb-main-header-title').textContent = "ФИНАЛЬНЫЙ РЕЙТИНГ МАТЧА";
-  }
-
-  const container = document.getElementById('lb-rows-container');
+// 5. ПОЛНОЕ ЗАВЕРШЕНИЕ С ВОЗВРАТОМ В ГЛАВНОЕ МЕНЮ
+function terminateMatchSession() {
+  clearInterval(state.timerId);
+  
+  // Собираем результаты для вывода финального окна
+  const container = document.getElementById('lb-modal-rows');
   container.innerHTML = '';
-
-  const sorted = [...state.players].sort((a, b) => b.score - a.score);
-
-  sorted.forEach((p, idx) => {
-    const r = document.createElement('div');
-    r.className = `lb-row rank-${idx + 1}`;
-    r.innerHTML = `
-      <div class="lb-left">
-        <div class="lb-num">#${idx + 1}</div>
-        <div class="lb-name">${p.avatar} ${p.name}</div>
-      </div>
-      <div class="lb-score">${p.score} XP</div>
-    `;
-    container.appendChild(r);
+  const sorted = [...state.players].sort((a,b) => b.score - a.score);
+  
+  sorted.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'lb-single-row';
+    row.innerHTML = `<div>#${i+1} ${p.avatar} ${p.name}</div><div style="color:var(--accent)">${p.score} XP</div>`;
+    container.appendChild(row);
   });
 
-  // Вывод абсолютного победителя
-  const winnerZone = document.getElementById('lb-winner-announcement');
-  if (sorted.length > 0 && isRealEnd) {
-    winnerZone.textContent = `🏆 ЧЕМПИОН ШОУ: ${sorted[0].name} (${sorted[0].score} XP)`;
-  } else {
-    winnerZone.textContent = "";
+  if(sorted.length > 0) {
+    document.getElementById('lb-winner-banner').textContent = `🏆 ПОБЕДИТЕЛЬ: ${sorted[0].name}`;
   }
 
-  document.getElementById('leaderboard-overlay').classList.add('active');
+  // Открываем финальную таблицу результатов перед вылетом в меню
+  document.getElementById('modal-leaderboard-view').classList.add('active');
 }
 
-function closeLeaderboard() {
-  if (state.gameStatus === "FINISHED") return;
-  document.getElementById('leaderboard-overlay').classList.remove('active');
+// СБРОС И ВЫХОД В МЕНЮ
+function exitToMainMenu() {
+  // Останавливаем все процессы
+  clearInterval(state.timerId);
+  
+  // Чистим стейт до дефолта
+  state.currentRoom = "";
+  state.role = "";
+  state.myNickname = "";
+  state.players = [];
+  state.activeQIdx = -1;
+  state.buzzList = [];
+  state.isQuestionLive = false;
+  state.isTimerRunning = false;
+
+  // Очищаем поля форм
+  document.getElementById('join-name-field').value = '';
+  document.getElementById('join-code-field').value = '';
+  
+  // Сбрасываем дисплеи арены
+  document.getElementById('arena-q-category').textContent = "СИСТЕМА ГОТОВА";
+  document.getElementById('arena-q-text').textContent = "Ожидайте публикации раунда ведущим";
+  document.getElementById('arena-media-frame').style.display = 'none';
+  document.getElementById('arena-timer-bar').style.width = '0%';
+  document.getElementById('arena-terminal-logs').innerHTML = '';
+
+  // Прячем модалки и улетаем на экран приветствия
+  document.getElementById('modal-leaderboard-view').classList.remove('active');
+  switchRoute('screen-welcome', 'MAIN MENU');
 }
 
-// Горячие клавиши
+// ГОРЯЧИЕ КЛАВИШИ ВЕДУЩЕГО
 document.addEventListener('keydown', (e) => {
-  if (state.gameStatus !== "PLAYING") return;
-
-  const gameActive = document.getElementById('game-screen').classList.contains('active');
-  if (!gameActive) return;
-
+  if(!document.getElementById('screen-match-arena').classList.contains('active')) return;
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-  if (e.code === 'Space') {
-    e.preventDefault();
-    publishQuestion();
-  }
-  if (e.key.toLowerCase() === 'r' || e.key.toLowerCase() === 'к') {
-    resetBuzz();
-  }
+  if (e.code === 'Space') { e.preventDefault(); triggerNextQuestion(); }
+  if (e.key.toLowerCase() === 'r' || e.key.toLowerCase() === 'к') { clearBuzzState(); }
+  
   const num = parseInt(e.key);
-  if (num >= 1 && num <= state.players.length) {
-    playerBuzz(num - 1);
-  }
+  if (num >= 1 && num <= state.players.length) { registerUserBuzz(num - 1); }
 });
 
-// Генератор частиц
-function spawnParticles() {
+// ФОНОВЫЕ ЭФФЕКТЫ ЧАСТИЦ
+function generateStarsBackground() {
   const container = document.getElementById('particles');
-  const colors = ['#ffe600', '#ffffff', '#ffeb00', '#ccbc00'];
-
   setInterval(() => {
-    if (state.gameStatus === "FINISHED") return;
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 3 + 1;
-    p.style.cssText = `
-      width: ${size}px;
-      height: ${size}px;
-      left: ${Math.random() * 100}vw;
-      background: ${colors[Math.floor(Math.random() * colors.length)]};
-      animation-duration: ${Math.random() * 5 + 4}s;
-    `;
-    container.appendChild(p);
-    setTimeout(() => p.remove(), 8000);
-  }, 350);
+    if(document.getElementById('screen-welcome').classList.contains('active') || document.getElementById('screen-lobby-wait').classList.contains('active')) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const size = Math.random() * 2 + 1;
+      p.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        left: ${Math.random() * 100}vw;
+        background: ${Math.random() > 0.5 ? '#ffe600' : '#00f5ff'};
+        animation-duration: ${Math.random() * 4 + 5}s;
+      `;
+      container.appendChild(p);
+      setTimeout(() => p.remove(), 9000);
+    }
+  }, 400);
 }
 </script>
 </body>
