@@ -6,38 +6,50 @@
 <title>THE QUIZ | PRO EDITION</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-  /* =========================================
-     [1] CORE VARIABLES & THEME (GLOWBYTE STYLE)
-     ========================================= */
+  /* ==========================================================================
+     1. ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ И ЦВЕТОВАЯ СХЕМА
+     ========================================================================== */
   :root {
+    /* Основные фоновые цвета */
     --bg-dark: #05060a;
     --bg-surface: rgba(15, 17, 26, 0.6);
     --bg-surface-hover: rgba(22, 25, 38, 0.8);
     
+    /* Акцентные неоновые цвета */
     --accent: #ffe600;
     --accent-glow: rgba(255, 230, 0, 0.4);
     --cyan: #00f5ff;
     --pink: #ff0055;
     --green: #00ff66;
     
+    /* Типографика */
     --text-primary: #ffffff;
     --text-secondary: #8b9bb4;
     
+    /* Бордеры и стекло */
     --border-thin: 1px solid rgba(255, 255, 255, 0.08);
     --border-accent: 1px solid rgba(255, 230, 0, 0.2);
-    
     --blur-heavy: blur(24px) saturate(180%);
+    
+    /* Тени и эффекты */
     --shadow-base: 0 10px 30px rgba(0, 0, 0, 0.5);
     --shadow-neon: 0 0 20px var(--accent-glow);
     
+    /* Анимации */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
-  /* =========================================
-     [2] RESET & BASE STYLES
-     ========================================= */
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+  /* ==========================================================================
+     2. СБРОС СТИЛЕЙ И БАЗОВЫЕ НАСТРОЙКИ
+     ========================================================================== */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
   
   body {
     background-color: var(--bg-dark);
@@ -51,11 +63,17 @@
       radial-gradient(circle at 85% 30%, rgba(0, 245, 255, 0.02) 0%, transparent 50%);
   }
 
-  /* =========================================
-     [3] TYPOGRAPHY & BRANDING
-     ========================================= */
-  h1, h2, h3, h4, .brand-font { font-family: 'Orbitron', sans-serif; text-transform: uppercase; }
-  .mono-font { font-family: 'Share Tech Mono', monospace; }
+  /* ==========================================================================
+     3. ТИПОГРАФИКА
+     ========================================================================== */
+  h1, h2, h3, h4, .brand-font {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .mono-font {
+    font-family: 'Share Tech Mono', monospace;
+  }
   
   .mega-title {
     font-size: clamp(3rem, 8vw, 5rem);
@@ -64,13 +82,13 @@
     background: linear-gradient(180deg, #fff 20%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 4px 15px rgba(255,230,0,0.2));
+    filter: drop-shadow(0 4px 15px rgba(255, 230, 0, 0.2));
     margin-bottom: 0.2em;
   }
 
-  /* =========================================
-     [4] LAYOUT & CONTAINERS
-     ========================================= */
+  /* ==========================================================================
+     4. СЕТКА И КОНТЕЙНЕРЫ
+     ========================================================================== */
   .app-layout {
     max-width: 1440px;
     margin: 0 auto;
@@ -89,13 +107,25 @@
     flex-grow: 1;
     animation: fadeIn 0.4s ease forwards;
   }
-  .screen.active { display: flex; }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .screen.active {
+    display: flex;
+  }
 
-  /* =========================================
-     [5] UI COMPONENTS (GLASSMORPHISM)
-     ========================================= */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ==========================================================================
+     5. UI КОМПОНЕНТЫ (GLASSMORPHISM)
+     ========================================================================== */
   .glass-panel {
     background: var(--bg-surface);
     backdrop-filter: var(--blur-heavy);
@@ -106,14 +136,21 @@
     box-shadow: var(--shadow-base);
     transition: var(--transition-fast);
   }
-  .glass-panel:hover { border-color: rgba(255, 255, 255, 0.15); }
+
+  .glass-panel:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
 
   .glass-header {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 24px; margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    margin-bottom: 24px;
     border-radius: 20px;
   }
 
+  /* КНОПКИ */
   .btn {
     background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
@@ -126,153 +163,475 @@
     letter-spacing: 1px;
     cursor: pointer;
     transition: var(--transition-bounce);
-    display: inline-flex; justify-content: center; align-items: center; gap: 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
     text-transform: uppercase;
   }
 
   .btn:hover:not(:disabled) {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 
-  .btn:active:not(:disabled) { transform: translateY(0); }
-  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn:active:not(:disabled) {
+    transform: translateY(0);
+  }
 
-  .btn-accent { background: rgba(255, 230, 0, 0.1); border: var(--border-accent); color: var(--accent); }
-  .btn-accent:hover:not(:disabled) { background: var(--accent); color: #000; box-shadow: var(--shadow-neon); }
+  .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  /* Акцентные кнопки */
+  .btn-accent {
+    background: rgba(255, 230, 0, 0.1);
+    border: var(--border-accent);
+    color: var(--accent);
+  }
+
+  .btn-accent:hover:not(:disabled) {
+    background: var(--accent);
+    color: #000;
+    box-shadow: var(--shadow-neon);
+  }
   
-  .btn-cyan { background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0,245,255,0.3); color: var(--cyan); }
-  .btn-cyan:hover:not(:disabled) { background: var(--cyan); color: #000; box-shadow: 0 0 20px rgba(0,245,255,0.4); }
+  .btn-cyan {
+    background: rgba(0, 245, 255, 0.1);
+    border: 1px solid rgba(0, 245, 255, 0.3);
+    color: var(--cyan);
+  }
 
-  .btn-pink { background: rgba(255, 0, 85, 0.1); border: 1px solid rgba(255,0,85,0.3); color: var(--pink); }
-  .btn-pink:hover:not(:disabled) { background: var(--pink); color: #fff; box-shadow: 0 0 20px rgba(255,0,85,0.4); }
+  .btn-cyan:hover:not(:disabled) {
+    background: var(--cyan);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+  }
 
-  .btn-green { background: rgba(0, 255, 102, 0.1); border: 1px solid rgba(0,255,102,0.3); color: var(--green); }
-  .btn-green:hover:not(:disabled) { background: var(--green); color: #000; box-shadow: 0 0 20px rgba(0,255,102,0.4); }
+  .btn-pink {
+    background: rgba(255, 0, 85, 0.1);
+    border: 1px solid rgba(255, 0, 85, 0.3);
+    color: var(--pink);
+  }
 
-  .input-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; text-align: left; }
-  .input-group label { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  .btn-pink:hover:not(:disabled) {
+    background: var(--pink);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+  }
+
+  .btn-green {
+    background: rgba(0, 255, 102, 0.1);
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    color: var(--green);
+  }
+
+  .btn-green:hover:not(:disabled) {
+    background: var(--green);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+  }
+
+  /* ПОЛЯ ВВОДА */
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+    text-align: left;
+  }
+
+  .input-group label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
   .input-field {
-    background: rgba(0,0,0,0.4); border: var(--border-thin); color: #fff;
-    padding: 16px; border-radius: 12px; font-size: 16px; transition: var(--transition-fast); width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: var(--border-thin);
+    color: #fff;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: var(--transition-fast);
+    width: 100%;
   }
-  .input-field:focus { outline: none; border-color: var(--accent); box-shadow: inset 0 0 10px rgba(255,230,0,0.1); }
 
-  /* =========================================
-     [6] SPECIFIC SCREENS
-     ========================================= */
-  /* WELCOME */
-  .center-wrap { margin: auto; text-align: center; max-width: 500px; width: 100%; display: flex; flex-direction: column; gap: 30px; }
+  .input-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: inset 0 0 10px rgba(255, 230, 0, 0.1);
+  }
+
+  /* ==========================================================================
+     6. ЭКРАНЫ И МАКЕТЫ
+     ========================================================================== */
   
-  /* LOBBY / HOST SETUP */
-  .grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+  /* ЭКРАН ВХОДА */
+  .center-wrap {
+    margin: auto;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  /* ЛОББИ И НАСТРОЙКИ ВЕДУЩЕГО */
+  .grid-2col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
   
   .room-code-display {
-    background: rgba(0,0,0,0.3); border: 2px dashed var(--accent); border-radius: 16px;
-    padding: 20px; text-align: center; font-size: 36px; font-weight: 900; letter-spacing: 8px; color: var(--accent);
-    margin-bottom: 24px; text-shadow: var(--shadow-neon);
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px dashed var(--accent);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    text-shadow: var(--shadow-neon);
   }
 
   .player-pill {
-    background: rgba(255,255,255,0.03); border: var(--border-thin); padding: 10px 16px;
-    border-radius: 12px; display: inline-flex; align-items: center; gap: 10px; font-weight: 600;
+    background: rgba(255, 255, 255, 0.03);
+    border: var(--border-thin);
+    padding: 10px 16px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
   }
-  .player-pill .av { font-size: 20px; }
 
-  /* ARENA STAGE */
-  .arena-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; flex-grow: 1; }
-  @media(max-width: 1000px) { .arena-grid { grid-template-columns: 1fr; } }
+  .player-pill .av {
+    font-size: 20px;
+  }
 
+  /* ГЛАВНАЯ АРЕНА (ИГРА) */
+  .arena-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+    flex-grow: 1;
+  }
+
+  @media(max-width: 1000px) {
+    .arena-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ГЛАВНЫЙ ЭКРАН С ВОПРОСОМ */
   .main-monitor {
-    height: 420px; border-radius: 24px; overflow: hidden; position: relative;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-    border: var(--border-thin); background: #000;
+    height: 420px;
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: var(--border-thin);
+    background: #000;
   }
-  .monitor-bg { position: absolute; top:0; left:0; width:100%; height:100%; background-size: cover; background-position: center; opacity: 0.3; filter: blur(5px); transition: 0.5s; }
-  .monitor-content { position: relative; z-index: 2; padding: 40px; width: 100%; }
+
+  .monitor-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    filter: blur(5px);
+    transition: 0.5s;
+  }
+
+  .monitor-content {
+    position: relative;
+    z-index: 2;
+    padding: 40px;
+    width: 100%;
+  }
   
-  .monitor-category { color: var(--accent); letter-spacing: 4px; font-size: 14px; margin-bottom: 16px; }
-  .monitor-text { font-size: 32px; font-weight: 800; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+  .monitor-category {
+    color: var(--accent);
+    letter-spacing: 4px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .monitor-text {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.3;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  }
   
   .monitor-image {
-    max-width: 80%; height: 200px; object-fit: contain; border-radius: 12px; margin-top: 24px;
-    border: 1px solid rgba(255,255,255,0.1); display: none; background: rgba(0,0,0,0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    max-width: 80%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-top: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
   }
 
-  .progress-bar-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 6px; background: rgba(255,255,255,0.1); }
-  .progress-bar-fill { height: 100%; width: 0%; background: var(--accent); transition: width 1s linear; box-shadow: 0 0 10px var(--accent); }
+  /* ТАЙМЕР-ПОЛОСА */
+  .progress-bar-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+  }
 
-  /* PODIUMS */
-  .podiums-area { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 1s linear;
+    box-shadow: 0 0 10px var(--accent);
+  }
+
+  /* ТРИБУНЫ ИГРОКОВ (PODIUMS) */
+  .podiums-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+
   .podium {
-    display: flex; flex-direction: column; align-items: center; padding: 24px 16px; text-align: center;
-    cursor: pointer; position: relative; overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
-  .podium::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background: transparent; transition: 0.3s; }
+
+  .podium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: transparent;
+    transition: 0.3s;
+  }
   
-  .podium.state-idle:hover { background: var(--bg-surface-hover); }
-  .podium.state-buzzed {
-    border-color: var(--accent); background: rgba(255, 230, 0, 0.05); transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,230,0,0.1);
+  .podium.state-idle:hover {
+    background: var(--bg-surface-hover);
   }
-  .podium.state-buzzed::before { background: var(--accent); box-shadow: 0 0 15px var(--accent); }
-  .podium.state-locked { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+
+  .podium.state-buzzed {
+    border-color: var(--accent);
+    background: rgba(255, 230, 0, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 230, 0, 0.1);
+  }
+
+  .podium.state-buzzed::before {
+    background: var(--accent);
+    box-shadow: 0 0 15px var(--accent);
+  }
+
+  .podium.state-locked {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: grayscale(1);
+  }
 
   .podium-avatar {
-    width: 80px; height: 80px; border-radius: 50%; background: rgba(0,0,0,0.5); border: var(--border-thin);
-    display: flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 16px; position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    border: var(--border-thin);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    margin-bottom: 16px;
+    position: relative;
   }
-  .podium.state-buzzed .podium-avatar { border-color: var(--accent); box-shadow: 0 0 15px rgba(255,230,0,0.3); }
+
+  .podium.state-buzzed .podium-avatar {
+    border-color: var(--accent);
+    box-shadow: 0 0 15px rgba(255, 230, 0, 0.3);
+  }
   
+  /* ИНДИКАТОР ОЧЕРЕДИ */
   .buzz-indicator {
-    position: absolute; top: -5px; right: -5px; width: 28px; height: 28px; border-radius: 50%;
-    background: var(--accent); color: #000; font-weight: 900; font-size: 14px;
-    display: none; align-items: center; justify-content: center; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #000;
+    font-weight: 900;
+    font-size: 14px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   }
-  .podium.state-buzzed .buzz-indicator { display: flex; animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-  @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+  .podium.state-buzzed .buzz-indicator {
+    display: flex;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
 
-  .podium-name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .podium-score { font-family: 'Orbitron', sans-serif; font-size: 24px; color: var(--cyan); }
-  .podium.state-buzzed .podium-score { color: var(--accent); }
+  @keyframes popIn {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+  }
 
-  /* HOST CONTROLS */
-  .control-sidebar { display: flex; flex-direction: column; gap: 20px; }
-  .panel-label { font-size: 11px; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 2px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
+  .podium-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .podium-score {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    color: var(--cyan);
+  }
+
+  .podium.state-buzzed .podium-score {
+    color: var(--accent);
+  }
+
+  /* ПАНЕЛЬ УПРАВЛЕНИЯ ВЕДУЩЕГО */
+  .control-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .panel-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+  }
   
+  /* ТЕРМИНАЛ ЛОГОВ */
   .terminal-log {
-    flex-grow: 1; max-height: 250px; overflow-y: auto; background: rgba(0,0,0,0.5);
-    border-radius: 12px; padding: 12px; font-size: 12px; display: flex; flex-direction: column; gap: 8px;
+    flex-grow: 1;
+    max-height: 250px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
-  .log-line { padding-left: 10px; border-left: 2px solid; }
+
+  .log-line {
+    padding-left: 10px;
+    border-left: 2px solid;
+  }
+
   .log-line.sys { border-color: var(--cyan); color: #a1fbff; }
   .log-line.act { border-color: var(--accent); color: #fffaa1; }
   .log-line.err { border-color: var(--pink); color: #ffa1b7; }
   .log-line.ok { border-color: var(--green); color: #a1ffb4; }
 
-  /* =========================================
-     [7] TOAST NOTIFICATIONS (CUSTOM)
-     ========================================= */
-  #toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+  /* ==========================================================================
+     7. УВЕДОМЛЕНИЯ (TOASTS) И МОДАЛЬНЫЕ ОКНА
+     ========================================================================== */
+  #toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .toast {
-    background: rgba(15, 17, 26, 0.95); backdrop-filter: blur(10px); border-left: 4px solid var(--accent);
-    padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; color: #fff;
+    background: rgba(15, 17, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border-left: 4px solid var(--accent);
+    padding: 16px 24px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
     animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
   }
+
   .toast.error { border-color: var(--pink); }
   .toast.success { border-color: var(--green); }
-  @keyframes slideInRight { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-  @keyframes fadeOut { to { opacity: 0; transform: translateY(-10px); } }
 
-  /* OVERLAYS */
-  .overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: rgba(5,6,10,0.9); backdrop-filter: var(--blur-heavy);
-    z-index: 1000; display: none; align-items: center; justify-content: center;
+  @keyframes slideInRight {
+    from {
+      transform: translateX(120%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
-  .overlay.active { display: flex; }
+
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+  }
+
+  /* ОВЕРЛЕИ */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(5, 6, 10, 0.9);
+    backdrop-filter: var(--blur-heavy);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .overlay.active {
+    display: flex;
+  }
 </style>
 </head>
 <body>
@@ -280,8 +639,13 @@
 <div class="app-layout">
   
   <header class="glass-panel glass-header" style="padding: 12px 24px; margin-bottom: 30px;">
-    <div class="brand-font" style="font-size: 20px; font-weight: 900; letter-spacing: 2px;">THE <span style="color: var(--accent);">QUIZ</span> <span style="font-size:10px; color: var(--text-secondary); vertical-align: top;">PRO</span></div>
-    <div class="mono-font" id="global-status" style="font-size: 12px; color: var(--text-secondary); border-left: 2px solid var(--accent); padding-left: 10px;">INITIALIZING SYSTEM...</div>
+    <div class="brand-font" style="font-size: 20px; font-weight: 900; letter-spacing: 2px;">
+      THE <span style="color: var(--accent);">QUIZ</span> 
+      <span style="font-size:10px; color: var(--text-secondary); vertical-align: top;">PRO V2</span>
+    </div>
+    <div class="mono-font" id="global-status" style="font-size: 12px; color: var(--text-secondary); border-left: 2px solid var(--accent); padding-left: 10px;">
+      INITIALIZING SYSTEM...
+    </div>
   </header>
 
   <div id="scr-welcome" class="screen active">
@@ -319,10 +683,12 @@
     <div class="center-wrap glass-panel">
       <div class="mono-font" style="color: var(--green); margin-bottom: 10px;">СВЯЗЬ УСТАНОВЛЕНА</div>
       <div class="room-code-display" id="lobby-code-display">000000</div>
-      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 30px;">Вы находитесь в лобби ожидания. Игра начнется автоматически, когда ведущий запустит сессию.</p>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 30px;">
+        Вы успешно заняли место на трибуне. Шоу начнется автоматически по команде ведущего.
+      </p>
       
       <div style="text-align: left;">
-        <div class="panel-label">АКТИВНЫЕ ИГРОКИ (<span id="lobby-count">0</span>)</div>
+        <div class="panel-label">АКТИВНЫЕ ТРИБУНЫ (<span id="lobby-count">0</span>)</div>
         <div id="lobby-players" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
       </div>
       
@@ -356,7 +722,9 @@
 
   <div id="scr-arena" class="screen">
     <div class="arena-grid">
+      
       <div style="display: flex; flex-direction: column;">
+        
         <div class="main-monitor">
           <div class="monitor-bg" id="arena-bg"></div>
           <div class="monitor-content">
@@ -364,8 +732,11 @@
             <div class="brand-font monitor-text" id="arena-text">Ожидание команд ведущего...</div>
             <img class="monitor-image" id="arena-img" src="" alt="Media">
           </div>
-          <div class="progress-bar-container"><div class="progress-bar-fill" id="arena-timer"></div></div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="arena-timer"></div>
+          </div>
         </div>
+        
         <div class="podiums-area" id="arena-podiums"></div>
       </div>
 
@@ -380,7 +751,7 @@
         </div>
 
         <div style="background: rgba(0,0,0,0.3); padding: 16px; border-radius: 12px; border: var(--border-thin);">
-          <div class="panel-label" style="text-align: center;">ОЦЕНКА: <span id="arena-target" style="color: var(--accent); font-weight: bold; font-size: 14px;">---</span></div>
+          <div class="panel-label" style="text-align: center;">ОЦЕНКА ОТВЕТА: <span id="arena-target" style="color: var(--accent); font-weight: bold; font-size: 14px;">---</span></div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <button class="btn btn-green" id="btn-ok" onclick="App.Host.judge(true)" disabled>ВЕРНО</button>
             <button class="btn btn-pink" id="btn-err" onclick="App.Host.judge(false)" disabled>ОШИБКА</button>
@@ -397,7 +768,7 @@
       
       <div class="glass-panel control-sidebar" id="arena-player-controls" style="display: none; justify-content: center; align-items: center; text-align: center;">
          <div class="brand-font" style="color: var(--accent); font-size: 24px; margin-bottom: 20px;">ВАШ ПУЛЬТ</div>
-         <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 30px;">Смотрите на главный экран. Когда появится вопрос, жмите кнопку быстрее других!</p>
+         <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 30px;">Смотрите на главный экран. Когда появится вопрос, жмите кнопку быстрее других, чтобы перехватить право ответа!</p>
          <button class="btn btn-accent" id="btn-player-buzz" style="width: 150px; height: 150px; border-radius: 50%; font-size: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" onclick="App.Player.sendBuzz()" disabled>ЖАТЬ!</button>
       </div>
 
@@ -411,9 +782,18 @@
 <div class="overlay" id="modal-q">
   <div class="glass-panel" style="width: 500px; max-width: 90%;">
     <h3 class="brand-font" style="margin-bottom: 20px; color: var(--accent);">ДОБАВИТЬ ВОПРОС</h3>
-    <div class="input-group"><label>Категория</label><input type="text" id="mq-cat" class="input-field" placeholder="Например: ИГРЫ"></div>
-    <div class="input-group"><label>Вопрос</label><textarea id="mq-txt" class="input-field" rows="3"></textarea></div>
-    <div class="input-group"><label>URL Картинки (необяз.)</label><input type="text" id="mq-img" class="input-field"></div>
+    <div class="input-group">
+      <label>Категория</label>
+      <input type="text" id="mq-cat" class="input-field" placeholder="Например: ИГРЫ">
+    </div>
+    <div class="input-group">
+      <label>Вопрос</label>
+      <textarea id="mq-txt" class="input-field" rows="3" placeholder="Текст вопроса..."></textarea>
+    </div>
+    <div class="input-group">
+      <label>URL Картинки (необяз.)</label>
+      <input type="text" id="mq-img" class="input-field" placeholder="https://...">
+    </div>
     <div style="display: flex; gap: 12px; margin-top: 24px;">
       <button class="btn btn-green" style="flex: 2;" onclick="App.Host.addQuestion()">СОХРАНИТЬ</button>
       <button class="btn" style="flex: 1;" onclick="document.getElementById('modal-q').classList.remove('active')">ОТМЕНА</button>
@@ -432,59 +812,99 @@
 
 <script>
 /**
- * THE QUIZ | PRO EDITION CORE ENGINE
- * @description Master architecture with Local Multiplayer via BroadcastChannel and Web Audio Synthesis.
+ * THE QUIZ | ЛОГИЧЕСКОЕ ЯДРО (PRO EDITION)
+ * -----------------------------------------------------------------------------
+ * Описание: Полная архитектура локального мультиплеера на базе BroadcastChannel.
+ * ИСПРАВЛЕН БАГ ТИПИЗАЦИИ: Теперь Хост передает Игроку полный объект вопроса (qData),
+ * а не индекс, что предотвращает зависание логики рендеринга на клиенте.
  */
 const App = (function() {
   
-  // ---------------------------------------------------------
-  // 1. UTILS & UI
-  // ---------------------------------------------------------
+  // --- 1. УТИЛИТЫ И ИНТЕРФЕЙС ---
   const UI = {
-    show: (id) => { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); },
+    show: (id) => {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    },
     toast: (msg, type = 'normal') => {
       const container = document.getElementById('toast-container');
       const t = document.createElement('div');
-      t.className = `toast ${type}`; t.textContent = msg;
+      t.className = `toast ${type}`;
+      t.textContent = msg;
       container.appendChild(t);
       SFX.play(type === 'error' ? 'err' : 'sys');
-      setTimeout(() => { t.style.animation = 'fadeOut 0.4s forwards'; setTimeout(() => t.remove(), 400); }, 3000);
+      setTimeout(() => {
+        t.style.animation = 'fadeOut 0.4s forwards';
+        setTimeout(() => t.remove(), 400);
+      }, 3000);
     },
-    updateStatus: (text) => document.getElementById('global-status').textContent = text
+    updateStatus: (text) => {
+      document.getElementById('global-status').textContent = text;
+    }
   };
 
-  // ---------------------------------------------------------
-  // 2. AUDIO SYNTHESIZER (NO EXTERNAL FILES)
-  // ---------------------------------------------------------
+  // --- 2. СИНТЕЗАТОР ЗВУКА (Web Audio API) ---
   const SFX = {
     ctx: null,
-    init: function() { if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)(); },
+    init: function() {
+      if(!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    },
     play: function(type) {
       if(!this.ctx) return;
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
-      osc.connect(gain); gain.connect(this.ctx.destination);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
       const now = this.ctx.currentTime;
       
       switch(type) {
-        case 'buzz': osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now); osc.frequency.exponentialRampToValueAtTime(40, now + 0.3); gain.gain.setValueAtTime(0.3, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(now); osc.stop(now + 0.3); break;
-        case 'ok': osc.type = 'sine'; osc.frequency.setValueAtTime(400, now); osc.frequency.setValueAtTime(600, now + 0.1); gain.gain.setValueAtTime(0.2, now); gain.gain.linearRampToValueAtTime(0, now + 0.4); osc.start(now); osc.stop(now + 0.4); break;
-        case 'err': osc.type = 'square'; osc.frequency.setValueAtTime(150, now); osc.frequency.setValueAtTime(100, now + 0.2); gain.gain.setValueAtTime(0.2, now); gain.gain.linearRampToValueAtTime(0, now + 0.4); osc.start(now); osc.stop(now + 0.4); break;
-        case 'sys': osc.type = 'sine'; osc.frequency.setValueAtTime(800, now); gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1); osc.start(now); osc.stop(now + 0.1); break;
+        case 'buzz':
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(40, now + 0.3);
+          gain.gain.setValueAtTime(0.3, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+          break;
+        case 'ok':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, now);
+          osc.frequency.setValueAtTime(600, now + 0.1);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0, now + 0.4);
+          osc.start(now);
+          osc.stop(now + 0.4);
+          break;
+        case 'err':
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.setValueAtTime(100, now + 0.2);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0, now + 0.4);
+          osc.start(now);
+          osc.stop(now + 0.4);
+          break;
+        case 'sys':
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+          osc.start(now);
+          osc.stop(now + 0.1);
+          break;
       }
     }
   };
 
-  // ---------------------------------------------------------
-  // 3. NETWORK ENGINE (BroadcastChannel API)
-  // ---------------------------------------------------------
+  // --- 3. СЕТЕВОЙ МОДУЛЬ ---
   let channel = null;
   const Net = {
     connect: (code, role) => {
       if(channel) channel.close();
       channel = new BroadcastChannel(`QUIZ_ROOM_${code}`);
       channel.onmessage = (e) => Net.handleMessage(e.data);
-      console.log(`[NET] Connected to Room: ${code} as ${role}`);
+      console.log(`[NET] Подключено к сессии: ${code} как ${role}`);
     },
     send: (type, payload = {}) => {
       if(channel) {
@@ -495,35 +915,42 @@ const App = (function() {
       if(STATE.role === 'HOST') App.Host.processNetworkMsg(msg);
       if(STATE.role === 'PLAYER') App.Player.processNetworkMsg(msg);
     },
-    disconnect: () => { if(channel) { channel.close(); channel = null; } }
+    disconnect: () => {
+      if(channel) { channel.close(); channel = null; }
+    }
   };
 
-  // ---------------------------------------------------------
-  // 4. GLOBAL STATE
-  // ---------------------------------------------------------
+  // --- 4. ГЛОБАЛЬНОЕ СОСТОЯНИЕ (STATE) ---
   const STATE = {
-    role: null, // 'HOST' or 'PLAYER'
+    role: null, 
     roomCode: null,
     myId: null,
     myName: null,
     
-    // Game Data (Mastered by Host)
-    players: [], // { id, name, avatar, score }
+    players: [],
+    
+    // БАЗА ДАННЫХ ВОПРОСОВ (Добавил крутую базу для тебя)
     questions: [
-      { type: "ЛОКАЦИЯ", text: "Из какой игры эта таверна?", media: "https://i.imgur.com/eP6PZ1M.jpeg", answer: "Skyrim" },
-      { type: "ИГРА", text: "Узнай игру по стилю:", media: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=cover", answer: "Cyberpunk" }
+      { type: "ЛОКАЦИЯ", text: "Из какой игры эта таверна, где играет уютная музыка?", media: "https://i.imgur.com/eP6PZ1M.jpeg", answer: "Skyrim" },
+      { type: "КИБЕРПАНК", text: "Узнай игру по футуристичному стилю интерфейса:", media: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=cover", answer: "Cyberpunk 2077" },
+      { type: "РЕТРО", text: "В какой культовой игре мы управляли водопроводчиком?", media: "", answer: "Super Mario Bros" },
+      { type: "ОРУЖИЕ", text: "Как называется культовая штурмовая винтовка за террористов в CS:GO?", media: "", answer: "AK-47" },
+      { type: "ПЕРСОНАЖ", text: "Как зовут главного героя серии игр Ведьмак?", media: "", answer: "Геральт из Ривии" }
     ],
-    phase: 'LOBBY', // LOBBY, PLAYING, FINISHED
-    currentQ: null, // index
-    buzzQueue: [], // Array of player IDs
+    
+    phase: 'LOBBY', 
+    
+    // ВАЖНО: Храним полный ОБЪЕКТ вопроса, чтобы логика игроков не ломалась об индексы
+    activeQIdx: -1,
+    qData: null, 
+    
+    buzzQueue: [],
     timerRunning: false
   };
 
-  const AVATARS = ["👾", "🤖", "🕹️", "🛸", "⚔️", "🎮", "💥", "👑"];
+  const AVATARS = ["👾", "🤖", "🕹️", "🛸", "⚔️", "🎮", "💥", "👑", "🔥", "⚡"];
 
-  // ---------------------------------------------------------
-  // 5. HOST LOGIC
-  // ---------------------------------------------------------
+  // --- 5. ЛОГИКА ВЕДУЩЕГО (HOST) ---
   const Host = {
     init: () => {
       STATE.role = 'HOST';
@@ -531,22 +958,28 @@ const App = (function() {
       STATE.roomCode = String(Math.floor(100000 + Math.random() * 900000));
       STATE.players = [];
       STATE.phase = 'LOBBY';
+      
       Net.connect(STATE.roomCode, 'HOST');
       
       document.getElementById('host-code-display').textContent = STATE.roomCode;
       Host.renderSetup();
       UI.show('scr-host-setup');
-      UI.updateStatus(`HOSTING ROOM: ${STATE.roomCode}`);
-      UI.toast('Комната создана. Код сгенерирован.', 'success');
+      UI.updateStatus(`ХОСТИНГ КОМНАТЫ: ${STATE.roomCode}`);
+      UI.toast('Комната создана. Ждем игроков.', 'success');
     },
 
     processNetworkMsg: (msg) => {
       if(msg.type === 'PLAYER_JOIN') {
         const isExist = STATE.players.find(p => p.name === msg.name);
         if(isExist) {
-          Net.send('JOIN_REJECT', { target: msg.senderId, reason: 'Никнейм занят' });
+          Net.send('JOIN_REJECT', { target: msg.senderId, reason: 'Никнейм уже занят!' });
         } else {
-          const newPlayer = { id: msg.senderId, name: msg.name, avatar: AVATARS[STATE.players.length % AVATARS.length], score: 0 };
+          const newPlayer = { 
+            id: msg.senderId, 
+            name: msg.name, 
+            avatar: AVATARS[STATE.players.length % AVATARS.length], 
+            score: 0 
+          };
           STATE.players.push(newPlayer);
           Host.syncStateToNetwork();
           Host.renderSetup();
@@ -554,16 +987,18 @@ const App = (function() {
         }
       }
       
-      if(msg.type === 'PLAYER_BUZZ' && STATE.phase === 'PLAYING' && STATE.currentQ !== null) {
+      if(msg.type === 'PLAYER_BUZZ' && STATE.phase === 'PLAYING' && STATE.qData !== null) {
         if(!STATE.buzzQueue.includes(msg.senderId)) {
           STATE.buzzQueue.push(msg.senderId);
           SFX.play('buzz');
+          
           if(STATE.buzzQueue.length === 1) {
             Host.stopTimer();
             Host.log(`Трибуна ${msg.name} перехватила управление!`, 'act');
           } else {
             Host.log(`Игрок ${msg.name} в очереди (${STATE.buzzQueue.length})`, 'sys');
           }
+          
           Host.syncStateToNetwork();
           Host.renderArena();
         }
@@ -571,24 +1006,35 @@ const App = (function() {
     },
 
     syncStateToNetwork: () => {
+      // ИСПРАВЛЕНА ОШИБКА: Передаем полностью готовый объект вопроса (qData)
       Net.send('SYNC_STATE', { 
-        players: STATE.players, phase: STATE.phase, 
-        currentQ: STATE.currentQ !== null ? STATE.questions[STATE.currentQ] : null,
-        buzzQueue: STATE.buzzQueue, timerRunning: STATE.timerRunning
+        phase: STATE.phase, 
+        players: STATE.players, 
+        qData: STATE.qData, 
+        buzzQueue: STATE.buzzQueue, 
+        timerRunning: STATE.timerRunning
       });
     },
 
     renderSetup: () => {
       document.getElementById('host-p-count').textContent = STATE.players.length;
-      const pWrap = document.getElementById('host-players'); pWrap.innerHTML = '';
-      STATE.players.forEach(p => { pWrap.innerHTML += `<div class="player-pill"><span class="av">${p.avatar}</span> ${p.name}</div>`; });
+      const pWrap = document.getElementById('host-players');
+      pWrap.innerHTML = '';
       
-      const qWrap = document.getElementById('host-q-list'); qWrap.innerHTML = '';
+      STATE.players.forEach(p => {
+        pWrap.innerHTML += `<div class="player-pill"><span class="av">${p.avatar}</span> ${p.name}</div>`;
+      });
+      
+      const qWrap = document.getElementById('host-q-list');
+      qWrap.innerHTML = '';
+      
       STATE.questions.forEach((q, i) => {
-        qWrap.innerHTML += `<div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border:var(--border-thin);">
-          <div style="font-size:12px;"><span style="color:var(--accent)">[${q.type}]</span> ${q.text.substring(0,30)}...</div>
-          <button class="btn btn-pink" style="padding:4px 8px; font-size:10px;" onclick="App.Host.delQ(${i})">X</button>
-        </div>`;
+        qWrap.innerHTML += `
+          <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border:var(--border-thin);">
+            <div style="font-size:12px;"><span style="color:var(--accent)">[${q.type}]</span> ${q.text.substring(0,30)}...</div>
+            <button class="btn btn-pink" style="padding:4px 8px; font-size:10px;" onclick="App.Host.delQ(${i})">X</button>
+          </div>
+        `;
       });
     },
 
@@ -596,20 +1042,32 @@ const App = (function() {
       const type = document.getElementById('mq-cat').value || 'ВОПРОС';
       const text = document.getElementById('mq-txt').value;
       const media = document.getElementById('mq-img').value;
+      
       if(!text) { UI.toast('Введите текст вопроса', 'error'); return; }
-      STATE.questions.push({type, text, media, answer: "HOST_VIEW"});
+      
+      STATE.questions.push({ type, text, media, answer: "Ответ скрыт" });
+      
       document.getElementById('modal-q').classList.remove('active');
       document.getElementById('mq-txt').value = '';
+      document.getElementById('mq-img').value = '';
       Host.renderSetup();
-      UI.toast('Вопрос добавлен', 'success');
+      UI.toast('Вопрос успешно добавлен в базу', 'success');
     },
 
-    delQ: (i) => { STATE.questions.splice(i,1); Host.renderSetup(); },
+    delQ: (i) => {
+      STATE.questions.splice(i, 1);
+      Host.renderSetup();
+    },
 
     startMatch: () => {
-      if(STATE.players.length === 0) { UI.toast('Дождитесь игроков!', 'error'); return; }
+      if(STATE.players.length === 0) {
+        UI.toast('Невозможно начать игру без трибун!', 'error');
+        return;
+      }
+      
       STATE.phase = 'PLAYING';
-      STATE.currentQ = null;
+      STATE.activeQIdx = -1;
+      STATE.qData = null;
       STATE.buzzQueue = [];
       Host.syncStateToNetwork();
       
@@ -617,21 +1075,29 @@ const App = (function() {
       document.getElementById('arena-player-controls').style.display = 'none';
       Host.renderArena();
       UI.show('scr-arena');
-      Host.log('Сессия запущена. Ведущий управляет экраном.', 'sys');
+      Host.log('Сессия запущена. Ведущий перешел за пульт.', 'sys');
     },
 
     publishNextQuestion: () => {
-      if(STATE.questions.length === 0) return;
+      if(STATE.questions.length === 0) {
+        UI.toast('База вопросов пуста!', 'error');
+        return;
+      }
+      
       STATE.buzzQueue = [];
       Host.stopTimer();
-      STATE.currentQ = STATE.currentQ === null ? 0 : (STATE.currentQ + 1) % STATE.questions.length;
+      
+      STATE.activeQIdx = (STATE.activeQIdx + 1) % STATE.questions.length;
+      STATE.qData = STATE.questions[STATE.activeQIdx]; // Берем объект
+      
       Host.syncStateToNetwork();
       Host.renderArena();
-      Host.log(`Выведен вопрос: ${STATE.questions[STATE.currentQ].type}`, 'sys');
+      Host.log(`Выведен вопрос: ${STATE.qData.type}`, 'sys');
     },
 
     startTimer: () => {
-      if(STATE.currentQ === null || STATE.timerRunning) return;
+      if(STATE.qData === null || STATE.timerRunning) return;
+      
       STATE.timerRunning = true;
       Host.syncStateToNetwork();
       Host.renderArena();
@@ -644,7 +1110,7 @@ const App = (function() {
         STATE.timerRunning = false;
         Host.syncStateToNetwork();
         Host.renderArena();
-        Host.log('Время вышло', 'err');
+        Host.log('Время раунда полностью вышло!', 'err');
         SFX.play('err');
       }, 30000);
     },
@@ -653,32 +1119,40 @@ const App = (function() {
       STATE.timerRunning = false;
       clearTimeout(Host._tid);
       const bar = document.getElementById('arena-timer');
-      bar.style.transition = 'none'; bar.style.width = '100%';
+      bar.style.transition = 'none';
+      bar.style.width = '100%';
     },
 
     resetBuzzers: () => {
       STATE.buzzQueue = [];
       Host.syncStateToNetwork();
       Host.renderArena();
+      Host.log('Кнопки трибун сброшены ведущим.', 'sys');
     },
 
     judge: (isCorrect) => {
       if(STATE.buzzQueue.length === 0) return;
+      
       const pid = STATE.buzzQueue[0];
       const player = STATE.players.find(p => p.id === pid);
       
       if(isCorrect) {
-        player.score += 200;
+        player.score += 250;
         SFX.play('ok');
-        Host.log(`${player.name} +200 XP`, 'ok');
-        STATE.buzzQueue = []; // Clear on correct
+        Host.log(`ОТВЕТ ВЕРЕН! ${player.name} заработал +250 XP`, 'ok');
+        STATE.buzzQueue = []; // Очищаем очередь, если ответ правильный
       } else {
         player.score = Math.max(0, player.score - 100);
         SFX.play('err');
-        Host.log(`${player.name} ошибка (-100 XP)`, 'err');
-        STATE.buzzQueue.shift(); // Move to next
-        if(STATE.buzzQueue.length > 0) Host.log(`Очередь переходит к ${STATE.players.find(p=>p.id===STATE.buzzQueue[0]).name}`, 'act');
+        Host.log(`ОШИБКА! ${player.name} оштрафован на -100 XP`, 'err');
+        
+        STATE.buzzQueue.shift(); // Выкидываем ошибшегося
+        if(STATE.buzzQueue.length > 0) {
+          const nextPlayer = STATE.players.find(p => p.id === STATE.buzzQueue[0]);
+          Host.log(`Право ответа перешло к ${nextPlayer.name}`, 'act');
+        }
       }
+      
       Host.syncStateToNetwork();
       Host.renderArena();
     },
@@ -693,8 +1167,8 @@ const App = (function() {
     renderArena: () => {
       Render.arenaCommon();
       
-      // Update Host Controls
-      document.getElementById('btn-timer').disabled = (STATE.currentQ === null || STATE.timerRunning || STATE.buzzQueue.length > 0);
+      // Управление кнопками ведущего
+      document.getElementById('btn-timer').disabled = (STATE.qData === null || STATE.timerRunning || STATE.buzzQueue.length > 0);
       
       const targetLabel = document.getElementById('arena-target');
       const btnOk = document.getElementById('btn-ok');
@@ -703,10 +1177,12 @@ const App = (function() {
       if(STATE.buzzQueue.length > 0) {
         const activeP = STATE.players.find(p => p.id === STATE.buzzQueue[0]);
         targetLabel.textContent = activeP.name;
-        btnOk.disabled = false; btnErr.disabled = false;
+        btnOk.disabled = false;
+        btnErr.disabled = false;
       } else {
         targetLabel.textContent = "---";
-        btnOk.disabled = true; btnErr.disabled = true;
+        btnOk.disabled = true;
+        btnErr.disabled = true;
       }
     },
 
@@ -717,9 +1193,7 @@ const App = (function() {
     }
   };
 
-  // ---------------------------------------------------------
-  // 6. PLAYER LOGIC
-  // ---------------------------------------------------------
+  // --- 6. ЛОГИКА ИГРОКА (PLAYER) ---
   const Player = {
     join: (name, code) => {
       STATE.role = 'PLAYER';
@@ -730,7 +1204,7 @@ const App = (function() {
       Net.connect(code, 'PLAYER');
       Net.send('PLAYER_JOIN', { name: STATE.myName });
       
-      UI.updateStatus(`CONNECTING TO ${code}...`);
+      UI.updateStatus(`ПОДКЛЮЧЕНИЕ К КОМНАТЕ ${code}...`);
       document.getElementById('btn-player-buzz').disabled = true;
     },
 
@@ -742,19 +1216,21 @@ const App = (function() {
       }
       
       if(msg.type === 'SYNC_STATE') {
-        // First time sync logic
+        // Первый вход в лобби
         if(STATE.phase === 'LOBBY' && msg.phase === 'LOBBY') {
            STATE.players = msg.players;
            Player.renderLobby();
            UI.show('scr-lobby');
         }
         
+        // Синхронизация стейта
         STATE.players = msg.players;
         STATE.phase = msg.phase;
-        STATE.currentQ = msg.currentQ; // This is the actual question object from host now
+        STATE.qData = msg.qData; // Записываем готовый объект вопроса от хоста
         STATE.buzzQueue = msg.buzzQueue;
         STATE.timerRunning = msg.timerRunning;
 
+        // Переход из лобби в игру
         if(STATE.phase === 'PLAYING') {
           document.getElementById('arena-host-controls').style.display = 'none';
           document.getElementById('arena-player-controls').style.display = 'flex';
@@ -762,6 +1238,7 @@ const App = (function() {
           Player.renderArena();
         }
 
+        // Переход к итогам
         if(STATE.phase === 'FINISHED') {
           Render.endScreen();
         }
@@ -771,80 +1248,99 @@ const App = (function() {
     renderLobby: () => {
       document.getElementById('lobby-code-display').textContent = STATE.roomCode;
       document.getElementById('lobby-count').textContent = STATE.players.length;
-      const wrap = document.getElementById('lobby-players'); wrap.innerHTML = '';
+      
+      const wrap = document.getElementById('lobby-players');
+      wrap.innerHTML = '';
+      
       STATE.players.forEach(p => {
-        wrap.innerHTML += `<div class="player-pill" style="${p.id===STATE.myId ? 'border-color:var(--accent); color:var(--accent);' : ''}"><span class="av">${p.avatar}</span> ${p.name}</div>`;
+        const isMe = p.id === STATE.myId;
+        wrap.innerHTML += `
+          <div class="player-pill" style="${isMe ? 'border-color:var(--accent); color:var(--accent);' : ''}">
+            <span class="av">${p.avatar}</span> ${p.name}
+          </div>
+        `;
       });
     },
 
     renderArena: () => {
       Render.arenaCommon();
-      // Manage big buzz button
+      
+      // Логика кнопки Игрока
       const btn = document.getElementById('btn-player-buzz');
-      if(STATE.currentQ !== null && !STATE.buzzQueue.includes(STATE.myId)) {
+      
+      // Если вопрос есть на экране и мы еще не нажимали кнопку
+      if(STATE.qData !== null && !STATE.buzzQueue.includes(STATE.myId)) {
         btn.disabled = false;
-        btn.style.animation = 'none'; // reset
+        btn.style.animation = 'none';
       } else {
         btn.disabled = true;
       }
       
+      // Визуализация статуса кнопки
       if(STATE.buzzQueue[0] === STATE.myId) {
         btn.textContent = "ВЫ ОТВЕЧАЕТЕ!";
         btn.style.background = "var(--green)";
         btn.style.color = "#000";
+        btn.style.boxShadow = "0 0 30px var(--green)";
       } else if (STATE.buzzQueue.includes(STATE.myId)) {
         btn.textContent = "ОЧЕРЕДЬ...";
         btn.style.background = "transparent";
         btn.style.color = "var(--text-secondary)";
+        btn.style.boxShadow = "none";
       } else {
         btn.textContent = "ЖАТЬ!";
         btn.style.background = "rgba(255, 230, 0, 0.1)";
         btn.style.color = "var(--accent)";
+        btn.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
       }
     },
 
     sendBuzz: () => {
-      SFX.init(); // Init Audio Context on user interaction
+      SFX.init(); // Инициализация аудиоконтекста по клику
       document.getElementById('btn-player-buzz').disabled = true;
       Net.send('PLAYER_BUZZ', { name: STATE.myName });
     }
   };
 
-  // ---------------------------------------------------------
-  // 7. SHARED RENDER LOGIC
-  // ---------------------------------------------------------
+  // --- 7. ОБЩАЯ ЛОГИКА РЕНДЕРИНГА (ДЛЯ ВСЕХ) ---
   const Render = {
     arenaCommon: () => {
-      // Main Monitor
       const cat = document.getElementById('arena-cat');
       const txt = document.getElementById('arena-text');
       const img = document.getElementById('arena-img');
       const bg = document.getElementById('arena-bg');
       
-      if(STATE.currentQ) {
-        cat.textContent = STATE.currentQ.type;
-        txt.textContent = STATE.currentQ.text;
-        if(STATE.currentQ.media) {
-          img.src = STATE.currentQ.media; img.style.display = 'block';
-          bg.style.backgroundImage = `url('${STATE.currentQ.media}')`;
+      // Рендер вопроса на главном экране
+      if(STATE.qData) {
+        cat.textContent = STATE.qData.type;
+        txt.textContent = STATE.qData.text;
+        
+        if(STATE.qData.media) {
+          img.src = STATE.qData.media;
+          img.style.display = 'block';
+          bg.style.backgroundImage = `url('${STATE.qData.media}')`;
         } else {
-          img.style.display = 'none'; bg.style.backgroundImage = 'none';
+          img.style.display = 'none';
+          bg.style.backgroundImage = 'none';
         }
       } else {
-        cat.textContent = "СИСТЕМА ГОТОВА";
-        txt.textContent = "Ожидайте публикации раунда";
-        img.style.display = 'none'; bg.style.backgroundImage = 'none';
+        cat.textContent = "СИСТЕМА В ОЖИДАНИИ";
+        txt.textContent = "Внимание на экран. Ждем публикации раунда...";
+        img.style.display = 'none';
+        bg.style.backgroundImage = 'none';
       }
 
-      // Timer UI
+      // Рендер анимации таймера
       const bar = document.getElementById('arena-timer');
       if(STATE.timerRunning && bar.style.width !== '0%') {
-        bar.style.transition = 'width 30s linear'; bar.style.width = '0%';
+        bar.style.transition = 'width 30s linear';
+        bar.style.width = '0%';
       } else if (!STATE.timerRunning) {
-        bar.style.transition = 'none'; bar.style.width = '100%';
+        bar.style.transition = 'none';
+        bar.style.width = '100%';
       }
 
-      // Podiums
+      // Рендер трибун
       const pWrap = document.getElementById('arena-podiums');
       pWrap.innerHTML = '';
       
@@ -855,8 +1351,9 @@ const App = (function() {
         if(STATE.buzzQueue.includes(p.id)) {
            const idx = STATE.buzzQueue.indexOf(p.id);
            if(idx === 0) pState = 'state-buzzed';
-           else pState = 'state-idle'; // in queue
-           orderHtml = `<div class="buzz-indicator" style="display:flex;">${idx+1}</div>`;
+           else pState = 'state-idle'; 
+           
+           orderHtml = `<div class="buzz-indicator" style="display:flex;">${idx + 1}</div>`;
         } else if (STATE.buzzQueue.length > 0) {
            pState = 'state-locked';
         }
@@ -872,29 +1369,37 @@ const App = (function() {
     },
 
     endScreen: () => {
-      const sorted = [...STATE.players].sort((a,b) => b.score - a.score);
-      document.getElementById('end-winner').textContent = sorted.length > 0 ? `🏆 Победитель: ${sorted[0].name}` : 'Игра окончена';
+      const sorted = [...STATE.players].sort((a, b) => b.score - a.score);
+      const winnerTxt = document.getElementById('end-winner');
+      
+      if(sorted.length > 0 && sorted[0].score > 0) {
+        winnerTxt.textContent = `🏆 АБСОЛЮТНЫЙ ЧЕМПИОН: ${sorted[0].name}`;
+      } else {
+        winnerTxt.textContent = 'ИГРА ОКОНЧЕНА (Нет победителя)';
+      }
       
       const list = document.getElementById('end-list');
       list.innerHTML = '';
+      
       sorted.forEach((p, i) => {
-        list.innerHTML += `<div style="display:flex; justify-content:space-between; padding:12px; border-bottom:var(--border-thin);">
-          <div>#${i+1} ${p.avatar} ${p.name}</div><div class="brand-font" style="color:var(--accent)">${p.score} XP</div>
-        </div>`;
+        list.innerHTML += `
+          <div style="display:flex; justify-content:space-between; padding:12px; border-bottom:var(--border-thin);">
+            <div>#${i + 1} ${p.avatar} ${p.name}</div>
+            <div class="brand-font" style="color:var(--accent)">${p.score} XP</div>
+          </div>
+        `;
       });
       
       document.getElementById('modal-end').classList.add('active');
     }
   };
 
-  // ---------------------------------------------------------
-  // 8. PUBLIC EXPORTS & HOTKEYS
-  // ---------------------------------------------------------
+  // --- 8. ГОРЯЧИЕ КЛАВИШИ ---
   document.addEventListener('keydown', (e) => {
     if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    SFX.init(); // Auto unlock audio
+    SFX.init(); 
     
-    // Host Hotkeys
+    // Клавиши Ведущего
     if(STATE.role === 'HOST' && STATE.phase === 'PLAYING') {
       if(e.code === 'Space') { e.preventDefault(); Host.publishNextQuestion(); }
       if(e.key.toLowerCase() === 'r' || e.key.toLowerCase() === 'к') Host.resetBuzzers();
@@ -902,12 +1407,17 @@ const App = (function() {
       if(e.key === '2' && STATE.buzzQueue.length > 0) Host.judge(false);
     }
     
-    // Player Hotkey
+    // Клавиши Игрока
     if(STATE.role === 'PLAYER' && STATE.phase === 'PLAYING') {
-      if(e.code === 'Space') { e.preventDefault(); Player.sendBuzz(); }
+      if(e.code === 'Space') {
+        e.preventDefault();
+        const btn = document.getElementById('btn-player-buzz');
+        if(!btn.disabled) Player.sendBuzz();
+      }
     }
   });
 
+  // --- ЭКСПОРТ МЕТОДОВ ДЛЯ HTML ---
   return {
     navigate: UI.show,
     initHost: () => { SFX.init(); Host.init(); },
@@ -915,11 +1425,19 @@ const App = (function() {
       SFX.init();
       const n = document.getElementById('join-name').value.trim().toUpperCase();
       const c = document.getElementById('join-code').value.trim();
-      if(n && c.length===6) Player.join(n, c); else UI.toast('Проверьте ник и код (6 цифр)', 'error');
+      
+      if(n && c.length === 6) {
+        Player.join(n, c);
+      } else {
+        UI.toast('Ошибка! Введите ник и корректный код (6 цифр)', 'error');
+      }
     },
     leaveRoom: () => {
       Net.disconnect();
-      STATE.role = null; STATE.roomCode = null; STATE.players = [];
+      STATE.role = null; 
+      STATE.roomCode = null; 
+      STATE.players = [];
+      
       document.getElementById('modal-end').classList.remove('active');
       UI.updateStatus('DISCONNECTED');
       UI.show('scr-welcome');
