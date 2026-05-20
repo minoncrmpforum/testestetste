@@ -3,431 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ЦИФРОВОЙ КВИЗ: ВЫХОД ТУТ - Геймпад Версия</title>
+    <title>ЦИФРОВОЙ КВИЗ // ВЫХОД ТУТ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* [0-100] Стили по умолчанию, сброс (оригинальный код) */
+        /* Базовые настройки стиля */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; color: #fff; overflow-x: hidden; }
-
-        /* [100-200] Утилиты, переменные (оригинальный код) */
-        :root { --main-yellow: #ffeb00; --main-black: #0d0d0d; --glass-bg: rgba(255, 255, 255, 0.1); --glass-border: rgba(255, 255, 255, 0.2); }
-
-        /* [200-300] Хедер и меню (оригинальный код, обновленный под геймпад) */
-        header { position: fixed; top: 0; width: 100%; padding: 20px; display: flex; justify-content: space-between; align-items: center; background: rgba(13, 13, 13, 0.8); z-index: 1000; backdrop-filter: blur(5px); border-bottom: 1px solid #222; }
-        .logo-group { display: flex; align-items: center; gap: 15px; }
-        .logo-icon { width: 50px; height: 50px; fill: var(--main-yellow); }
-        .logo-text { font-weight: 900; color: var(--main-yellow); font-size: 1.2rem; }
-        .nav-buttons { display: flex; gap: 15px; }
-        .nav-btn { color: #fff; text-decoration: none; font-size: 14px; font-weight: bold; border-bottom: 2px solid transparent; transition: 0.3s; }
-        .nav-btn:hover { border-bottom-color: var(--main-yellow); }
-
-        /* [300-400] Главный заголовок (оригинальный код, с макета) */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; padding-top: 100px; }
-        .game-title { font-size: 7rem; font-weight: 900; line-height: 0.9; text-transform: uppercase; color: var(--main-yellow); text-shadow: 0 0 10px rgba(255, 235, 0, 0.5); z-index: 2; text-align: center; }
-        .game-subtitle { font-size: 1.5rem; text-transform: uppercase; color: #888; font-weight: bold; margin-top: -20px; z-index: 2; text-align: center;}
-        .gamepad-model { position: absolute; top: 15%; right: 5%; width: 250px; opacity: 0.7; z-index: 1; transform: rotate(15deg); filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));}
-
-        /* [400-500] Секция "Компетенции" (оригинальный код, сохранено) */
-        .competencies { padding: 100px 20px; background-color: var(--main-black); }
-        /* ... оригинальные стили компетенций ... */
-
-        /* [500-600] Секция "Гейм Хаб" (оригинальный код, сохранено) */
-        .game-hub { padding: 100px 20px; background-color: var(--main-black); }
-        /* ... оригинальные стили гейм хаба ... */
-
-        /* [600-700] Футер (оригинальный код) */
-        footer { padding: 50px 20px; border-top: 1px solid #222; text-align: center; }
-
-        /* === [700+] НОВЫЙ КОД ИГРЫ КВИЗ === */
-
-        /* СТИЛЬ iOS GLASSMORPHISM (УНИВЕРСАЛЬНЫЙ КЛАСС) */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.05); /* Полупрозрачный фон */
-            border-radius: 20px;
-            backdrop-filter: blur(15px); /* iOS размытие */
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая грань */
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15), inset 0 0 10px rgba(255,255,255,0.1); /* Тень и внутренний блик */
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .glass-panel:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.25), inset 0 0 15px rgba(255,255,255,0.15);
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: #0a0a0a; 
+            color: #fff; 
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a14 0%, #0a0a0a 100%);
         }
 
-        /* Секция викторины (Game Area) */
-        .quiz-section {
-            padding: 120px 5% 50px;
-            background: linear-gradient(180deg, #0d0d0d 0%, #151515 100%);
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
+        :root { 
+            --neon-yellow: #ffeb00; 
+            --dark-bg: #0d0d0d; 
+            /* Фирменное желтое стекло */
+            --yellow-glass: rgba(255, 235, 0, 0.03);
+            --yellow-glass-border: rgba(255, 235, 0, 0.15);
+            --yellow-glass-glow: rgba(255, 235, 0, 0.05);
         }
 
-        /* Окно Вопроса */
-        .question-window {
-            grid-column: 1 / -1;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+        header { 
+            position: fixed; top: 0; width: 100%; padding: 25px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(10, 10, 10, 0.7); z-index: 1000; 
+            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 235, 0, 0.1); 
         }
-        .q-timer { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 50px; color: var(--main-yellow); font-weight: 900; font-size: 1.5rem; }
-        .q-media { width: 100%; max-height: 400px; border-radius: 15px; margin-bottom: 30px; object-fit: cover; }
-        .q-text { font-size: 2.5rem; font-weight: 900; color: #fff; margin-bottom: 30px; text-transform: uppercase;}
+        .logo-text { font-weight: 900; color: var(--neon-yellow); font-size: 1.4rem; letter-spacing: 2px; }
+        
+        .hero { 
+            height: 45vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; 
+        }
+        .game-title { 
+            font-size: 5rem; font-weight: 900; text-transform: uppercase; 
+            color: var(--neon-yellow); text-shadow: 0 0 20px rgba(255, 235, 0, 0.3); 
+        }
+        .game-subtitle { font-size: 1.1rem; text-transform: uppercase; color: #888; letter-spacing: 4px; margin-top: 10px; }
 
-        /* Область Игроков (Трибуны) */
-        .players-arena {
-            grid-column: 1 / 2;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
+        /* ЭФФЕКТ ЖЕЛТОГО ИОС СТЕКЛА */
+        .yellow-glass-panel {
+            background: var(--yellow-glass);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--yellow-glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 
+                        inset 0 0 20px var(--yellow-glass-glow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .quiz-container {
+            max-width: 1400px; margin: 0 auto; padding: 0 40px 100px;
+            display: grid; grid-template-columns: 2.5fr 1fr; gap: 40px;
         }
 
-        /* Трибуна игрока */
-        .player-stand {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            position: relative;
+        /* Экран вывода вопроса */
+        .question-block {
+            grid-column: 1 / -1; padding: 40px; position: relative;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
         }
-        .p-rank-badge { position: absolute; top: -15px; left: -15px; background: #fff; color: #000; padding: 5px 10px; border-radius: 5px; font-weight: 900; font-size: 12px; display: none; }
-        .p-avatar-ring { width: 100px; height: 100px; border-radius: 50%; border: 4px solid #fff; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
-        .p-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); }
-        .p-name { font-size: 1.2rem; font-weight: 900; color: #fff; text-transform: uppercase; margin-bottom: 5px; }
-        .p-status { font-size: 0.9rem; color: #888; margin-bottom: 15px; }
-        .p-score { font-size: 1.5rem; font-weight: bold; color: var(--main-yellow); background: rgba(0,0,0,0.4); padding: 5px 15px; border-radius: 10px; display: block; border: 1px solid rgba(255,255,255,0.1); }
+        .timer-badge { 
+            position: absolute; top: 25px; right: 25px; 
+            background: rgba(255, 235, 0, 0.2); border: 1px solid var(--neon-yellow);
+            padding: 8px 20px; border-radius: 30px; color: var(--neon-yellow); 
+            font-weight: 900; font-size: 1.4rem; box-shadow: 0 0 15px rgba(255, 235, 0, 0.2);
+        }
+        .question-media-wrapper {
+            width: 100%; max-height: 450px; overflow: hidden; 
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px;
+        }
+        .question-img { width: 100%; height: 100%; object-fit: cover; }
+        .question-txt { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Кнопка (Buzzer) */
-        .buzzer-container { margin-top: auto; padding-top: 20px; }
-        .p-buzzer {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #eee, #999);
-            border: 5px solid #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: 0.1s;
-            position: relative;
+        /* Трибуны игроков */
+        .arena-stands { grid-column: 1 / 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .tribune { 
+            padding: 30px 20px; display: flex; flex-direction: column; 
+            align-items: center; position: relative; text-align: center;
+        }
+        
+        /* Состояние трибуны, когда игрок успел нажать первый */
+        .tribune.leader-active {
+            border-color: var(--neon-yellow);
+            box-shadow: 0 0 30px rgba(255, 235, 0, 0.25), inset 0 0 20px rgba(255, 235, 0, 0.1);
+        }
+        /* Блокировка остальных, когда кто-то уже отвечает */
+        .tribune.locked-out { opacity: 0.25; transform: scale(0.98); }
+
+        .avatar-box { 
+            width: 90px; height: 90px; border-radius: 50%; 
+            border: 3px solid rgba(255,255,255,0.2); margin-bottom: 15px; 
             display: flex; justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.3);
         }
-        .p-buzzer:active { transform: translateY(2px); box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        .p-buzzer.disabled { opacity: 0.5; pointer-events: none; }
-        .p-buzzer.pressed { background: var(--main-yellow); border-color: var(--main-yellow); box-shadow: 0 0 20px rgba(255, 235, 0, 0.7); }
-        .pressed-order { font-size: 2rem; font-weight: 900; color: #000; display: none; }
-        .pressed .pressed-order { display: block; }
-
-        /* Панель Ведущего */
-        .host-control-panel {
-            grid-column: 2 / 3;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        .avatar-img { width: 70px; height: 70px; font-size: 2.5rem; text-align: center; line-height: 70px; }
+        .player-nickname { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: 1px; margin-bottom: 5px; }
+        .player-score-tag { 
+            font-size: 1.1rem; font-weight: 700; color: var(--neon-yellow); 
+            background: rgba(0,0,0,0.5); padding: 4px 16px; border-radius: 12px; 
+            border: 1px solid rgba(255,235,0,0.1);
         }
-        .host-title { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; color: #fff; margin-bottom: 10px; border-bottom: 2px solid var(--main-yellow); padding-bottom: 10px; }
-        .host-btn {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            padding: 15px;
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            text-transform: uppercase;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.2s;
+
+        /* Кнопка-Биззер на трибуне */
+        .buzzer-btn {
+            margin-top: 25px; width: 75px; height: 75px; border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fffa78 0%, #ccbc00 70%, #8a7f00 100%);
+            border: 4px solid #fff; cursor: pointer; position: relative;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.6), inset 0 2px 3px rgba(255,255,255,0.4);
+            transition: transform 0.05s, box-shadow 0.1s;
         }
-        .host-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
-        .host-btn.btn-correct { color: #00ff0a; border-color: #00ff0a; }
-        .host-btn.btn-incorrect { color: #ff001c; border-color: #ff001c; }
-        .score-info { margin-top: auto; background: rgba(0,0,0,0.4); border-radius: 10px; padding: 15px; border: 1px solid #222; }
-        .score-row { display: flex; justify-content: space-between; font-family: monospace; color: #888; font-size: 12px;}
-
-        /* Плеер звуков (скрытый) */
-        #audio-player { display: none; }
-
-        /* [1400-1481] Медиа-запросы, адаптив (оригинальный код) */
-        @media (max-width: 900px) {
-            .quiz-section { grid-template-columns: 1fr; }
-            .host-control-panel { grid-column: 1; }
-            .game-title { font-size: 4rem; }
+        .buzzer-btn:active { transform: translateY(3px); box-shadow: 0 2px 6px rgba(0,0,0,0.6); }
+        
+        /* Эффект свечения кнопки при успешном нажатии */
+        .tribune.leader-active .buzzer-btn {
+            background: radial-gradient(circle at 35% 35%, #fffb9e 0%, #ffeb00 60%, #b3a500 100%);
+            box-shadow: 0 0 25px var(--neon-yellow), 0 4px 10px rgba(0,0,0,0.5);
+            border-color: var(--neon-yellow);
         }
-        /* ... оригинальный адаптив ... */
 
-        /* === [1481+] КОНЕЦ ОРИГИНАЛЬНОГО КОДА === */
+        /* Панель управления Ведущего */
+        .host-station { padding: 35px 25px; display: flex; flex-direction: column; gap: 20px; height: fit-content; }
+        .host-head { font-size: 1.2rem; font-weight: 900; letter-spacing: 2px; border-bottom: 2px solid var(--neon-yellow); padding-bottom: 12px; text-transform: uppercase;}
+        
+        .action-button {
+            background: rgba(255,255,255,0.03); color: #fff; border: 1px solid rgba(255,255,255,0.1);
+            padding: 16px; border-radius: 14px; font-weight: 700; text-transform: uppercase;
+            cursor: pointer; letter-spacing: 1px; transition: all 0.2s;
+        }
+        .action-button:hover { background: rgba(255,235,0,0.1); border-color: var(--neon-yellow); color: var(--neon-yellow); }
+        
+        .judge-zone { display: flex; gap: 12px; margin-top: 10px; }
+        .judge-btn { flex: 1; padding: 14px; border-radius: 12px; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.2s; opacity: 0.3; pointer-events: none;}
+        .judge-btn.active { opacity: 1; pointer-events: auto; }
+        
+        .btn-yes { background: rgba(0, 255, 100, 0.1); border: 1px solid #00ff64; color: #00ff64; }
+        .btn-yes:hover { background: #00ff64; color: #000; box-shadow: 0 0 15px rgba(0, 255, 100, 0.4); }
+        .btn-no { background: rgba(255, 30, 60, 0.1); border: 1px solid #ff1e3c; color: #ff1e3c; }
+        .btn-no:hover { background: #ff1e3c; color: #fff; box-shadow: 0 0 15px rgba(255, 30, 60, 0.4); }
+
+        .current-responder-info { background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+
+        footer { text-align: center; padding: 40px; color: #555; font-size: 0.9rem; border-top: 1px solid rgba(255,235,0,0.05); }
+
+        @media (max-width: 1024px) {
+            .quiz-container { grid-template-columns: 1fr; }
+            .arena-stands { grid-column: 1; }
+        }
     </style>
 </head>
 <body>
 
-    <audio id="sfx-correct" src="https://assets.mixkit.co/active_storage/sfx/2012/2012-preview.mp3"></audio>
-    <audio id="sfx-incorrect" src="https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3"></audio>
-    <audio id="sfx-button" src="https://assets.mixkit.co/active_storage/sfx/2014/2014-preview.mp3"></audio>
-
     <header>
-        <div class="logo-group">
-            <svg class="logo-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"></path></svg>
-            <span class="logo-text">ВЫХОД ТУТ // GAME HUB</span>
-        </div>
-        <nav class="nav-buttons">
-            <a href="#" class="nav-btn">КОМПЕТЕНЦИИ</a>
-            <a href="#" class="nav-btn">ИГРЫ</a>
-            <a href="#quiz" class="nav-btn">КВИЗ</a>
-            <a href="#" class="nav-btn">ВХОД</a>
-        </nav>
+        <div class="logo-text">ВЫХОД ТУТ // КВИЗ-ИНТЕРФЕЙС</div>
     </header>
 
-    <section class="hero" id="home">
-        <h1 class="game-title">ЦИФРОВОЙ КВИЗ</h1>
-        <p class="game-subtitle">ПРОЕКТИРУЕМ ОПЫТ. ИГРАЕМ. ВЫИГРЫВАЕМ.</p>
-        <img src="https://i.imgur.com/8QGjYtU.png" alt="Gamepad Model" class="gamepad-model">
+    <section class="hero">
+        <h1 class="game-title">ГЕЙМ-ВИКТОРИНА</h1>
+        <p class="game-subtitle">Интерактивная панель ведущего и игроков</p>
     </section>
 
-    <section class="quiz-section" id="quiz">
+    <main class="quiz-container">
 
-        <div class="question-window glass-panel" id="questionWindow">
-            <div class="q-timer">30</div>
-            <img id="questionMedia" src="https://i.imgur.com/eP6PZ1M.jpeg" class="q-media" alt="Медиа Вопроса">
-            <h2 class="q-text" id="questionText">ОТКУДА ЭТА ЛОКАЦИЯ?</h2>
-            <div id="mediaAnswerHint" style="color:#888; margin-top: -15px; margin-bottom: 20px;">ОЖИДАЕМ НАЖАТИЯ КНОПКИ</div>
+        <div class="question-block yellow-glass-panel" id="qBlock">
+            <div class="timer-badge" id="timerDisplay">30</div>
+            <div class="question-media-wrapper">
+                <img id="qImage" src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=cover" class="question-img" alt="Экран Вопроса">
+            </div>
+            <h2 class="question-txt" id="qText">Ожидание запуска раунда ведущим...</h2>
         </div>
 
-        <div class="players-arena" id="playersArena">
-            <div class="player-stand glass-panel" id="player1Stand">
-                <span class="p-rank-badge">1st</span>
-                <div class="p-avatar-ring">
-                    <img src="https://i.imgur.com/QhX3b30.png" class="p-avatar" alt="User Avatar">
+        <div class="arena-stands" id="standsArena">
+            <div class="tribune yellow-glass-panel" id="stand-1">
+                <div class="avatar-box">
+                    <div class="avatar-img">👾</div>
                 </div>
-                <h3 class="p-name" id="p1Name">NEO_KNIGHT</h3>
-                <p class="p-status">Online</p>
-                <div class="p-score-group">
-                    <span class="p-score" id="p1Score">1500 XP</span>
-                </div>
-                <div class="buzzer-container">
-                    <div class="p-buzzer disabled" id="p1Buzzer" onclick="playerPressBuzzer(1)">
-                        <span class="pressed-order">1</span>
-                    </div>
-                </div>
+                <h3 class="player-nickname">ИГРОК_1</h3>
+                <span class="player-score-tag" id="score-1">0 XP</span>
+                <button class="buzzer-btn" onclick="pressBuzzer(1)"></button>
             </div>
-            <div class="player-stand glass-panel" id="player2Stand">
-                <span class="p-rank-badge">1st</span>
-                <div class="p-avatar-ring">
-                    <img src="https://i.imgur.com/Z4w294V.png" class="p-avatar" alt="User Avatar">
+
+            <div class="tribune yellow-glass-panel" id="stand-2">
+                <div class="avatar-box">
+                    <div class="avatar-img">🕹️</div>
                 </div>
-                <h3 class="p-name" id="p2Name">RETRO_WAVE</h3>
-                <p class="p-status">Online</p>
-                <div class="p-score-group">
-                    <span class="p-score" id="p2Score">1250 XP</span>
-                </div>
-                <div class="buzzer-container">
-                    <div class="p-buzzer disabled" id="p2Buzzer" onclick="playerPressBuzzer(2)">
-                        <span class="pressed-order">1</span>
-                    </div>
-                </div>
+                <h3 class="player-nickname">ИГРОК_2</h3>
+                <span class="player-score-tag" id="score-2">0 XP</span>
+                <button class="buzzer-btn" onclick="pressBuzzer(2)"></button>
             </div>
-            <div class="player-stand glass-panel" id="player3Stand">
-                <span class="p-rank-badge">1st</span>
-                <div class="p-avatar-ring">
-                    <img src="https://i.imgur.com/f0m53vG.png" class="p-avatar" alt="User Avatar">
+
+            <div class="tribune yellow-glass-panel" id="stand-3">
+                <div class="avatar-box">
+                    <div class="avatar-img">🤖</div>
                 </div>
-                <h3 class="p-name" id="p3Name">CYBER_DRAGON</h3>
-                <p class="p-status">Online</p>
-                <div class="p-score-group">
-                    <span class="p-score" id="p3Score">1600 XP</span>
-                </div>
-                <div class="buzzer-container">
-                    <div class="p-buzzer disabled" id="p3Buzzer" onclick="playerPressBuzzer(3)">
-                        <span class="pressed-order">1</span>
-                    </div>
-                </div>
+                <h3 class="player-nickname">ИГРОК_3</h3>
+                <span class="player-score-tag" id="score-3">0 XP</span>
+                <button class="buzzer-btn" onclick="pressBuzzer(3)"></button>
             </div>
         </div>
 
-        <div class="host-control-panel glass-panel" id="hostPanel">
-            <h4 class="host-title">ИНТЕРФЕЙС ВЕДУЩЕГО</h4>
+        <div class="host-station yellow-glass-panel">
+            <h4 class="host-head">Пульт Управления</h4>
             
-            <button class="host-btn" onclick="nextQuestion()">ЗАГРУЗИТЬ ВОПРОС</button>
-            <button class="host-btn disabled" id="startTimerBtn" onclick="startQuestionTimer()">ЗАПУСТИТЬ ТАЙМЕР</button>
-
-            <div class="score-controls" style="margin-top: 20px;">
-                <p style="color: #888; font-size: 0.9rem; margin-bottom: 5px;">Начислить игроку <span id="answeringPlayerName" style="color:var(--main-yellow); font-weight:bold;">???</span>:</p>
-                <div style="display: flex; gap: 10px;">
-                    <button class="host-btn btn-correct disabled" id="btnCorrect" onclick="judgeAnswer(true)">ВЕРНО (+250)</button>
-                    <button class="host-btn btn-incorrect disabled" id="btnIncorrect" onclick="judgeAnswer(false)">НЕВЕРНО (-100)</button>
-                </div>
+            <button class="action-button" onclick="loadNextQuestion()">Следующий вопрос</button>
+            
+            <div class="current-responder-info">
+                <p style="color: #777; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 5px;">Отвечает игрок:</p>
+                <div id="responderName" style="font-size: 1.4rem; font-weight: 900; color: var(--neon-yellow);">НИКТО</div>
             </div>
 
-            <div class="score-info">
-                <div class="score-row">ОЧКИ ЗА ОТВЕТ: 250</div>
-                <div class="score-row">ШТРАФ ЗА ОШИБКУ: 100</div>
-                <div class="score-row">ВРЕМЯ ВОПРОСА: 30с</div>
+            <div class="judge-zone">
+                <button class="judge-btn btn-yes" id="jBtnYes" onclick="judgeResult(true)">Верно (+250)</button>
+                <button class="judge-btn btn-no" id="jBtnNo" onclick="judgeResult(false)">Ошибка (-100)</button>
             </div>
-            <p style="font-size: 10px; color: #555; text-align:center; margin-top:10px;">КВИЗ УПРАВЛЕНИЯ "ВЫХОД ТУТ"</p>
         </div>
 
-    </section>
+    </main>
 
     <footer>
-        <p>&copy; 2024 ВЫХОД ТУТ // КОДОВЫЙ ШТАБ ЛЁХИ. Все права защищены (да, даже этот квиз).</p>
+        <p>&copy; ВЫХОД ТУТ // Разработано в точном соответствии с ТЗ</p>
     </footer>
 
     <script>
-        /* === [1481+] НОВЫЙ КОД ЛОГИКИ ИГРЫ === */
+        // База данных вопросов (Сюда загружать ссылки на картинки и тексты)
+        const questionsDatabase = [
+            {
+                text: "Из какой культовой игры эта известная стартовая локация?",
+                media: "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200&auto=format&fit=cover"
+            },
+            {
+                text: "Угадайте ретро-игру по дизайну интерфейса и цветовой гамме:",
+                media: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=cover"
+            }
+        ];
 
-        // Состояние Игры
-        const MAX_TIME = 30;
-        const XP_CORRECT = 250;
-        const XP_INCORRECT = -100;
+        let pScores = { 1: 0, 2: 0, 3: 0 };
+        let currentQuestionIdx = -1;
+        let timerVal = 30;
+        let timerId = null;
+        let activeResponder = null;
+        let isRoundActive = false;
 
-        let players = {
-            1: { name: 'NEO_KNIGHT', score: 1500, currentRank: 2 },
-            2: { name: 'RETRO_WAVE', score: 1250, currentRank: 3 },
-            3: { name: 'CYBER_DRAGON', score: 1600, currentRank: 1 }
-        };
-
-        let currentQuestionTime = MAX_TIME;
-        let qTimerInterval;
-        let isQuestionActive = false;
-        let playerAnswering = null;
-
-        // Плейер SFX
-        const sfx = {
-            correct: document.getElementById('sfx-correct'),
-            incorrect: document.getElementById('sfx-incorrect'),
-            buzzer: document.getElementById('sfx-button')
-        };
-
-        function playSfx(type) {
-            sfx[type].currentTime = 0;
-            sfx[type].play();
-        }
-
-        // Обновление DOM очков и аватарок
-        function updatePlayerDOM() {
-            Object.keys(players).forEach(pId => {
-                const player = players[pId];
-                document.getElementById(`p${pId}Name`).textContent = player.name;
-                document.getElementById(`p${pId}Score`).textContent = `${player.score} XP`;
-                
-                // Ранги (выводить только на "выходе тут")
-                const badge = document.getElementById(`player${pId}Stand`).querySelector('.p-rank-badge');
-                badge.style.display = 'none';
-            });
-        }
-
-        // === ВЗАИМОДЕЙСТВИЕ ВЕДУЩЕГО ===
-
-        // 1. Загрузить новый вопрос (Placeholder данные)
-        function nextQuestion() {
-            if (isQuestionActive) return;
-
-            // Сброс состояния вопроса
-            playerAnswering = null;
-            document.getElementById('mediaAnswerHint').textContent = "ОЖИДАЕМ НАЖАТИЯ КНОПКИ";
-            document.getElementById('questionText').textContent = "ОТКУДА ЭТА ТАВЕРНА?";
-            document.getElementById('questionMedia').src = "https://i.imgur.com/eP6PZ1M.jpeg"; // Skyrim tavern
+        // Переключение на следующий вопрос
+        function loadNextQuestion() {
+            clearInterval(timerId);
+            currentQuestionIdx++;
             
-            // Включить кнопки игрокам
-            document.querySelectorAll('.p-buzzer').forEach(b => b.classList.remove('pressed', 'disabled'));
-            document.getElementById('startTimerBtn').classList.remove('disabled');
+            if(currentQuestionIdx >= questionsDatabase.length) {
+                currentQuestionIdx = 0; // Зацикливаем вопросы по кругу
+            }
+
+            const currentQ = questionsDatabase[currentQuestionIdx];
             
-            // Отключить кнопки ведущего
-            disableHostJudgment();
-            isQuestionActive = true;
-            currentQuestionTime = MAX_TIME;
-            document.querySelector('.q-timer').textContent = currentQuestionTime;
-        }
+            // Обновляем медиаэкран
+            document.getElementById('qImage').src = currentQ.media;
+            document.getElementById('qText').textContent = currentQ.text;
+            
+            // Сброс блокировок и стилей трибун
+            activeResponder = null;
+            isRoundActive = true;
+            document.getElementById('responderName').textContent = "НИКТО";
+            
+            for(let i = 1; i <= 3; i++) {
+                const stand = document.getElementById(`stand-${i}`);
+                stand.classList.remove('leader-active', 'locked-out');
+            }
 
-        // 2. Запустить таймер (ведущий)
-        function startQuestionTimer() {
-            if (!isQuestionActive) return;
-            document.getElementById('startTimerBtn').classList.add('disabled');
-            playSfx('buzzer'); // Звук старта
+            // Выключение кнопок вердикта у ведущего
+            document.getElementById('jBtnYes').classList.remove('active');
+            document.getElementById('jBtnNo').classList.remove('active');
 
-            qTimerInterval = setInterval(() => {
-                currentQuestionTime--;
-                document.querySelector('.q-timer').textContent = currentQuestionTime;
-
-                if (currentQuestionTime <= 0) {
-                    clearInterval(qTimerInterval);
-                    lockBuzzers();
-                    document.getElementById('questionText').textContent = "ВРЕМЯ ВЫШЛО. ОЖИДАЕМ СЛЕДУЮЩИЙ ВОПРОС.";
+            // Счётчик времени раунда
+            timerVal = 30;
+            document.getElementById('timerDisplay').textContent = timerVal;
+            timerId = setInterval(() => {
+                timerVal--;
+                document.getElementById('timerDisplay').textContent = timerVal;
+                if(timerVal <= 0) {
+                    clearInterval(timerId);
+                    isRoundActive = false;
+                    document.getElementById('qText').textContent = "ВРЕМЯ ИСТЕКЛО! ЖДЕМ СЛЕДУЮЩИЙ ВОПРОС.";
                 }
             }, 1000);
         }
 
-        // 3. Функция Ведущего: Оценка ответа
-        function judgeAnswer(isCorrect) {
-            if (!playerAnswering) return;
+        // Клик игрока по своей кнопке
+        function pressBuzzer(playerNum) {
+            if(!isRoundActive || activeResponder !== null) return;
 
-            if (isCorrect) {
-                players[playerAnswering].score += XP_CORRECT;
-                playSfx('correct');
-                document.getElementById('questionText').textContent = "ВЕРНО! " + XP_CORRECT + " XP НАЧИСЛЕНО.";
-            } else {
-                players[playerAnswering].score += XP_INCORRECT;
-                playSfx('incorrect');
-                document.getElementById('questionText').textContent = "НЕВЕРНО! ШТРАФ " + XP_INCORRECT + " XP.";
+            clearInterval(timerId); // Останавливаем время
+            activeResponder = playerNum;
+
+            // Подсвечиваем лидера, блокируем остальных
+            document.getElementById(`responderName`).textContent = `ИГРОК_${playerNum}`;
+            
+            for(let i = 1; i <= 3; i++) {
+                const stand = document.getElementById(`stand-${i}`);
+                if(i === playerNum) {
+                    stand.classList.add('leader-active');
+                } else {
+                    stand.classList.add('locked-out');
+                }
             }
 
-            updatePlayerDOM();
-            disableHostJudgment();
-            isQuestionActive = false; // Завершить фазу вопроса
+            // Активируем управление на пульте ведущего
+            document.getElementById('jBtnYes').classList.add('active');
+            document.getElementById('jBtnNo').classList.add('active');
         }
 
-        // === ВЗАИМОДЕЙСТВИЕ ИГРОКА ===
+        // Вердикт ведущего
+        function judgeResult(isCorrect) {
+            if(activeResponder === null) return;
 
-        function playerPressBuzzer(playerId) {
-            if (!isQuestionActive || currentQuestionTime <= 0 || playerAnswering) return;
+            if(isCorrect) {
+                pScores[activeResponder] += 250;
+                document.getElementById('qText').textContent = `ПРАВИЛЬНО! ИГРОК_${activeResponder} ПОЛУЧАЕТ +250 XP.`;
+            } else {
+                pScores[activeResponder] = Math.max(0, pScores[activeResponder] - 100);
+                document.getElementById('qText').textContent = `ОШИБКА! ИГРОК_${activeResponder} ТЕРЯЕТ 100 XP.`;
+            }
 
-            playerAnswering = playerId;
-            
-            // Звук нажатия
-            playSfx('buzzer');
+            // Обновляем табло очков на трибунах
+            document.getElementById(`score-${activeResponder}`).textContent = `${pScores[activeResponder]} XP`;
 
-            // Остановка таймера
-            clearInterval(qTimerInterval);
-
-            // Визуализация нажатия
-            const buzzer = document.getElementById(`p${playerId}Buzzer`);
-            buzzer.classList.add('pressed');
-            
-            // Блокировка остальных
-            lockBuzzers(playerId);
-
-            // Обновление интерфейса Ведущего
-            document.getElementById('answeringPlayerName').textContent = players[playerId].name;
-            enableHostJudgment();
-            document.getElementById('mediaAnswerHint').textContent = "ИГРОК ОТВЕЧАЕТ";
+            // Закрываем текущую фазу
+            isRoundActive = false;
+            activeResponder = null;
+            document.getElementById('jBtnYes').classList.remove('active');
+            document.getElementById('jBtnNo').classList.remove('active');
         }
-
-        // Вспомогательные функции лога
-        function lockBuzzers(excludeId = null) {
-            document.querySelectorAll('.p-buzzer').forEach(b => {
-                if (excludeId && b.id === `p${excludeId}Buzzer`) return;
-                b.classList.add('disabled');
-            });
-        }
-
-        function disableHostJudgment() {
-            document.getElementById('btnCorrect').classList.add('disabled');
-            document.getElementById('btnIncorrect').classList.add('disabled');
-            document.getElementById('answeringPlayerName').textContent = "???";
-        }
-
-        function enableHostJudgment() {
-            document.getElementById('btnCorrect').classList.remove('disabled');
-            document.getElementById('btnIncorrect').classList.remove('disabled');
-        }
-
-        // Initial update
-        updatePlayerDOM();
-        disableHostJudgment();
-
     </script>
 </body>
 </html>
