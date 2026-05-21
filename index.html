@@ -36,7 +36,7 @@
     border-radius: 50%;
     position: fixed; top: 0; left: 0;
     pointer-events: none; z-index: 9999;
-    transition: transform 0.15s ease;
+    transition: transform 0.15s ease, background 0.3s ease;
     mix-blend-mode: multiply;
   }
   .cursor-ring {
@@ -65,7 +65,7 @@
     display: flex; align-items: center; justify-content: space-between;
     padding: 20px 48px;
     background: transparent;
-    transition: all 0.4s ease;
+    transition: all 0.5s cubic-bezier(.25,.46,.45,.94);
   }
   nav.scrolled {
     background: rgba(245,240,232,0.92);
@@ -75,12 +75,9 @@
   }
   .nav-logo {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 0.3em;
-    color: var(--dark);
+    font-size: 28px; font-weight: 300;
+    letter-spacing: 0.3em; color: var(--dark);
     text-decoration: none;
-    position: relative;
   }
   .nav-logo span { color: var(--wine); }
   .nav-links { display: flex; gap: 36px; align-items: center; }
@@ -92,23 +89,21 @@
   .nav-links a::after {
     content: ''; position: absolute; bottom: 0; left: 0;
     width: 0; height: 1px; background: var(--wine);
-    transition: width 0.3s ease;
+    transition: width 0.35s ease;
   }
   .nav-links a:hover::after { width: 100%; }
   .nav-cta {
     background: var(--wine); color: white !important;
     padding: 10px 24px; border-radius: 2px;
     font-size: 11px !important; letter-spacing: 0.2em !important;
-    transition: background 0.3s !important;
+    transition: background 0.3s, transform 0.2s !important;
   }
   .nav-cta::after { display: none !important; }
-  .nav-cta:hover { background: var(--dark) !important; }
+  .nav-cta:hover { background: var(--dark) !important; transform: translateY(-1px); }
 
-  /* BURGER */
   .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 200; }
   .burger span { display: block; width: 28px; height: 1.5px; background: var(--dark); transition: all 0.3s; }
 
-  /* MOBILE MENU */
   .mobile-menu {
     display: none; position: fixed; inset: 0; background: var(--cream);
     z-index: 150; flex-direction: column; align-items: center;
@@ -140,9 +135,7 @@
     content: ''; position: absolute; inset: 0;
     background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(139,46,46,0.25) 0%, transparent 60%);
   }
-  .hero-lines {
-    position: absolute; inset: 0; overflow: hidden;
-  }
+  .hero-lines { position: absolute; inset: 0; overflow: hidden; }
   .hero-lines::before {
     content: 'RITMO';
     position: absolute; right: -40px; top: 50%; transform: translateY(-50%);
@@ -154,14 +147,30 @@
     line-height: 1; pointer-events: none;
     animation: float 8s ease-in-out infinite;
   }
+
+  /* floating particles in hero */
+  .hero-particles {
+    position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  }
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: var(--gold); opacity: 0;
+    animation: particleFly var(--dur) ease-in-out var(--delay) infinite;
+  }
+  @keyframes particleFly {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    20% { opacity: 0.6; }
+    80% { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-120px) scale(1.5) translateX(var(--dx)); }
+  }
+
   @keyframes float {
     0%, 100% { transform: translateY(-50%) translateX(0); }
     50% { transform: translateY(-52%) translateX(-10px); }
   }
   .hero-tag {
     color: var(--gold); font-size: 11px; letter-spacing: 0.4em;
-    text-transform: uppercase; font-weight: 400;
-    margin-bottom: 24px;
+    text-transform: uppercase; font-weight: 400; margin-bottom: 24px;
     opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
   }
   .hero-title {
@@ -187,18 +196,23 @@
     padding: 16px 40px; border-radius: 2px;
     font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
     font-weight: 400; text-decoration: none;
-    transition: all 0.3s;
-    border: 1px solid var(--wine);
+    transition: all 0.3s; border: 1px solid var(--wine);
+    position: relative; overflow: hidden;
   }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%); transition: transform 0.4s ease;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
   .btn-primary:hover { background: transparent; color: var(--wine); }
   .btn-outline {
     border: 1px solid rgba(245,240,232,0.3); color: var(--cream);
     padding: 16px 40px; border-radius: 2px;
     font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
-    font-weight: 400; text-decoration: none;
-    transition: all 0.3s;
+    font-weight: 400; text-decoration: none; transition: all 0.3s;
   }
-  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
   .hero-scroll {
     position: absolute; right: 48px; bottom: 80px;
     display: flex; flex-direction: column; align-items: center; gap: 12px;
@@ -223,10 +237,7 @@
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
   /* ABOUT */
   .about {
@@ -235,9 +246,7 @@
     gap: 80px; align-items: center;
     max-width: 1200px; margin: 0 auto;
   }
-  .about-visual {
-    position: relative;
-  }
+  .about-visual { position: relative; }
   .about-img-frame {
     width: 100%; aspect-ratio: 3/4;
     background: linear-gradient(160deg, #2a1f1a, #4a2a2a);
@@ -260,13 +269,14 @@
   }
   .about-badge {
     position: absolute; bottom: -20px; right: -20px;
-    width: 120px; height: 120px;
-    background: var(--wine);
+    width: 120px; height: 120px; background: var(--wine);
     border-radius: 50%;
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; color: white;
     font-family: 'Cormorant Garamond', serif;
+    transition: transform 0.4s ease;
   }
+  .about-badge:hover { transform: scale(1.1) rotate(5deg); }
   .about-badge .num { font-size: 36px; font-weight: 600; line-height: 1; }
   .about-badge .lbl { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.8; }
   .section-tag {
@@ -274,14 +284,11 @@
     color: var(--wine); font-weight: 500; margin-bottom: 20px;
     display: flex; align-items: center; gap: 12px;
   }
-  .section-tag::before {
-    content: ''; display: block; width: 30px; height: 1px; background: var(--wine);
-  }
+  .section-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--wine); }
   .section-title {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(36px, 5vw, 64px);
-    font-weight: 300; line-height: 1.1;
-    margin-bottom: 28px;
+    font-weight: 300; line-height: 1.1; margin-bottom: 28px;
   }
   .section-title em { font-style: italic; color: var(--wine); }
   .about-text { color: var(--muted); font-size: 15px; line-height: 1.85; font-weight: 300; }
@@ -298,84 +305,77 @@
   .stat-lbl { font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
 
   /* SERVICES */
-  .services {
-    background: var(--dark); padding: 120px 48px;
-    position: relative; overflow: hidden;
-  }
+  .services { background: var(--dark); padding: 120px 48px; position: relative; overflow: hidden; }
   .services::before {
-    content: '';
-    position: absolute; top: -100px; left: -100px;
+    content: ''; position: absolute; top: -100px; left: -100px;
     width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(139,46,46,0.2), transparent 70%);
     pointer-events: none;
+    animation: pulse-glow 6s ease-in-out infinite;
   }
-  .services-header {
-    text-align: center; margin-bottom: 80px;
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
   }
+  .services-header { text-align: center; margin-bottom: 80px; }
   .services-header .section-title { color: var(--cream); }
   .services-header .section-tag { justify-content: center; }
   .services-header .section-tag::before { display: none; }
   .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px; max-width: 1200px; margin: 0 auto;
   }
   .service-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 4px; padding: 40px 32px;
-    transition: all 0.4s cubic-bezier(.25,.46,.45,.94);
+    transition: all 0.45s cubic-bezier(.25,.46,.45,.94);
     position: relative; overflow: hidden;
   }
   .service-card::after {
-    content: '';
-    position: absolute; bottom: 0; left: 0;
+    content: ''; position: absolute; bottom: 0; left: 0;
     width: 100%; height: 2px;
     background: linear-gradient(90deg, var(--wine), var(--gold));
     transform: scaleX(0); transform-origin: left;
     transition: transform 0.4s ease;
   }
-  .service-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-6px); }
+  .service-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-8px); box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
   .service-card:hover::after { transform: scaleX(1); }
   .service-icon {
     width: 52px; height: 52px; margin-bottom: 24px;
     display: flex; align-items: center; justify-content: center;
     background: rgba(139,46,46,0.2); border-radius: 50%;
     font-size: 22px;
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), background 0.3s;
   }
+  .service-card:hover .service-icon { transform: scale(1.15) rotate(8deg); background: rgba(139,46,46,0.4); }
   .service-card h3 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px; font-weight: 400; color: var(--cream);
-    margin-bottom: 14px;
+    font-size: 26px; font-weight: 400; color: var(--cream); margin-bottom: 14px;
   }
   .service-card p { color: rgba(245,240,232,0.5); font-size: 14px; line-height: 1.75; font-weight: 300; }
-  .service-events {
-    margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px;
-  }
+  .service-events { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
   .event-tag {
     font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
     border: 1px solid rgba(201,168,76,0.3); color: var(--gold-light);
     padding: 4px 12px; border-radius: 20px;
+    transition: all 0.3s;
   }
+  .event-tag:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
 
   /* PRICING */
   .pricing { padding: 120px 48px; max-width: 1100px; margin: 0 auto; }
   .pricing-header { margin-bottom: 64px; }
-  .pricing-cards {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-  }
+  .pricing-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
   .price-card {
-    background: var(--card-bg);
-    border: 1px solid rgba(139,46,46,0.12);
+    background: var(--card-bg); border: 1px solid rgba(139,46,46,0.12);
     border-radius: 4px; padding: 48px 36px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.4s cubic-bezier(.25,.46,.45,.94), box-shadow 0.4s;
     position: relative;
   }
-  .price-card:hover { transform: translateY(-8px); box-shadow: 0 24px 60px rgba(139,46,46,0.1); }
+  .price-card:hover { transform: translateY(-10px); box-shadow: 0 30px 70px rgba(139,46,46,0.12); }
   .price-card.featured {
-    background: var(--dark); color: var(--cream);
-    border-color: var(--wine);
+    background: var(--dark); color: var(--cream); border-color: var(--wine);
   }
   .price-card.featured::before {
     content: 'Популярный';
@@ -384,67 +384,42 @@
     font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
     padding: 4px 16px; border-radius: 20px;
   }
-  .price-card h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px; font-weight: 400; margin-bottom: 8px;
-  }
+  .price-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; margin-bottom: 8px; }
   .price-card .price-sub { font-size: 12px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 32px; }
   .price-card.featured .price-sub { color: rgba(245,240,232,0.5); }
-  .price-value {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; font-weight: 300; color: var(--wine);
-    margin-bottom: 8px; line-height: 1.4;
-  }
+  .price-value { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--wine); margin-bottom: 8px; line-height: 1.4; }
   .price-card.featured .price-value { color: var(--gold); }
-  .price-note {
-    font-size: 12px; color: var(--muted); margin-bottom: 28px; font-style: italic;
-  }
+  .price-note { font-size: 12px; color: var(--muted); margin-bottom: 28px; font-style: italic; }
   .price-card.featured .price-note { color: rgba(245,240,232,0.45); }
-  .price-features {
-    list-style: none; display: flex; flex-direction: column; gap: 12px;
-    margin-bottom: 36px;
-  }
-  .price-features li {
-    font-size: 14px; font-weight: 300; color: var(--muted);
-    display: flex; align-items: flex-start; gap: 10px;
-    line-height: 1.5;
-  }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+  .price-features li { font-size: 14px; font-weight: 300; color: var(--muted); display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
   .price-card.featured .price-features li { color: rgba(245,240,232,0.65); }
-  .price-features li::before {
-    content: '—'; color: var(--wine); flex-shrink: 0; font-size: 14px;
-  }
+  .price-features li::before { content: '—'; color: var(--wine); flex-shrink: 0; font-size: 14px; }
   .price-card.featured .price-features li::before { color: var(--gold); }
   .studio-note {
     margin-top: 48px; padding: 28px 32px;
-    background: rgba(139,46,46,0.06);
-    border-left: 3px solid var(--wine);
-    border-radius: 0 4px 4px 0;
+    background: rgba(139,46,46,0.06); border-left: 3px solid var(--wine); border-radius: 0 4px 4px 0;
   }
-  .studio-note h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-weight: 400; color: var(--dark); margin-bottom: 10px;
-  }
+  .studio-note h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--dark); margin-bottom: 10px; }
   .studio-note p { font-size: 14px; color: var(--muted); line-height: 1.75; }
   .studio-note strong { color: var(--wine); font-weight: 500; }
 
   /* PROCESS */
   .process { background: var(--dark); padding: 120px 48px; position: relative; overflow: hidden; }
   .process::after {
-    content: '';
-    position: absolute; bottom: -100px; right: -100px;
+    content: ''; position: absolute; bottom: -100px; right: -100px;
     width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(201,168,76,0.1), transparent 70%);
+    animation: pulse-glow 7s ease-in-out infinite;
   }
   .process-header { text-align: center; margin-bottom: 80px; }
   .process-header .section-title { color: var(--cream); }
   .process-steps {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0; max-width: 1000px; margin: 0 auto;
-    position: relative;
+    gap: 0; max-width: 1000px; margin: 0 auto; position: relative;
   }
   .process-steps::before {
-    content: '';
-    position: absolute; top: 36px; left: 10%; right: 10%; height: 1px;
+    content: ''; position: absolute; top: 36px; left: 10%; right: 10%; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
   }
   .step { text-align: center; padding: 0 24px; position: relative; }
@@ -456,13 +431,10 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 26px; color: var(--gold); font-weight: 300;
     background: var(--dark); position: relative; z-index: 1;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(.34,1.56,.64,1);
   }
-  .step:hover .step-num { background: var(--wine); border-color: var(--wine); color: white; }
-  .step h4 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; color: var(--cream); margin-bottom: 10px; font-weight: 400;
-  }
+  .step:hover .step-num { background: var(--wine); border-color: var(--wine); color: white; transform: scale(1.1); }
+  .step h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--cream); margin-bottom: 10px; font-weight: 400; }
   .step p { font-size: 13px; color: rgba(245,240,232,0.45); font-weight: 300; line-height: 1.7; }
 
   /* AGES */
@@ -470,11 +442,10 @@
   .ages-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 64px; }
   .age-block {
     background: var(--card-bg); padding: 48px 40px;
-    transition: all 0.3s; position: relative; overflow: hidden;
+    transition: all 0.4s cubic-bezier(.25,.46,.45,.94); position: relative; overflow: hidden;
   }
   .age-block::before {
-    content: '';
-    position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(139,46,46,0.08), transparent);
     opacity: 0; transition: opacity 0.3s;
   }
@@ -484,23 +455,19 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 80px; font-weight: 300; color: rgba(139,46,46,0.1);
     line-height: 1; margin-bottom: 16px; letter-spacing: -0.02em;
+    transition: color 0.4s;
   }
-  .age-block h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px; font-weight: 400; margin-bottom: 12px;
-  }
+  .age-block:hover .age-num { color: rgba(139,46,46,0.2); }
+  .age-block h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; margin-bottom: 12px; }
   .age-block p { font-size: 14px; color: var(--muted); line-height: 1.75; font-weight: 300; }
   .age-full { grid-column: 1 / -1; }
 
   /* CONTACT */
   .contact { background: var(--dark); padding: 120px 48px; position: relative; overflow: hidden; }
   .contact::before {
-    content: 'RITMO';
-    position: absolute; left: -60px; bottom: -40px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 200px; font-weight: 600;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    content: 'RITMO'; position: absolute; left: -60px; bottom: -40px;
+    font-family: 'Cormorant Garamond', serif; font-size: 200px; font-weight: 600;
+    color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.04);
     pointer-events: none; line-height: 1;
   }
   .contact-inner {
@@ -513,29 +480,25 @@
   .contact-item {
     display: flex; align-items: center; gap: 16px;
     color: rgba(245,240,232,0.65); font-size: 14px; font-weight: 300;
+    transition: color 0.3s;
   }
+  .contact-item:hover { color: rgba(245,240,232,0.9); }
   .contact-item-icon {
     width: 40px; height: 40px; border-radius: 50%;
     background: rgba(139,46,46,0.2);
     display: flex; align-items: center; justify-content: center;
     font-size: 16px; flex-shrink: 0;
+    transition: background 0.3s, transform 0.3s;
   }
+  .contact-item:hover .contact-item-icon { background: rgba(139,46,46,0.4); transform: scale(1.1); }
   .contact-form {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 4px; padding: 48px 40px;
   }
-  .form-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px; color: var(--cream); font-weight: 300;
-    margin-bottom: 32px;
-  }
+  .form-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--cream); font-weight: 300; margin-bottom: 32px; }
   .form-group { margin-bottom: 20px; }
-  .form-group label {
-    display: block; font-size: 10px; letter-spacing: 0.2em;
-    text-transform: uppercase; color: rgba(245,240,232,0.4);
-    margin-bottom: 8px;
-  }
+  .form-group label { display: block; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-bottom: 8px; }
   .form-group input,
   .form-group textarea,
   .form-group select {
@@ -543,14 +506,13 @@
     border: 1px solid rgba(255,255,255,0.1); border-radius: 2px;
     padding: 14px 16px; color: var(--cream);
     font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 300;
-    outline: none; transition: border-color 0.3s; resize: none;
-    appearance: none;
+    outline: none; transition: border-color 0.3s, background 0.3s; resize: none; appearance: none;
   }
   .form-group select { cursor: pointer; }
   .form-group select option { background: #2a1f1a; color: var(--cream); }
   .form-group input:focus,
   .form-group textarea:focus,
-  .form-group select:focus { border-color: var(--wine); }
+  .form-group select:focus { border-color: var(--wine); background: rgba(255,255,255,0.09); }
   .form-group textarea { height: 100px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-submit {
@@ -560,12 +522,110 @@
     font-family: 'Jost', sans-serif;
     font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
     cursor: pointer; transition: all 0.3s; margin-top: 8px;
+    position: relative; overflow: hidden;
   }
-  .form-submit:hover { background: var(--gold); }
-  .form-success {
-    display: none; text-align: center; padding: 20px;
-    color: var(--gold); font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-weight: 300;
+  .form-submit::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%); transition: transform 0.4s;
+  }
+  .form-submit:hover::before { transform: translateX(0); }
+  .form-submit:hover { background: var(--gold); transform: translateY(-1px); }
+  .form-success { display: none; text-align: center; padding: 20px; color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; }
+
+  /* ============================================
+     MESSENGER POPUP
+  ============================================ */
+  .messenger-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(26,20,16,0.7);
+    backdrop-filter: blur(8px);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .messenger-overlay.active {
+    opacity: 1; pointer-events: all;
+  }
+  .messenger-popup {
+    background: #1e1610;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 48px 40px;
+    width: 420px; max-width: 90vw;
+    text-align: center;
+    transform: translateY(30px) scale(0.95);
+    transition: transform 0.45s cubic-bezier(.34,1.56,.64,1);
+    position: relative;
+  }
+  .messenger-overlay.active .messenger-popup {
+    transform: translateY(0) scale(1);
+  }
+  .messenger-popup-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none; cursor: pointer;
+    color: rgba(245,240,232,0.3); font-size: 22px;
+    transition: color 0.2s, transform 0.2s;
+    line-height: 1;
+  }
+  .messenger-popup-close:hover { color: var(--cream); transform: rotate(90deg); }
+  .messenger-popup-tag {
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+  }
+  .messenger-popup h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 300; color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .messenger-popup p {
+    font-size: 14px; color: rgba(245,240,232,0.4);
+    font-weight: 300; margin-bottom: 36px; line-height: 1.6;
+  }
+  .messenger-btns {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .messenger-btn {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    padding: 18px 28px; border-radius: 4px;
+    text-decoration: none; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-family: 'Jost', sans-serif; font-weight: 400;
+    transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+    border: 1px solid transparent;
+    position: relative; overflow: hidden;
+  }
+  .messenger-btn::before {
+    content: ''; position: absolute; inset: 0;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .messenger-btn:hover::before { opacity: 1; }
+  .messenger-btn-wa {
+    background: #1a3d2b; border-color: rgba(37,211,102,0.3); color: #a8f0c6;
+  }
+  .messenger-btn-wa::before { background: rgba(37,211,102,0.06); }
+  .messenger-btn-wa:hover { border-color: rgba(37,211,102,0.7); color: #25d366; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(37,211,102,0.15); }
+  .messenger-btn-tg {
+    background: #1a2d3d; border-color: rgba(41,182,246,0.3); color: #a8d8f0;
+  }
+  .messenger-btn-tg::before { background: rgba(41,182,246,0.06); }
+  .messenger-btn-tg:hover { border-color: rgba(41,182,246,0.7); color: #29b6f6; transform: translateY(-3px); box-shadow: 0 12px 40px rgba(41,182,246,0.15); }
+  .messenger-btn-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 18px;
+  }
+  .messenger-btn-wa .messenger-btn-icon { background: rgba(37,211,102,0.15); }
+  .messenger-btn-tg .messenger-btn-icon { background: rgba(41,182,246,0.15); }
+  .messenger-btn-label { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+  .messenger-btn-label span:first-child { font-size: 13px; }
+  .messenger-btn-label span:last-child { font-size: 10px; opacity: 0.5; letter-spacing: 0.1em; }
+  .messenger-divider {
+    display: flex; align-items: center; gap: 14px; margin: 4px 0;
+    color: rgba(245,240,232,0.15); font-size: 11px; letter-spacing: 0.2em;
+  }
+  .messenger-divider::before,
+  .messenger-divider::after {
+    content: ''; flex: 1; height: 1px; background: rgba(245,240,232,0.08);
   }
 
   /* FOOTER */
@@ -574,11 +634,7 @@
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 20px;
   }
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-weight: 300; letter-spacing: 0.3em;
-    color: rgba(245,240,232,0.4);
-  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; letter-spacing: 0.3em; color: rgba(245,240,232,0.4); }
   .footer-logo span { color: var(--wine); }
   footer p { font-size: 12px; color: rgba(245,240,232,0.25); letter-spacing: 0.05em; }
   .footer-social { display: flex; gap: 16px; }
@@ -589,12 +645,12 @@
     color: rgba(245,240,232,0.4); text-decoration: none;
     font-size: 14px; transition: all 0.3s;
   }
-  .footer-social a:hover { border-color: var(--wine); color: var(--wine); background: rgba(139,46,46,0.1); }
+  .footer-social a:hover { border-color: var(--wine); color: var(--wine); background: rgba(139,46,46,0.1); transform: translateY(-2px); }
 
   /* REVEAL ANIMATIONS */
   .reveal {
     opacity: 0; transform: translateY(40px);
-    transition: all 0.8s cubic-bezier(.25,.46,.45,.94);
+    transition: opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94);
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: 0.1s; }
@@ -602,15 +658,19 @@
   .reveal-delay-3 { transition-delay: 0.3s; }
   .reveal-delay-4 { transition-delay: 0.4s; }
 
-  /* DANCING DOTS */
-  .dots {
-    display: flex; align-items: center; gap: 5px; margin-bottom: 60px;
+  /* RIPPLE on click */
+  .ripple-host { position: relative; overflow: hidden; }
+  .ripple-circle {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    transform: scale(0); animation: ripple-anim 0.6s linear;
+    pointer-events: none;
   }
-  .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--wine); opacity: 0.3;
-    animation: pulse 1.5s ease-in-out infinite;
-  }
+  @keyframes ripple-anim { to { transform: scale(4); opacity: 0; } }
+
+  /* DOTS */
+  .dots { display: flex; align-items: center; gap: 5px; margin-bottom: 60px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--wine); opacity: 0.3; animation: pulse 1.5s ease-in-out infinite; }
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
@@ -645,6 +705,7 @@
     .hero-title { font-size: clamp(44px, 12vw, 80px); }
     .process-steps { grid-template-columns: 1fr; }
     .contact-form { padding: 32px 24px; }
+    .messenger-popup { padding: 36px 24px; }
   }
 </style>
 </head>
@@ -652,6 +713,37 @@
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MESSENGER POPUP -->
+<div class="messenger-overlay" id="messengerOverlay">
+  <div class="messenger-popup">
+    <button class="messenger-popup-close" id="messengerClose">✕</button>
+    <div class="messenger-popup-tag">✦ Связаться</div>
+    <h3>Как вам удобнее?</h3>
+    <p>Выберите мессенджер — и мы ответим максимально быстро</p>
+    <div class="messenger-btns">
+      <a href="https://wa.me/77024189999" target="_blank" class="messenger-btn messenger-btn-wa ripple-host">
+        <div class="messenger-btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div class="messenger-btn-label">
+          <span>WhatsApp</span>
+          <span>+7 702 418 9999</span>
+        </div>
+      </a>
+      <div class="messenger-divider">или</div>
+      <a href="https://t.me/ssamkinss" target="_blank" class="messenger-btn messenger-btn-tg ripple-host">
+        <div class="messenger-btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </div>
+        <div class="messenger-btn-label">
+          <span>Telegram</span>
+          <span>@ssamkinss</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -681,6 +773,8 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-lines"></div>
+  <!-- Particles -->
+  <div class="hero-particles" id="heroParticles"></div>
   <div style="position:relative; z-index:2;">
     <div class="hero-tag">✦ Профессиональная хореография</div>
     <h1 class="hero-title">
@@ -688,7 +782,7 @@
     </h1>
     <p class="hero-sub">Постановка танцев для школ, праздников и мероприятий. Работаем с детьми от 10 лет — вдохновляем, создаём, удивляем.</p>
     <div class="hero-btns">
-      <a href="#contact" class="btn-primary">Записаться</a>
+      <button class="btn-primary ripple-host" onclick="openMessenger()">Записаться</button>
       <a href="#services" class="btn-outline">Узнать больше</a>
     </div>
   </div>
@@ -702,23 +796,14 @@
 <section class="about" id="about">
   <div class="about-visual reveal">
     <div class="about-img-frame">
-      <!-- Dance silhouette SVG -->
       <svg class="dance-silhouette" viewBox="0 0 200 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Body -->
         <ellipse cx="100" cy="55" rx="18" ry="18" fill="rgba(201,168,76,0.7)"/>
-        <!-- Torso -->
         <path d="M85 73 Q100 68 115 73 L118 140 Q100 145 82 140 Z" fill="rgba(201,168,76,0.5)"/>
-        <!-- Left arm raised -->
         <path d="M85 80 Q60 55 45 35" stroke="rgba(201,168,76,0.7)" stroke-width="8" stroke-linecap="round" fill="none"/>
-        <!-- Right arm down -->
         <path d="M115 80 Q140 110 155 130" stroke="rgba(201,168,76,0.7)" stroke-width="8" stroke-linecap="round" fill="none"/>
-        <!-- Left leg -->
         <path d="M92 140 Q80 185 65 220" stroke="rgba(201,168,76,0.6)" stroke-width="9" stroke-linecap="round" fill="none"/>
-        <!-- Right leg extended -->
         <path d="M108 140 Q130 175 155 195" stroke="rgba(201,168,76,0.6)" stroke-width="9" stroke-linecap="round" fill="none"/>
-        <!-- Skirt flow -->
         <path d="M82 140 Q70 165 60 185 Q90 175 100 145 Q110 175 140 180 Q128 162 118 140 Z" fill="rgba(139,46,46,0.4)"/>
-        <!-- Sparkles -->
         <circle cx="40" cy="30" r="3" fill="rgba(201,168,76,0.5)"/>
         <circle cx="160" cy="125" r="2" fill="rgba(201,168,76,0.4)"/>
         <circle cx="50" cy="200" r="2.5" fill="rgba(201,168,76,0.35)"/>
@@ -740,18 +825,9 @@
       <p>Принимаю детей <strong>от 10 лет</strong> — верю, что именно в этом возрасте закладывается любовь к движению на всю жизнь.</p>
     </div>
     <div class="about-stats reveal reveal-delay-3">
-      <div class="stat">
-        <span class="stat-num">10+</span>
-        <span class="stat-lbl">постановок</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">5+</span>
-        <span class="stat-lbl">школ и коллективов</span>
-      </div>
-      <div class="stat">
-        <span class="stat-num">∞</span>
-        <span class="stat-lbl">идей для вас</span>
-      </div>
+      <div class="stat"><span class="stat-num">10+</span><span class="stat-lbl">постановок</span></div>
+      <div class="stat"><span class="stat-num">5+</span><span class="stat-lbl">школ и коллективов</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-lbl">идей для вас</span></div>
     </div>
   </div>
 </section>
@@ -827,7 +903,7 @@
         <li>Репетиции до полной готовности</li>
         <li>Помощь в организации выступления</li>
       </ul>
-      <a href="#contact" class="btn-primary" style="display:block;text-align:center;padding:14px;">Узнать цену</a>
+      <button class="btn-primary ripple-host" style="width:100%;padding:14px;border:none;cursor:pointer;" onclick="openMessenger()">Узнать цену</button>
     </div>
     <div class="price-card featured reveal reveal-delay-2">
       <h3>Комплексная подготовка</h3>
@@ -841,7 +917,7 @@
         <li>Приоритетная поддержка и быстрый отклик</li>
         <li>Гибкий график репетиций</li>
       </ul>
-      <a href="#contact" class="btn-primary" style="display:block;text-align:center;padding:14px;background:var(--gold);color:var(--dark);border-color:var(--gold);">Обсудить проект</a>
+      <button class="btn-primary ripple-host" style="width:100%;padding:14px;border:none;cursor:pointer;background:var(--gold);color:var(--dark);border-color:var(--gold);" onclick="openMessenger()">Обсудить проект</button>
     </div>
     <div class="price-card reveal reveal-delay-3">
       <h3>Регулярные занятия</h3>
@@ -854,7 +930,7 @@
         <li>Индивидуальный подход к каждому ребёнку</li>
         <li>Формирование программы под группу</li>
       </ul>
-      <a href="#contact" class="btn-primary" style="display:block;text-align:center;padding:14px;">Записаться</a>
+      <button class="btn-primary ripple-host" style="width:100%;padding:14px;border:none;cursor:pointer;" onclick="openMessenger()">Записаться</button>
     </div>
   </div>
   <div class="studio-note reveal" style="margin-top:48px;">
@@ -950,7 +1026,7 @@
           <label>Ваши пожелания</label>
           <textarea id="fmsg" placeholder="Расскажите о вашем мероприятии, дате, количестве участников..."></textarea>
         </div>
-        <button class="form-submit" onclick="submitForm()">Отправить заявку →</button>
+        <button class="form-submit ripple-host" onclick="submitForm()">Отправить заявку →</button>
       </div>
       <div class="form-success" id="formSuccess">
         ✦ Заявка отправлена! Свяжемся с вами в ближайшее время.
@@ -962,55 +1038,78 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">RI<span>T</span>MO</div>
-  <p>© 2024 RITMO — Хореографическая студия. Все права защищены.</p>
+  <p>© 2025 RITMO — Хореографическая студия. Все права защищены.</p>
   <div class="footer-social">
-    <a href="#" title="Instagram">IG</a>
-    <a href="#" title="Telegram">TG</a>
-    <a href="#" title="WhatsApp">WA</a>
+    <a href="https://wa.me/77024189999" target="_blank" title="WhatsApp">WA</a>
+    <a href="https://t.me/ssamkinss" target="_blank" title="Telegram">TG</a>
   </div>
 </footer>
 
 <script>
-  // CURSOR
+  // ── CURSOR ──
   const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
+  const ring   = document.getElementById('cursorRing');
   let mx = 0, my = 0, rx = 0, ry = 0;
-
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx - 5 + 'px';
-    cursor.style.top = my - 5 + 'px';
+    cursor.style.top  = my - 5 + 'px';
   });
-
-  function animRing() {
+  (function animRing() {
     rx += (mx - rx) * 0.12;
     ry += (my - ry) * 0.12;
     ring.style.left = rx - 18 + 'px';
-    ring.style.top = ry - 18 + 'px';
+    ring.style.top  = ry - 18 + 'px';
     requestAnimationFrame(animRing);
-  }
-  animRing();
-
+  })();
   document.querySelectorAll('a, button, .service-card, .price-card').forEach(el => {
     el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
     el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
   });
 
-  // NAV SCROLL
+  // ── RIPPLE ──
+  document.querySelectorAll('.ripple-host').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const d = Math.max(rect.width, rect.height);
+      const el = document.createElement('span');
+      el.className = 'ripple-circle';
+      el.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX-rect.left-d/2}px;top:${e.clientY-rect.top-d/2}px`;
+      this.appendChild(el);
+      el.addEventListener('animationend', () => el.remove());
+    });
+  });
+
+  // ── MESSENGER POPUP ──
+  function openMessenger() {
+    document.getElementById('messengerOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMessenger() {
+    document.getElementById('messengerOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('messengerClose').addEventListener('click', closeMessenger);
+  document.getElementById('messengerOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeMessenger();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMessenger(); });
+
+  // ── NAV SCROLL ──
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  // BURGER
-  const burger = document.getElementById('burger');
+  // ── BURGER ──
+  const burger     = document.getElementById('burger');
   const mobileMenu = document.getElementById('mobileMenu');
   let menuOpen = false;
   burger.addEventListener('click', () => {
     menuOpen = !menuOpen;
     mobileMenu.classList.toggle('open', menuOpen);
     burger.children[0].style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
-    burger.children[1].style.opacity = menuOpen ? '0' : '1';
+    burger.children[1].style.opacity   = menuOpen ? '0' : '1';
     burger.children[2].style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
   });
   mobileMenu.querySelectorAll('a').forEach(a => {
@@ -1018,31 +1117,44 @@
       menuOpen = false;
       mobileMenu.classList.remove('open');
       burger.children[0].style.transform = '';
-      burger.children[1].style.opacity = '1';
+      burger.children[1].style.opacity   = '1';
       burger.children[2].style.transform = '';
     });
   });
 
-  // REVEAL
-  const reveals = document.querySelectorAll('.reveal');
+  // ── REVEAL ──
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
-  reveals.forEach(r => observer.observe(r));
+  document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
 
-  // FORM
+  // ── PARTICLES in hero ──
+  const container = document.getElementById('heroParticles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      top:${40 + Math.random()*50}%;
+      --dur:${3 + Math.random()*5}s;
+      --delay:${Math.random()*6}s;
+      --dx:${(Math.random()-0.5)*60}px;
+    `;
+    container.appendChild(p);
+  }
+
+  // ── FORM ──
   function submitForm() {
-    const name = document.getElementById('fname').value.trim();
+    const name  = document.getElementById('fname').value.trim();
     const phone = document.getElementById('fphone').value.trim();
-    if (!name || !phone) {
-      alert('Пожалуйста, укажите имя и контакт.');
-      return;
-    }
+    if (!name || !phone) { alert('Пожалуйста, укажите имя и контакт.'); return; }
     document.getElementById('contactForm').style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
   }
 
-  // Smooth anchor
+  // ── SMOOTH ANCHOR ──
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const target = document.querySelector(a.getAttribute('href'));
